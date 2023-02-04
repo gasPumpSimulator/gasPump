@@ -13,3 +13,7 @@ function changeColor(input)
     document.getElementById('93Gas').style.backgroundColor = 'red';
     document.getElementById('dieselGas').style.backgroundColor = 'red';
 }
+
+function addToEquation (input) {
+    
+}
