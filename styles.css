@@ -7,8 +7,10 @@ body {
 .screen {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-grow: 1;
-    background-color: aquamarine;
+    background-color: grey;
+    padding-left: 70px;
 }
 .output {
     display: flex;
@@ -66,12 +68,40 @@ body {
     background-color: green;
 }
 .btnContainer {
+    background-color: grey;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: solid;
+    padding: 10px;
 }
+.buttonGroup {
+    background-color: black;
+    min-width: 175px;
+    min-height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.btns {
+    background-color: silver;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    padding: 0;
+}
+.alphabet {
+    font-size: 7px;
+}
+
 footer {
     height: 50px;
+    background-color: grey;
+}
+
+.fuelingBtn {
+    font-size: 10px;
+    width: 70px;
+    background-color: red;
+    border-radius: 50px;
 }
