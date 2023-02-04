@@ -1,0 +1,56 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.screen {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    background-color: aquamarine;
+}
+.output {
+    display: flex;
+    justify-content: center;
+    background-color: blue;
+    width: 300px;
+    height: 100px;
+}
+.button_container {
+    display: flex;
+    justify-content: center;
+    background-color: grey;
+}
+.button_group {
+    border: solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.gas_buttons {
+    flex-grow: 0;
+    width: 100px;
+    height: 150px;
+    border-radius: 30px;
+    background-color: yellow;
+    border: 5px solid black;
+    margin: 5px;
+}
+.light {
+    width: 30px;
+    height: 5px;
+    border: solid;
+    background-color: white;
+    border-radius: 20px;
+}
+.price {
+    border: solid;
+    border: 2px solid black;
+    width: 50px;
+    margin-bottom:  20px;
+
+}
+.footer {
+    height: 20px;
+}
