@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css";>
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
-    <link href="https://www.1001fonts.com/digital-7-font.html" rel="stylesheet">
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -17,23 +16,26 @@
             <button class="fuelingBtn">BEGIN FUELING</button>
         </div>
     </div>
+    <div class="middleContainer">
+        <div class="middleLeft"></div>
+        <div class="middleLeftInside"></div>
 
-    <div class="btnContainer">
-        <div class="buttonGroup"  >    
-            <button class="btns" id="1" onclick="addToEquation('1')">1
-                <div class="alphabet">QZ</div>
-            </button>
-            <button class="btns" id="2" onclick="addToEquation('2')">2
-                <div class="alphabet">ABC</div>
-            </button>
-            <button class="btns" id="3" onclick="addToEquation('3')">3
-                <div class="alphabet">DEF</div>
-            </button>
-            <button class="btns" id="D" onclick="deleteEntry()">
-                <div class="alphabet">YES</div>
-            </button>
-        </div>
-        <div class="buttonGroup"  >
+        <div class="keypadContainer">
+            <div class="buttonGroup"  >    
+                <button class="btns" id="1" onclick="addToEquation('1')">1
+                    <div class="alphabet">QZ</div>
+                </button>
+                <button class="btns" id="2" onclick="addToEquation('2')">2
+                    <div class="alphabet">ABC</div>
+                </button>
+                <button class="btns" id="3" onclick="addToEquation('3')">3
+                    <div class="alphabet">DEF</div>
+                </button>
+                <button class="btns" id="D" onclick="deleteEntry()">
+                    <div class="alphabet">YES</div>
+                </button>
+            </div>
+        <div class="buttonGroup">
             <button class="btns" id="4" onclick="addToEquation('4')">4
                 <div class="alphabet">GHI</div>
             </button>
@@ -71,8 +73,11 @@
             <div class="alphabet">DELETE</div>
         </button>
         </div>
-      </div>
-          
+      </div>     
+      <div class="middleRightInside"></div>
+      <div class="middleRight"></div>
+    </div>
+     
     <div class="button_container">
     <div class="button_group">
         <label class="gasName">Regular</label>
@@ -104,6 +109,11 @@
     </div>
 
     </div>
-    <footer></footer>
+    <footer>
+        <div class = "footerContainer">
+          <a href="https://github.com/gasPumpSimulator/gasPump" image><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github link" style="width:20px;height:20px;"></a>
+        </div>
+        <i class="fab fa-github" aria-hidden="true"></i>
+        </footer>
 </body>
 </html>

@@ -22,7 +22,7 @@ body {
 .button_container {
     display: flex;
     justify-content: center;
-    background-color: grey;
+    background-color: black;
 }
 .button_group {
     border: solid;
@@ -34,7 +34,7 @@ body {
 }
 .gas_buttons {
     flex-grow: 0;
-    width: 100px;
+    width: 106px;
     height: 150px;
     border-radius: 30px;
     background-color: yellow;
@@ -62,12 +62,11 @@ body {
     border-top: 5px solid black;
     width: 50px;
     margin-bottom: 20px;
-
 }
 .diesel {
     background-color: green;
 }
-.btnContainer {
+.keypadContainer {
     background-color: grey;
     display: flex;
     flex-direction: column;
@@ -75,7 +74,27 @@ body {
     align-items: center;
     padding: 10px;
 }
+.middleContainer {
+    display: flex;
+}
+.middleRight {
+    width: 150px;
+    background-color: black;
+}
+.middleLeft {
+    background-color: black;
+    width: 150px;
+}
+.middleRightInside {
+    width: 150px;
+    background-color: grey;
+}
+.middleLeftInside {
+    background-color: grey;
+    width: 150px;
+}
 .buttonGroup {
+    flex-grow: 1;
     background-color: black;
     min-width: 175px;
     min-height: 40px;
@@ -95,8 +114,14 @@ body {
 }
 
 footer {
-    height: 50px;
-    background-color: grey;
+    height: 30px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    font-size: 10px;
+}
+.footerContainer {
+    padding: 5px;
 }
 
 .fuelingBtn {
