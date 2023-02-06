@@ -3,6 +3,20 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: grey;
+}
+/* top container */
+.topContainer {
+    display: flex;
+} 
+.topRight {
+    width: 137px;
+    background-color: black;
+}
+.topLeft {
+    width: 137px;
+    background-color: black;
+
 }
 .screen {
     display: flex;
@@ -11,13 +25,14 @@ body {
     flex-grow: 1;
     background-color: grey;
     padding-left: 70px;
+    height: 300px;
 }
 .output {
     display: flex;
     justify-content: center;
     background-color: black;
     width: 300px;
-    height: 100px;
+    height: 200px;
 }
 .button_container {
     display: flex;
@@ -66,32 +81,37 @@ body {
 .diesel {
     background-color: green;
 }
+
 .keypadContainer {
-    background-color: grey;
+    background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px;
+    border: 5px solid black;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
 }
 .middleContainer {
     display: flex;
 }
 .middleRight {
-    width: 150px;
+    flex-grow: 1.03;
     background-color: black;
 }
 .middleLeft {
     background-color: black;
-    width: 150px;
+    flex-grow: 1.03;
 }
 .middleRightInside {
-    width: 150px;
+    flex-grow: 1;
     background-color: grey;
 }
 .middleLeftInside {
     background-color: grey;
-    width: 150px;
+    flex-grow: 1;
 }
 .buttonGroup {
     flex-grow: 1;
