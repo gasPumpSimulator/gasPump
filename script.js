@@ -14,6 +14,10 @@ function changeColor(input)
     document.getElementById('dieselGas').style.backgroundColor = 'red';
 }
 
-function addToEquation (input) {
-    
+function addToEquation(input) {
+    document.getElementById('screen').innerHTML = input;
+}
+
+function deleteEntry() {
+    document.getElementById('screen').innerHTML = 'SCREEN';
 }
