@@ -113,7 +113,7 @@ function compute()
     if(paymentMethod === 'cash')
     {
         amountOfGas = cashAmount / chosenGasPrice;
-        inputField.innerHTML = amountOfGas +' gallons purchased';
+        inputField.innerHTML = Math.round(amountOfGas * 100)/100 +' gallons purchased';
     }
     else if(paymentMethod === 'credit')
     {
