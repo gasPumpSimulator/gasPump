@@ -8,6 +8,7 @@ let currentInputNumber = '';
 let cashAmount = 0;
 let gasTankSize = 0;
 let amountOfGas;
+
 function changeColor(input, price)
 {
     let element=document.getElementById(input);
@@ -118,6 +119,6 @@ function compute()
     else if(paymentMethod === 'credit')
     {
         amountOfGas = gasTankSize * chosenGasPrice;
-        inputField.innerHTML = amountOfGas + ' dollars of gas purchase';
+        inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchase';
     }
 }
