@@ -10,24 +10,19 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="topContainer">
-        <div class="topLeft"></div>
-        <div class="screen">
-<<<<<<< HEAD
-            <iframe width="310" height="155"
-src="https://www.youtube.com/embed/tgbNymZ7vqY">
-</iframe>
-=======
-            <lable id="screen" class="output" style="color:white">SCREEN</lable>
->>>>>>> main
-            <button class="fuelingBtn">BEGIN FUELING</button>
-        </div>
-        <div class="topRight"></div>
-    </div>
-    <div class="middleContainer">
-        <div class="middleLeft"></div>
-        <div class="middleLeftInside"></div>
+    <header></header>
+    <div class="mainContainer">
+        <div class="mainSides"></div>
+    <div class="containerBody">
+        <div class="topContainer">
 
+            <div class="interface"></div>
+            <div class="btnGroup">
+                <button class="fuelingBtn">BEGIN FUELING</button>
+                <button class="emergencyShutoff">STOP</button>
+            </div>
+
+        </div>
         <div class="keypadContainer">
             <div class="buttonGroup"  >    
                 <button class="btns" id="1" onclick="addToEquation('1')">1
@@ -81,10 +76,8 @@ src="https://www.youtube.com/embed/tgbNymZ7vqY">
             <div class="alphabet">DELETE</div>
         </button>
         </div>
-      </div>     
-      <div class="middleRightInside"></div>
-      <div class="middleRight"></div>
     </div>
+
      
     <div class="button_container">
     <div class="button_group">
@@ -114,14 +107,16 @@ src="https://www.youtube.com/embed/tgbNymZ7vqY">
         <div id="dieselGas" class="light"></div>
         <div class="gasType">Diesel</div>
         <button class="gas_buttons" onclick="changeColor('dieselGas')">Diesel</button>
-    </div>
-
+                    </div>
+                </div>
+        </div>
+    <div class="mainSides"></div>
     </div>
     <footer>
         <div class = "footerContainer">
           <a href="https://github.com/gasPumpSimulator/gasPump" image><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github link" style="width:20px;height:20px;"></a>
         </div>
         <i class="fab fa-github" aria-hidden="true"></i>
-        </footer>
+    </footer>
 </body>
 </html>
