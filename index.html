@@ -5,18 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css";>
-    <title>Document</title>
+    <title>GasPumpSimulator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <script src="script.js" defer></script>
 </head>
 <body>
     <header></header>
-    <div class="mainContainer" id="main">
+    <div class="mainContainer">
         <div class="mainSides"></div>
     <div class="containerBody">
         <div class="topContainer">
 
-            <div class="interface"></div>
+            <div class="interface" style="color:white">Enter 1 for credit or 2 for cash</div>
             <div class="btnGroup">
                 <button class="fuelingBtn">BEGIN FUELING</button>
                 <button class="emergencyShutoff">STOP</button>
@@ -62,7 +62,7 @@
           <button class="btns" id="9" onclick="addToEquation('9')">9
             <div class="alphabet">WXY</div>
         </button>
-        <button class="btns" id="D" onclick="deleteEntry()">
+        <button class="btns" id="D" onclick="reset()">
             <div class="alphabet">CANCEL</div>
         </button>
         </div>
@@ -82,31 +82,31 @@
     <div class="gasButtonContainer">
     <div class="gasButtonGroup">
         <label class="gasName">Regular</label>
-        <lable class="price">$0.00</lable>
+        <lable class="price">$3.00</lable>
         <div id="87Gas" class="light"></div>
         <div class="gasType">Gasoline</div>
-        <button class="gas_buttons" onclick="changeColor('87Gas')">87</button>
+        <button class="gas_buttons" onclick="changeColor('87Gas', '3')">87</button>
     </div>
     <div class="gasButtonGroup">
         <label class="gasName">Plus</label>
-        <lable class="price">$0.00</lable>
+        <lable class="price">$3.10</lable>
         <div id="89Gas" class="light"></div>
         <div class="gasType">Gasoline</div>
-        <button class="gas_buttons" onclick="changeColor('89Gas')">89</button>
+        <button class="gas_buttons" onclick="changeColor('89Gas', '3.10')">89</button>
     </div>
     <div class="gasButtonGroup">
         <label class="gasName">Premium</label>
-        <lable class="price">$0.00</lable>
+        <lable class="price">$3.30</lable>
         <div id="93Gas" class="light"></div>
         <div class="gasType">Gasoline</div>
-        <button class="gas_buttons" onclick="changeColor('93Gas')">93</button>
+        <button class="gas_buttons" onclick="changeColor('93Gas', '3.30')">93</button>
     </div>
     <div class="gasButtonGroup diesel">
         <label class="gasName">Diesel</label>
-        <lable class="price">$0.00</lable>
+        <lable class="price">$4.00</lable>
         <div id="dieselGas" class="light"></div>
         <div class="gasType">Diesel</div>
-        <button class="gas_buttons" onclick="changeColor('dieselGas')">Diesel</button>
+        <button class="gas_buttons" onclick="changeColor('dieselGas', '4')">Diesel</button>
     </div>
         </div>
     </div>
