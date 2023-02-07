@@ -3,7 +3,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: grey;
+    background-color: black;
 }
 /* top container */
 .topContainer {
@@ -26,6 +26,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: grey;
+    border-radius: 10px;
 }
 .mainSides {
     flex-grow: 1;
@@ -51,6 +53,7 @@ body {
     display: flex;
     justify-content: center;
     background-color: grey;
+    margin: 10px;
 }
 .button_group {
     border: solid;
