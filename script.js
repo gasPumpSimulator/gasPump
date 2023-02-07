@@ -1,6 +1,13 @@
 let chosenGasBool = false; 
 let chosenGasNumber;
 let chosenGasPrice = 0;
+let paymentMethod = 'none';
+let paymentMethodBool = false;
+let inputField = document.getElementById('interface');
+let currentInputNumber = '';
+let cashAmount = 0;
+let gasTankSize = 0;
+let amountOfGas;
 function changeColor(input, price)
 {
     let element=document.getElementById(input);
@@ -17,17 +24,96 @@ function reset()
 {
     chosenGasBool = false;
     chosenGasPrice = 0;
-    let element=document.getElementById(chosenGasNumber);
-    element.style.backgroundColor = "white";
+    paymentMethod = 'none';
+    paymentMethodBool = false;
+    currentInputNumber = '';
+    cashAmount = 0;
+    gasTankSize = 0;
+    if(chosenGasNumber)
+    {
+        let element=document.getElementById(chosenGasNumber);
+        element.style.backgroundColor = "white";
+    }
+    paymentMethod = 'none';
+    inputField.innerHTML = 'Enter 1 for credit or 2 for cash';
+}
+function paymentMethodFunction(input)
+{
+    let message;
+    let inputValue;
+    if(input === 'credit')
+    {
+        message = "input credit card number and press ENTER";
+        inputValue = '1';
+    }
+    else
+    {
+        message = "input cash amount and press ENTER";
+        inputValue = '2';
+    }
+    if(paymentMethod === 'none')
+    {
+        paymentMethod = input;
+        inputField.innerHTML = message;
+    }
+    else
+    {
+        addToInput(inputValue);
+    }
 }
 
-
-
-
-function addToEquation(input) {
-    document.getElementById('screen').innerHTML = input;
+function addToInput(input) 
+{
+    currentInputNumber += input;
+    inputField.innerHTML = currentInputNumber;
 }
 
 function deleteEntry() {
     document.getElementById('screen').innerHTML = 'SCREEN';
+}
+
+function compute()
+{
+    if(!paymentMethodBool)
+    {
+        if(paymentMethod === 'credit')
+        {   
+            if(currentInputNumber.length > 16 || currentInputNumber.length < 16)
+            {
+                inputField.innerHTML = 'Invalid credit card info';
+            }
+            else
+            {
+                inputField.innerHTML = 'Enter size of gas tank and press ENTER';
+            }
+        }
+        else if(paymentMethod === 'cash')
+        {
+            cashAmount = currentInputNumber;
+        }
+        paymentMethodBool = true;
+        currentInputNumber = '';
+    }
+    else if(!gasTankSize && paymentMethod != 'cash')
+    {
+        gasTankSize = currentInputNumber;
+        if(!chosenGasNumber)
+        {
+            inputField.innerHTML = 'Select Gas type and press ENTER';
+        }
+    }
+    else if(!chosenGasNumber)
+    {
+        inputField.innerHTML = 'Choose gas type and press ENTER';
+    }
+    if(paymentMethod === 'cash')
+    {
+        amountOfGas = cashAmount / chosenGasPrice;
+        inputField.innerHTML = amountOfGas +' gallons purchased';
+    }
+    else if(paymentMethod === 'credit')
+    {
+        amountOfGas = gasTankSize * chosenGasPrice;
+        inputField.innerHTML = amountOfGas + ' dollars of gas purchase';
+    }
 }

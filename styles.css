@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
 } 
-.interface {
+#interface {
     width: 300px;
     height: 150px;
     background-color: rgba(37, 33, 33, 0.747);
