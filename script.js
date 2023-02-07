@@ -34,6 +34,7 @@ function reset()
         let element=document.getElementById(chosenGasNumber);
         element.style.backgroundColor = "white";
     }
+    chosenGasNumber = '';
     paymentMethod = 'none';
     inputField.innerHTML = 'Enter 1 for credit or 2 for cash';
 }
@@ -93,6 +94,7 @@ function compute()
         }
         paymentMethodBool = true;
         currentInputNumber = '';
+        return;
     }
     else if(!gasTankSize && paymentMethod != 'cash')
     {
@@ -100,11 +102,13 @@ function compute()
         if(!chosenGasNumber)
         {
             inputField.innerHTML = 'Select Gas type and press ENTER';
+            return;
         }
     }
     else if(!chosenGasNumber)
     {
         inputField.innerHTML = 'Choose gas type and press ENTER';
+        return;
     }
     if(paymentMethod === 'cash')
     {
