@@ -1,17 +1,18 @@
-    
+let chosenGasBool = false; 
+let chosenGasNumber;
 function changeColor(input)
 {
-    document.getElementById(input).style.backgroundColor = 'red';
-
-    if(document.getElementById('87Gas').style.backgroundColor === 'red');
+    let element=document.getElementById(input);
+    if(!chosenGasBool)
     {
-        return;
+        element.style.backgroundColor = "red";
+        chosenGasBool = true;
+        chosenGasNumber = input;
+        console.log(chosenGasNumber);
     }
 
-    document.getElementById(input).style.backgroundColor = 'red';
-    document.getElementById('89Gas').style.backgroundColor = 'red';
-    document.getElementById('93Gas').style.backgroundColor = 'red';
-    document.getElementById('dieselGas').style.backgroundColor = 'red';
+
+
 }
 
 function addToEquation(input) {
