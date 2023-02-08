@@ -8,6 +8,8 @@ let currentInputNumber = '';
 let cashAmount = 0;
 let gasTankSize = 0;
 let amountOfGas;
+let gallonsPumped = 0;
+let intervalId;
 
 function changeColor(input, price)
 {
@@ -120,5 +122,19 @@ function compute()
     {
         amountOfGas = gasTankSize * chosenGasPrice;
         inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchase';
+    }
+}
+
+function showGallons() {
+   intervalId =  setInterval(incrementGallons, 1000);
+}
+
+function incrementGallons() {
+    if (gallonsPumped <= gasTankSize) {
+        inputField.innerHTML = gallonsPumped;
+        gallonsPumped += 1;
+    } else {
+        clearInterval(intervalId);
+        inputField.innerHTML = 'Thank you! Would you like a reciept?';
     }
 }
