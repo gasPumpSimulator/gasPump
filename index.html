@@ -8,6 +8,7 @@
     <title>GasPumpSimulator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <script src="script.js" defer></script>
+    <script src="gasPriceAPI.js" defer></script>
 </head>
 <body>
     <header></header>
@@ -17,7 +18,7 @@
         <div class="topContainer">
             <div id="interface" style="color:white">Enter 1 for credit or 2 for cash</div>
             <div class="btnGroup">
-                <button class="fuelingBtn" onclick="showGallons()">BEGIN FUELING</button>
+                <button class="fuelingBtn" onclick="showGallons()" onclick="getGasPrice()">BEGIN FUELING</button>
                 <button class="emergencyShutoff">STOP</button>
             </div>
 

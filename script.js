@@ -125,6 +125,8 @@ function compute()
     }
 }
 
+
+
 function showGallons() {
    intervalId =  setInterval(incrementGallons, 1000);
 }
