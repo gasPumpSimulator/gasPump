@@ -4,12 +4,14 @@ let chosenGasPrice = 0;
 let paymentMethod = 'none';
 let paymentMethodBool = false;
 let inputField = document.getElementById('interface');
+let decimalField = document.getElementById('decimal');
 let currentInputNumber = '';
 let cashAmount = 0;
 let gasTankSize = 0;
 let amountOfGas;
 let gallonsPumped = 0;
 let intervalId;
+let cents = 0;
 
 function changeColor(input, price)
 {
@@ -129,6 +131,7 @@ function compute()
 
 function showGallons() {
    intervalId =  setInterval(incrementGallons, 1000);
+   decIntervalId = setInterval(incrementDecimal, 100);
 }
 
 function incrementGallons() {
@@ -138,5 +141,15 @@ function incrementGallons() {
     } else {
         clearInterval(intervalId);
         inputField.innerHTML = 'Thank you! Would you like a reciept?';
+    }
+}
+
+function incrementDecimal() {
+    if (cents <= 10) {
+        decimalField.innerHTML = `.${cents}`;
+        cents += 1;
+    } else {
+        clearInterval(decIntervalId);
+        decimalField.innerHTML = '';
     }
 }
