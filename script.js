@@ -144,12 +144,12 @@ function incrementGallons() {
     }
 }
 
-function incrementDecimal() {
-    if (cents <= 10) {
-        decimalField.innerHTML = `.${cents}`;
-        cents += 1;
-    } else {
-        clearInterval(decIntervalId);
-        decimalField.innerHTML = '';
-    }
-}
+// function incrementDecimal() {
+//     if (cents <= 10) {
+//         decimalField.innerHTML = `.${cents}`;
+//         cents += 1;
+//     } else {
+//         clearInterval(decIntervalId);
+//         decimalField.innerHTML = '';
+//     }
+// }
