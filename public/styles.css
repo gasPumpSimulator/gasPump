@@ -83,7 +83,7 @@ body {
     background-color: white;
     border-radius: 20px;
 }
-.price {
+#price87, #price89, #price93, #priceDiesel {
     border: solid;
     border: 2px solid black;
     border-top: 5px solid black;
