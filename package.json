@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/gasPumpSimulator/gasPump/issues"
   },
-  "homepage": "https://github.com/gasPumpSimulator/gasPump#readme"
+  "homepage": "https://github.com/gasPumpSimulator/gasPump#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
