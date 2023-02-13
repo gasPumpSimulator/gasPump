@@ -5,7 +5,7 @@ const port = 9000
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname, 'htmlCss/index.html'))
+  response.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
 app.listen(port, () => {
