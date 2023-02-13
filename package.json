@@ -2,7 +2,8 @@
   "name": "gaspump",
   "version": "1.0.0",
   "description": "",
-  "main": "gasPriceAPI.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/gasPumpSimulator/gasPump/issues"
   },
-  "homepage": "https://github.com/gasPumpSimulator/gasPump#readme"
+  "homepage": "https://github.com/gasPumpSimulator/gasPump#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  }
 }
