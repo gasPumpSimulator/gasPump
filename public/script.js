@@ -7,11 +7,13 @@ let inputField = document.getElementById('interface');
 let decimalField = document.getElementById('decimal');
 let currentInputNumber = '';
 let cashAmount = 0;
-let gasTankSize = 0;
+let gasTankSize = 10;
 let amountOfGas;
 let gallonsPumped = 0;
 let intervalId;
+let decIntervalId;
 let cents = 0;
+let count = 0;
 
 function changeColor(input, price)
 {
@@ -127,16 +129,18 @@ function compute()
     }
 }
 
-
-
 function showGallons() {
-   intervalId =  setInterval(incrementGallons, 1000);
-   decIntervalId = setInterval(incrementDecimal, 100);
+   intervalId =  setInterval(incrementGallons, 5000);
 }
 
 function incrementGallons() {
     if (gallonsPumped <= gasTankSize) {
-        inputField.innerHTML = gallonsPumped;
+        decIntervalId = setInterval(incrementDecimal, 500);
+        if (count == gasTankSize){
+            clearInterval(decIntervalId);
+            decimalField = ".0";
+        }
+        inputField.innerHTML = `Gallons: ${gallonsPumped}`;
         gallonsPumped += 1;
     } else {
         clearInterval(intervalId);
@@ -144,12 +148,12 @@ function incrementGallons() {
     }
 }
 
-// function incrementDecimal() {
-//     if (cents <= 10) {
-//         decimalField.innerHTML = `.${cents}`;
-//         cents += 1;
-//     } else {
-//         clearInterval(decIntervalId);
-//         decimalField.innerHTML = '';
-//     }
-// }
+function incrementDecimal() {
+     if (cents < 10) {
+        decimalField.innerHTML = `.${cents}`;
+        cents += 1;
+    } else {
+        count += 1;
+        cents = 0;
+    }
+}
