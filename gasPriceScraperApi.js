@@ -13,5 +13,7 @@ const jsonFile = JSON.parse(html);
 let dataSet = jsonFile[9];
 // Print page title to terminal
 console.log(dataSet.gasPrices[0].priceTag);
+console.log(dataSet.gasPrices[1].priceTag);
+console.log(dataSet.gasPrices[2].priceTag);
 
 

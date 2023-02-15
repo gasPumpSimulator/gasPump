@@ -153,3 +153,25 @@ function incrementGallons() {
 //         decimalField.innerHTML = '';
 //     }
 // }
+
+//frontend for getting data for gas prices API
+
+let gasPrice87 = document.getElementById('price87');
+let gasPrice89 = document.getElementById('price89');
+let gasPrice93 = document.getElementById('price93');
+let gasPriceDiesel = document.getElementById('priceDiesel');
+let periodBtn = document.getElementById('period')
+
+const baseUrl = 'http://localhost:3000/getPrices'
+
+periodBtn.addEventListener('click', getPrices)
+async function getPrices(e) {
+    e.preventDefault()
+    const response = await fetch(baseUrl,
+    {
+        method: 'GET'
+    })
+    console.log(response)
+    const data = await response.json()
+    gasPrice87.value = data.info;
+}
