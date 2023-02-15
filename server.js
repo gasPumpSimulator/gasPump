@@ -30,7 +30,7 @@ app.get('/getPrices', (request, response) => {
       const headingText = headingElement.text();
       const jsonFile = JSON.parse(html);
       let dataSet = jsonFile[9];
-      // Print page title to terminal
+      // add data to data variable
       data[0] = dataSet.gasPrices[0].priceTag;
       data[1] = dataSet.gasPrices[1].priceTag;
       data[2] = dataSet.gasPrices[2].priceTag;
