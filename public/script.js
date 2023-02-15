@@ -176,5 +176,4 @@ async function getPrices() {
     gasPrice89.innerHTML = data[1];
     gasPrice93.innerHTML = data[2];
     gasPriceDiesel.innerHTML = data[3];
-
 }
