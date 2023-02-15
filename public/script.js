@@ -9,11 +9,8 @@ let currentInputNumber = '';
 let cashAmount = 0;
 let gasTankSize = 10;
 let amountOfGas;
-let gallonsPumped = 0;
-let intervalId;
-let decIntervalId;
-let cents = 0;
-let count = 0;
+
+
 
 function changeColor(input, price)
 {
@@ -128,32 +125,35 @@ function compute()
         inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchase';
     }
 }
+// variables for interval timer
+let gallonsPumped = 0;
+let intervalId;
+let decIntervalId;
+let decimal = 0;
 
 function showGallons() {
-   intervalId =  setInterval(incrementGallons, 5000);
+   intervalId =  setInterval(incrementGallons, 2000);
+   
 }
 
 function incrementGallons() {
     if (gallonsPumped <= gasTankSize) {
-        decIntervalId = setInterval(incrementDecimal, 500);
-        if (count == gasTankSize){
-            clearInterval(decIntervalId);
-            decimalField = ".0";
-        }
         inputField.innerHTML = `Gallons: ${gallonsPumped}`;
         gallonsPumped += 1;
+        decIntervalId = setInterval(incrementDecimal, 200);
     } else {
         clearInterval(intervalId);
+        clearInterval(decIntervalId);
         inputField.innerHTML = 'Thank you! Would you like a reciept?';
     }
 }
 
 function incrementDecimal() {
-     if (cents < 10) {
-        decimalField.innerHTML = `.${cents}`;
-        cents += 1;
+     if (decimal < 10) {
+        decimalField.innerHTML = `.${decimal}`;
+        decimal += 1;
     } else {
-        count += 1;
-        cents = 0;
+        decimal = 0;
+        clearInterval(decIntervalId);
     }
 }
