@@ -12,6 +12,7 @@ let currentInputNumber = '';
 let cashAmount = 0;
 let gasTankSize;
 let amountOfGas;
+let decimalBool = false;
 
 
 
@@ -38,7 +39,7 @@ function reset()
     gasTankSize = 0;
     gallonsInput.innerHTML = 'Gallons: 0';
     decimalField.innerHTML = '';
-    decimal
+    decimalBool = false;
     if(chosenGasNumber)
     {
         let element=document.getElementById(chosenGasNumber);
@@ -141,9 +142,10 @@ let gallonsPumped = 0;
 let intervalId;
 let decIntervalId;
 let decimal = 0;
-let decimalBool = false;
 
 function showGallons() {
+   decimalBool = false;
+   gallonsPumped = 0;
    intervalId =  setInterval(incrementGallons, 2000);
 }
 
@@ -159,7 +161,7 @@ function incrementGallons() {
     }
 }
 
-function incrementDecimal() {
+function incrementDecimal(decIntervalId) {
     if (decimal < 10 && decimalBool === false) {
        decimalField.innerHTML = `.${decimal}`;
        decimal += 1;
