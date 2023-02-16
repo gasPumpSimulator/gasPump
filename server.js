@@ -3,7 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
-let data = [];
+let data = ['$-.--', '$-.--','$-.--','$-.--'];
 
 
 const __filename = fileURLToPath(import.meta.url);
