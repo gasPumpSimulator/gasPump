@@ -15,7 +15,7 @@ let amountOfGas;
 let decimalBool = false;
 
 
-
+//change color of button for chosen gas type
 function changeColor(input, price)
 {
     let element=document.getElementById(input);
@@ -28,6 +28,7 @@ function changeColor(input, price)
         console.log(chosenGasNumber, " ", price);
     }
 }
+//reset everything for new transaction
 function reset()
 {
     chosenGasBool = false;
@@ -50,6 +51,7 @@ function reset()
     paymentMethod = 'none';
     inputField.innerHTML = 'Enter 1 for credit or 2 for cash';
 }
+//determine payment type
 function paymentMethodFunction(input)
 {
     let message;
@@ -75,7 +77,7 @@ function paymentMethodFunction(input)
         addToInput(inputValue);
     }
 }
-
+//add input to current input
 function addToInput(input) 
 {
     currentInputNumber += input;
@@ -143,12 +145,12 @@ let gallonsPumped = 0;
 let intervalId;
 let decIntervalId;
 let decimal = 0;
-
+//show gallons as they are being pumped
 function showGallons() {
    decimalBool = false;
    intervalId =  setInterval(incrementGallons, 2000);
 }
-
+//increment gallons
 function incrementGallons() {
     if (gallonsPumped <= gasTankSize) {
         gallonsInput.innerHTML = `Gallons: ${gallonsPumped}`;
@@ -159,8 +161,9 @@ function incrementGallons() {
         // inputField.innerHTML = 'Thank you! Would you like a reciept?';
     }
 }
-
+//increment fraction of gallons
 function incrementDecimal() {
+    //if gallons is less than 10 increment decimal, otherwise set to 0 and return
     if (decimal < 10 && decimalBool === false) {
        decimalField.innerHTML = `.${decimal}`;
        decimal += 1;
@@ -169,7 +172,8 @@ function incrementDecimal() {
       decimal = 0;
       decimalField.innerHTML = `.${decimal}`;
       return clearInterval(decIntervalId);
-   }    
+   } 
+   //if gallons pumped has reached amount needed return and clear interval   
    if(gallonsPumped > gasTankSize) {
        decimalBool = true;
        return clearInterval(decIntervalId);
