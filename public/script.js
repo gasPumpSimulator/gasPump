@@ -7,11 +7,10 @@ let inputField = document.getElementById('interface');
 let decimalField = document.getElementById('decimal');
 let currentInputNumber = '';
 let cashAmount = 0;
-let gasTankSize = 0;
+let gasTankSize = 10;
 let amountOfGas;
-let gallonsPumped = 0;
-let intervalId;
-let cents = 0;
+
+
 
 function changeColor(input, price)
 {
@@ -127,32 +126,38 @@ function compute()
     }
 }
 
-
+// variables for interval timer
+let gallonsPumped = 0;
+let intervalId;
+let decIntervalId;
+let decimal = 0;
 
 function showGallons() {
-   intervalId =  setInterval(incrementGallons, 1000);
-   decIntervalId = setInterval(incrementDecimal, 100);
+   intervalId =  setInterval(incrementGallons, 2000);
+   
 }
 
 function incrementGallons() {
     if (gallonsPumped <= gasTankSize) {
-        inputField.innerHTML = gallonsPumped;
+        inputField.innerHTML = `Gallons: ${gallonsPumped}`;
         gallonsPumped += 1;
+        decIntervalId = setInterval(incrementDecimal, 200);
     } else {
         clearInterval(intervalId);
+        clearInterval(decIntervalId);
         inputField.innerHTML = 'Thank you! Would you like a reciept?';
     }
 }
 
-// function incrementDecimal() {
-//     if (cents <= 10) {
-//         decimalField.innerHTML = `.${cents}`;
-//         cents += 1;
-//     } else {
-//         clearInterval(decIntervalId);
-//         decimalField.innerHTML = '';
-//     }
-// }
+function incrementDecimal() {
+    if (decimal < 10) {
+       decimalField.innerHTML = `.${decimal}`;
+       decimal += 1;
+   } else {
+       decimal = 0;
+       clearInterval(decIntervalId);
+   }
+}
 
 //frontend for getting data for gas prices API
 
