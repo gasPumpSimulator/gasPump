@@ -3,7 +3,8 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
-let data = [];
+import { request } from "https";
+let data = ['$-.--','$-.--','$-.--','$-.--',];
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,29 +19,43 @@ app.get('/', (request, response) => {
 })
 
 app.get('/getPrices', (request, response) => {
-
-  async function getGasPrices() {
-      const storeUrl = 'https://api.apify.com/v2/datasets/oRfOLi79S4TcYn7V7/items?token=apify_api_DVgZweSpe7Lp9jEr9AQht1ERabqQER1sxBgR';
-      // Download HTML with Got Scraping
-      const response = await gotScraping.gotScraping(storeUrl);
-      const html = response.body;
-      // Parse HTML with Cheerio
-      const $ = cheerio.load(html);
-      const headingElement = $('gasPrices');
-      const headingText = headingElement.text();
-      const jsonFile = JSON.parse(html);
-      let dataSet = jsonFile[9];
-      // Print page title to terminal
-      data[0] = dataSet.gasPrices[0].priceTag;
-      data[1] = dataSet.gasPrices[1].priceTag;
-      data[2] = dataSet.gasPrices[2].priceTag;
-      data[3] = dataSet.gasPrices[3].priceTag;
-    }
-    getGasPrices();
-    response.status(200).json(data);
+  let data = getPrices();
+  response.status(200).json(data);
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
+//function for getting gas
+function getPrices() {
+var options = {
+  "method": "GET",
+  "hostname": "api.collectapi.com",
+  "port": null,
+  "path": "/gasPrice/stateUsaPrice?state=IN",
+  "headers": {
+  "content-type": "application/json",
+  "authorization": "apikey 3fXNLjSzicFt8OTb6aTUHp:6Q8v4FvJ4afKvmiD7esJD3"
+  }
+  };
+
+var req = request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    let jsonData = JSON.parse(body.toString());
+  data[0] = '$' + jsonData.result.state.gasoline;
+  data[1] = '$' + jsonData.result.state.midGrade;
+  data[2] = '$' + jsonData.result.state.premium;
+  data[3] = '$' + jsonData.result.state.diesel;
+  });
+});
+req.end();
+return data;
+}
