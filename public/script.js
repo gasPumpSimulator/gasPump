@@ -127,7 +127,7 @@ function compute()
     else if(paymentMethod === 'credit')
     {
         amountOfGas = gasTankSize * chosenGasPrice;
-        inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchase';
+        inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchased';
         beginFuelingButton.disabled = false;
     }
 }
@@ -138,6 +138,7 @@ let intervalId;
 let decIntervalId;
 let decimal = 0;
 let decimalBool = false;
+let gallonsInput = document.getElementById('gallons');
 
 function showGallons() {
    intervalId =  setInterval(incrementGallons, 2000);
@@ -145,7 +146,7 @@ function showGallons() {
 
 function incrementGallons() {
     if (gallonsPumped <= gasTankSize) {
-        inputField.innerHTML = `Gallons: ${gallonsPumped}`;
+        gallonsInput.innerHTML = `Gallons: ${gallonsPumped}`;
         gallonsPumped += 1;
         console.log('test');
         decIntervalId = setInterval(incrementDecimal, 200);
@@ -168,7 +169,6 @@ function incrementDecimal() {
        decimalBool = true;
        return clearInterval(decIntervalId);
    }
-   console.log('test3');
 }
 
 //frontend for getting data for gas prices API
