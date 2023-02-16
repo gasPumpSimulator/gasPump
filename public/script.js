@@ -5,9 +5,11 @@ let paymentMethod = 'none';
 let paymentMethodBool = false;
 let inputField = document.getElementById('interface');
 let decimalField = document.getElementById('decimal');
+let beginFuelingButton = document.getElementById('beginFueling');
+    beginFuelingButton.disabled = true;
 let currentInputNumber = '';
 let cashAmount = 0;
-let gasTankSize = 10;
+let gasTankSize;
 let amountOfGas;
 
 
@@ -46,6 +48,7 @@ function paymentMethodFunction(input)
 {
     let message;
     let inputValue;
+    
     if(input === 'credit')
     {
         message = "input credit card number and press ENTER";
@@ -83,7 +86,7 @@ function compute()
     {
         if(paymentMethod === 'credit')
         {   
-            if(currentInputNumber.length > 16 || currentInputNumber.length < 16)
+            if(currentInputNumber.length > 4 || currentInputNumber.length < 4)
             {
                 inputField.innerHTML = 'Invalid credit card info';
             }
@@ -117,12 +120,15 @@ function compute()
     if(paymentMethod === 'cash')
     {
         amountOfGas = cashAmount / chosenGasPrice;
+        gasTankSize = Math.floor(Math.random() * (amountOfGas - 3) + 3);
         inputField.innerHTML = Math.round(amountOfGas * 100)/100 +' gallons purchased';
+        beginFuelingButton.disabled = false;
     }
     else if(paymentMethod === 'credit')
     {
         amountOfGas = gasTankSize * chosenGasPrice;
         inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchase';
+        beginFuelingButton.disabled = false;
     }
 }
 
@@ -134,7 +140,6 @@ let decimal = 0;
 
 function showGallons() {
    intervalId =  setInterval(incrementGallons, 2000);
-   
 }
 
 function incrementGallons() {
@@ -144,8 +149,7 @@ function incrementGallons() {
         decIntervalId = setInterval(incrementDecimal, 200);
     } else {
         clearInterval(intervalId);
-        clearInterval(decIntervalId);
-        inputField.innerHTML = 'Thank you! Would you like a reciept?';
+        // inputField.innerHTML = 'Thank you! Would you like a reciept?';
     }
 }
 
