@@ -137,6 +137,7 @@ let gallonsPumped = 0;
 let intervalId;
 let decIntervalId;
 let decimal = 0;
+let decimalBool = false;
 
 function showGallons() {
    intervalId =  setInterval(incrementGallons, 2000);
@@ -154,12 +155,15 @@ function incrementGallons() {
 }
 
 function incrementDecimal() {
-    if (decimal < 10) {
+    if (decimal < 10 && decimalBool === false) {
        decimalField.innerHTML = `.${decimal}`;
        decimal += 1;
-   } else {
-       decimal = 0;
-       clearInterval(decIntervalId);
+   } else if(gallonsPumped === gasTankSize) {
+       decimalBool = true;
+   }
+   else {
+    clearInterval(decIntervalId);
+    decimal = 0;
    }
 }
 
