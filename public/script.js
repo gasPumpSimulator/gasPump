@@ -147,9 +147,10 @@ function incrementGallons() {
     if (gallonsPumped <= gasTankSize) {
         inputField.innerHTML = `Gallons: ${gallonsPumped}`;
         gallonsPumped += 1;
+        console.log('test');
         decIntervalId = setInterval(incrementDecimal, 200);
     } else {
-        clearInterval(intervalId);
+        return clearInterval(intervalId);
         // inputField.innerHTML = 'Thank you! Would you like a reciept?';
     }
 }
@@ -160,13 +161,14 @@ function incrementDecimal() {
        decimal += 1;
    }
    else {
-      clearInterval(decIntervalId);
       decimal = 0;
+      decimalField.innerHTML = `.${decimal}`;
    }    
    if(gallonsPumped > gasTankSize) {
        decimalBool = true;
+       return clearInterval(decIntervalId);
    }
-
+   console.log('test3');
 }
 
 //frontend for getting data for gas prices API
