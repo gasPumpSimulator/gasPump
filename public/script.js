@@ -158,13 +158,15 @@ function incrementDecimal() {
     if (decimal < 10 && decimalBool === false) {
        decimalField.innerHTML = `.${decimal}`;
        decimal += 1;
-   } else if(gallonsPumped === gasTankSize) {
-       decimalBool = true;
    }
    else {
-    clearInterval(decIntervalId);
-    decimal = 0;
+      clearInterval(decIntervalId);
+      decimal = 0;
+   }    
+   if(gallonsPumped > gasTankSize) {
+       decimalBool = true;
    }
+
 }
 
 //frontend for getting data for gas prices API
