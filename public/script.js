@@ -5,6 +5,7 @@ let paymentMethod = 'none';
 let paymentMethodBool = false;
 let inputField = document.getElementById('interface');
 let decimalField = document.getElementById('decimal');
+let gallonsInput = document.getElementById('gallons');
 let beginFuelingButton = document.getElementById('beginFueling');
     beginFuelingButton.disabled = true;
 let currentInputNumber = '';
@@ -35,6 +36,9 @@ function reset()
     currentInputNumber = '';
     cashAmount = 0;
     gasTankSize = 0;
+    gallonsInput.innerHTML = 'Gallons: 0';
+    decimalField.innerHTML = '';
+    decimal
     if(chosenGasNumber)
     {
         let element=document.getElementById(chosenGasNumber);
@@ -138,7 +142,6 @@ let intervalId;
 let decIntervalId;
 let decimal = 0;
 let decimalBool = false;
-let gallonsInput = document.getElementById('gallons');
 
 function showGallons() {
    intervalId =  setInterval(incrementGallons, 2000);
