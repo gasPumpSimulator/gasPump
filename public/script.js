@@ -14,7 +14,13 @@ let gasTankSize;
 let amountOfGas;
 let decimalBool = false;
 
+//reload page 
+function reloadPage()
+{
 
+    location.reload();
+    console.log("reloaded");
+}
 //change color of button for chosen gas type
 function changeColor(input, price)
 {
@@ -194,9 +200,7 @@ async function getPrices() {
     {
         method: 'GET'
     })
-    console.log(response)
     const data = await response.json()
-    console.log(data);
     gasPrice87.innerHTML = data[0];
     gasPrice89.innerHTML = data[1];
     gasPrice93.innerHTML = data[2];
