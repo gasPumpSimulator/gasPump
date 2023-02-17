@@ -152,8 +152,8 @@ let decIntervalId;
 let decimal = 0;
 //show gallons as they are being pumped
 function showGallons() {
-   decimalBool = false;
    intervalId =  setInterval(incrementGallons, 2000);
+   decimalBool = false;
 }
 //increment gallons
 function incrementGallons() {
