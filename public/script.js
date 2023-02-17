@@ -152,6 +152,7 @@ let decIntervalId;
 let decimal = 0;
 //show gallons as they are being pumped
 function showGallons() {
+   inputField.innerHTML = "NOW FUELING";
    intervalId =  setInterval(incrementGallons, 2000);
    decimalBool = false;
 }
