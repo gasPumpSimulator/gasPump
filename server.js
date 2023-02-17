@@ -17,13 +17,12 @@ app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
-app.get('/getPrices', (request, response) => {
+app.get('/getPrices', async (request, response) => {
 
-  async function getGasPrices() {
     const storeUrl = 'https://gasprices.aaa.com/?state=IN';
     // Download HTML with Got Scraping
-    const response = await gotScraping.gotScraping(storeUrl);
-    const html = response.body;
+    const res = await gotScraping.gotScraping(storeUrl);
+    const html = res.body;
     // Parse HTML with Cheerio
     const $ = cheerio.load(html);
     //get all the tr elements on page add to array
@@ -37,13 +36,7 @@ app.get('/getPrices', (request, response) => {
     returnValue[1] = data[1].split(' ')[4];
     returnValue[2] = data[1].split(' ')[5];
     returnValue[3] = data[1].split(' ')[6];
-    //print out values
-    for(let x = 0; x < 4; x++)
-    {
-        console.log(returnValue[x]);
-    }
-    }
-    getGasPrices();
+    //return value to frontend
     response.status(200).json(returnValue);
 })
 
