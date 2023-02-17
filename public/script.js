@@ -14,16 +14,12 @@ let gasTankSize;
 let amountOfGas;
 let decimalBool = false;
 
-//reload page 
-function reloadPage()
-{
 
-    location.reload();
-    console.log("reloaded");
-}
 //change color of button for chosen gas type
-function changeColor(input, price)
+function changeColor(input, inputedPrice)
 {
+    let price=document.getElementById(inputedPrice).innerHTML;
+    price=price.replace('$', '');
     let element=document.getElementById(input);
     if(!chosenGasBool)
     {
