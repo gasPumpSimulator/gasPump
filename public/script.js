@@ -21,7 +21,7 @@ function changeColor(input, inputedPrice)
     let price=document.getElementById(inputedPrice).innerHTML;
     price=price.replace('$', '');
     let element=document.getElementById(input);
-    if(!chosenGasBool)
+    if(!chosenGasBool && paymentMethod != 'none')
     {
         element.style.backgroundColor = "red";
         chosenGasBool = true;
