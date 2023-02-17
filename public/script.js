@@ -5,14 +5,17 @@ let paymentMethod = 'none';
 let paymentMethodBool = false;
 let inputField = document.getElementById('interface');
 let decimalField = document.getElementById('decimal');
+let gallonsInput = document.getElementById('gallons');
+let beginFuelingButton = document.getElementById('beginFueling');
+    beginFuelingButton.disabled = true;
 let currentInputNumber = '';
 let cashAmount = 0;
-let gasTankSize = 0;
+let gasTankSize;
 let amountOfGas;
-let gallonsPumped = 0;
-let intervalId;
-let cents = 0;
+let decimalBool = false;
 
+
+//change color of button for chosen gas type
 function changeColor(input, price)
 {
     let element=document.getElementById(input);
@@ -25,6 +28,7 @@ function changeColor(input, price)
         console.log(chosenGasNumber, " ", price);
     }
 }
+//reset everything for new transaction
 function reset()
 {
     chosenGasBool = false;
@@ -34,6 +38,9 @@ function reset()
     currentInputNumber = '';
     cashAmount = 0;
     gasTankSize = 0;
+    gallonsPumped = 0;
+    gallonsInput.innerHTML = 'Gallons: 0';
+    decimalField.innerHTML = '';
     if(chosenGasNumber)
     {
         let element=document.getElementById(chosenGasNumber);
@@ -43,10 +50,12 @@ function reset()
     paymentMethod = 'none';
     inputField.innerHTML = 'Enter 1 for credit or 2 for cash';
 }
+//determine payment type
 function paymentMethodFunction(input)
 {
     let message;
     let inputValue;
+    
     if(input === 'credit')
     {
         message = "input credit card number and press ENTER";
@@ -67,7 +76,7 @@ function paymentMethodFunction(input)
         addToInput(inputValue);
     }
 }
-
+//add input to current input
 function addToInput(input) 
 {
     currentInputNumber += input;
@@ -84,7 +93,7 @@ function compute()
     {
         if(paymentMethod === 'credit')
         {   
-            if(currentInputNumber.length > 16 || currentInputNumber.length < 16)
+            if(currentInputNumber.length > 4 || currentInputNumber.length < 4)
             {
                 inputField.innerHTML = 'Invalid credit card info';
             }
@@ -118,41 +127,57 @@ function compute()
     if(paymentMethod === 'cash')
     {
         amountOfGas = cashAmount / chosenGasPrice;
+        gasTankSize = Math.floor(Math.random() * (amountOfGas - 3) + 3);
         inputField.innerHTML = Math.round(amountOfGas * 100)/100 +' gallons purchased';
+        beginFuelingButton.disabled = false;
     }
     else if(paymentMethod === 'credit')
     {
         amountOfGas = gasTankSize * chosenGasPrice;
-        inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchase';
+        inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchased';
+        beginFuelingButton.disabled = false;
     }
 }
 
-
-
+// variables for interval timer
+let gallonsPumped = 0;
+let intervalId;
+let decIntervalId;
+let decimal = 0;
+//show gallons as they are being pumped
 function showGallons() {
-   intervalId =  setInterval(incrementGallons, 1000);
-   decIntervalId = setInterval(incrementDecimal, 100);
+   decimalBool = false;
+   intervalId =  setInterval(incrementGallons, 2000);
 }
-
+//increment gallons
 function incrementGallons() {
     if (gallonsPumped <= gasTankSize) {
-        inputField.innerHTML = gallonsPumped;
+        gallonsInput.innerHTML = `Gallons: ${gallonsPumped}`;
         gallonsPumped += 1;
+        decIntervalId = setInterval(incrementDecimal, 200);
     } else {
-        clearInterval(intervalId);
-        inputField.innerHTML = 'Thank you! Would you like a reciept?';
+        return clearInterval(intervalId);
+        // inputField.innerHTML = 'Thank you! Would you like a reciept?';
     }
 }
-
-// function incrementDecimal() {
-//     if (cents <= 10) {
-//         decimalField.innerHTML = `.${cents}`;
-//         cents += 1;
-//     } else {
-//         clearInterval(decIntervalId);
-//         decimalField.innerHTML = '';
-//     }
-// }
+//increment fraction of gallons
+function incrementDecimal() {
+    //if gallons is less than 10 increment decimal, otherwise set to 0 and return
+    if (decimal < 10 && decimalBool === false) {
+       decimalField.innerHTML = `.${decimal}`;
+       decimal += 1;
+   }
+   else {
+      decimal = 0;
+      decimalField.innerHTML = `.${decimal}`;
+      return clearInterval(decIntervalId);
+   } 
+   //if gallons pumped has reached amount needed return and clear interval   
+   if(gallonsPumped > gasTankSize) {
+       decimalBool = true;
+       return clearInterval(decIntervalId);
+   }
+}
 
 //frontend for getting data for gas prices API
 
