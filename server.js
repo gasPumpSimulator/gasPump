@@ -3,8 +3,8 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
-let data = ['$-.--', '$-.--','$-.--','$-.--'];
-
+let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
+let data = [];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,24 +20,31 @@ app.get('/', (request, response) => {
 app.get('/getPrices', (request, response) => {
 
   async function getGasPrices() {
-      const storeUrl = 'https://api.apify.com/v2/datasets/oRfOLi79S4TcYn7V7/items?token=apify_api_DVgZweSpe7Lp9jEr9AQht1ERabqQER1sxBgR';
-      // Download HTML with Got Scraping
-      const response = await gotScraping.gotScraping(storeUrl);
-      const html = response.body;
-      // Parse HTML with Cheerio
-      const $ = cheerio.load(html);
-      const headingElement = $('gasPrices');
-      const headingText = headingElement.text();
-      const jsonFile = JSON.parse(html);
-      let dataSet = jsonFile[9];
-      // add data to data variable
-      data[0] = dataSet.gasPrices[0].priceTag;
-      data[1] = dataSet.gasPrices[1].priceTag;
-      data[2] = dataSet.gasPrices[2].priceTag;
-      data[3] = dataSet.gasPrices[3].priceTag;
+    const storeUrl = 'https://gasprices.aaa.com/?state=IN';
+    // Download HTML with Got Scraping
+    const response = await gotScraping.gotScraping(storeUrl);
+    const html = response.body;
+    // Parse HTML with Cheerio
+    const $ = cheerio.load(html);
+    //get all the tr elements on page add to array
+    $('.table-mob:first tr').each((_, e) => {
+    
+        let row  = $(e).text().replace(/(\s+)/g, ' ');
+        data.push(row);  
+    });
+    //add all elements that have price in them to return arrray
+    returnValue[0] = data[1].split(' ')[3];
+    returnValue[1] = data[1].split(' ')[4];
+    returnValue[2] = data[1].split(' ')[5];
+    returnValue[3] = data[1].split(' ')[6];
+    //print out values
+    for(let x = 0; x < 4; x++)
+    {
+        console.log(returnValue[x]);
+    }
     }
     getGasPrices();
-    response.status(200).json(data);
+    response.status(200).json(returnValue);
 })
 
 app.listen(port, () => {
