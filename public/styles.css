@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
 } 
-#interface {
+#interfaceContainer {
     width: 300px;
     height: 150px;
     background-color: rgba(37, 33, 33, 0.747);
@@ -23,8 +23,10 @@ body {
     border-top: solid rgba(0, 0, 0, 0.493) 5px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-
-
+}
+#gallonContainer {
+    display: flex;
+    justify-content: center;
 }
 .mainContainer {
     display: flex;
