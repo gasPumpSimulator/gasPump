@@ -41,7 +41,6 @@ function reset()
     gallonsPumped = 0;
     gallonsInput.innerHTML = 'Gallons: 0';
     decimalField.innerHTML = '';
-    decimalBool = false;
     if(chosenGasNumber)
     {
         let element=document.getElementById(chosenGasNumber);
