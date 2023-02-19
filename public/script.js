@@ -45,6 +45,7 @@ function paymentMethodFunction(input)
     inputField.innerHTML = message;
     stepInPumpProcess++;
 }
+
 //2nd step in process
 function gallonsOrDollars() {
     if (paymentMethod === 'card') {
@@ -65,6 +66,7 @@ function gallonsOrDollars() {
     currentInputNumber = '';
     stepInPumpProcess++;
 }
+
 //3rd step in process
 function tankSize() {
     if(currentInputNumber <= 0) {
@@ -73,7 +75,6 @@ function tankSize() {
     if(paymentMethod === 'card') {
         gasTankSize = currentInputNumber;
         inputField.innerHTML = 'Chose type of gas';
-
     }
     stepInPumpProcess++;
 }
@@ -91,6 +92,7 @@ function changeColor(input, inputedPrice) {
         stepInPumpProcess++;
     } 
 }
+
 //compute amount of gas to be pumped 5th step
 function amountOfGasPumped() {
     if(paymentMethod === 'cash') {
@@ -104,7 +106,6 @@ function amountOfGasPumped() {
     stepInPumpProcess++;
     beginFuelingButton.disabled = false;
     emergencyShutoff.disabled = false;
-
 }
 
 //add input to current input
@@ -117,6 +118,7 @@ function addToInput(input) {
         inputField.innerHTML = currentInputNumber;
     }
 }
+
 //switch statement for process
 function compute() {   
     switch(stepInPumpProcess) {
@@ -137,12 +139,14 @@ function compute() {
 // variables for interval timer
 let gallonsPumped = 0;
 let intervalId;
+
 //show gallons as they are being pumped
 function showGallons() {
    inputField.innerHTML = "NOW FUELING";
    gallonDisplayField.innerHTML = 'Gallons Pumped:  ';
    intervalId =  setInterval(incrementGallons, 10);
 }
+
 //increment gallons
 function incrementGallons() {
     gallonsPumped += .01;
@@ -160,6 +164,7 @@ function incrementGallons() {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
     }
 }  
+
 //emergency shutoff
 function stopFueling() {
     emergencyStop = true;
