@@ -11,29 +11,29 @@ const pool = mysql.createPool({
 }).promise();
 
 export async function getTransactions() {
-    const [rows] = await pool.query("SELECT * FROM FuelTransactions")
+    const [rows] = await pool.query("SELECT * FROM transactions")
     return rows;
 }
 
 export async function getTransaction(id) {
     const [rows] = await pool.query(`
     SELECT * 
-    FROM FuelTransactions
-    WHERE TransactionId = ${id}
+    FROM transactions
+    WHERE id = ${id}
     `);
     return rows[0];
 }
 
-export async function createTransaction(TransactionId, FuelPumpID, PumpedFuel, PumpedAmount) {
+export async function createTransaction(gallons, price) {
     const result = await pool.query(`
-    INSERT INTO FuelTransactions (TransactionId, FuelPumpID, PumpedFuel, PumpedAmount)
-    VALUES (?, ?, ?, ?)
-    `, [TransactionId, FuelPumpID, PumpedFuel, PumpedAmount]);
+    INSERT INTO transactions (gallons, price)
+    VALUES (?, ?)
+    `, [gallons, price]);
     return result;
 }
 
-// const transactions = await getTransactions(1);
+// const transactions = await getTransactions();
 // console.log(transactions);
 
-// const result = await createTransaction(5, 12, 9, 9);
+// const result = await createTransaction(9.5, 31.99);
 // console.log(result);

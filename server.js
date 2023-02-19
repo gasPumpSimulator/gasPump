@@ -47,6 +47,11 @@ app.get('/transactions', async (req, res) => {
   res.send(transactions);
 })
 
+// app.get('/transactions/:id', async (req, res) => {
+//   const transactions = await getTransactions();
+//   res.send(transactions);
+// })
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
