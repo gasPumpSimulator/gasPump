@@ -153,9 +153,10 @@ function incrementGallons() {
     gallonsPumped = Math.round(gallonsPumped * 100)/100;
     if(gallonsPumped === Math.round(gasTankSize * 100)/100 || emergencyStop === true) {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
-        inputField.innerHTML = 'Done Fueling';
         if(emergencyStop === true) {
             inputField.innerHTML = 'Emergency stop initiated';
+        } else {
+            inputField.innerHTML = 'Done Fueling';
         }
         clearInterval(intervalId);
     } else {
