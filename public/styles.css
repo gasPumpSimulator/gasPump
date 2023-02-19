@@ -28,6 +28,11 @@ body {
     display: flex;
     justify-content: center;
 }
+
+#gallons {
+    margin-left: 5px;
+    width: 5px;
+}
 .mainContainer {
     display: flex;
 }
@@ -157,7 +162,4 @@ footer {
 .btnGroup {
     display: flex;
     margin: 10px;
-}
-#gallonDisplay {
-    margin-right: 10px;
 }
