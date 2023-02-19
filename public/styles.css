@@ -158,3 +158,6 @@ footer {
     display: flex;
     margin: 10px;
 }
+#gallonDisplay {
+    margin-right: 10px;
+}

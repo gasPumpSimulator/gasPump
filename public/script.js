@@ -4,7 +4,7 @@ let chosenGasPrice = 0;
 let paymentMethod;
 let paymentMethodBool = false;
 let inputField = document.getElementById('interface');
-let decimalField = document.getElementById('decimal');
+let gallonDisplayField = document.getElementById('gallonDisplay');
 let gallonsInput = document.getElementById('gallons');
 let beginFuelingButton = document.getElementById('beginFueling');
     beginFuelingButton.disabled = true;
@@ -136,57 +136,28 @@ function compute() {
 // variables for interval timer
 let gallonsPumped = 0;
 let intervalId;
-let decIntervalId;
-let decimal = 0;
-let gallonBool = false;
 //show gallons as they are being pumped
 function showGallons() {
    inputField.innerHTML = "NOW FUELING";
-   intervalId =  setInterval(incrementGallons, 2000);
-   decimalBool = false;
-   console.log('tank size ' + gasTankSize)
+   gallonDisplayField.innerHTML = 'Gallons Pumped:  ';
+   intervalId =  setInterval(incrementGallons, 100);
 }
 //increment gallons
 function incrementGallons() {
-    if (gallonsPumped <= gasTankSize && gallonBool === false) {
-        gallonsInput.innerHTML = `Gallons: ${gallonsPumped}`;
-        gallonsPumped += 1;
-        decIntervalId = setInterval(incrementDecimal, 200);
-    } else {
-        console.log('end')
-        return clearInterval(intervalId);
-
-        // inputField.innerHTML = 'Thank you! Would you like a reciept?';
+    gallonsPumped += .01;
+    gallonsPumped = Math.round(gallonsPumped * 100)/100
+    if(gallonsPumped === Math.round(gasTankSize * 100)/100)
+    {
+        gallonsInput.innerHTML = ' ' + gallonsPumped;
+        inputField.innerHTML = 'Done Fueling'
+        clearInterval(intervalId);
     }
-}
-//increment fraction of gallons
-function incrementDecimal() {
-    //if gallons is less than 10 increment decimal, otherwise set to 0 and return
-    if (decimal < 10 && decimalBool === false) {
-       decimalField.innerHTML = `.${decimal}`;
-        //if gallons pumped has reached amount needed return and clear interval 
-        let totalGallons = gallonsPumped + decimal * .1 + 1;   
-  
-        console.log('total ' + totalGallons)
+    else {
+        gallonsInput.innerHTML = ' ' + gallonsPumped;
+    }
+}  
 
-        if(totalGallons > gasTankSize) {
-            console.log('total gallons pumped ' + totalGallons);
-            decimalBool = true;
-            gallonbool = true;
-            decimalField.innerHTML = `.${decimal}`;
-            return clearInterval(decIntervalId);
-        }
-        decimal++;
-   }
-   else {
-      if(gallonBool != true) {
-        decimal = 0;
-      }
-      decimalField.innerHTML = `.${decimal}`;
-      console.log('end decimal')
-      return clearInterval(decIntervalId);
-   } 
-}
+
 
 //frontend for getting data for gas prices API
 let gasPrice87 = document.getElementById('price87');
