@@ -3,6 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
+import { getTransactions, getTransaction, createTransaction } from './database.js';
 let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
 let data = [];
 
@@ -38,6 +39,12 @@ app.get('/getPrices', async (request, response) => {
     returnValue[3] = data[1].split(' ')[6];
     //return value to frontend
     response.status(200).json(returnValue);
+})
+
+//database 
+app.get('/transactions', async (req, res) => {
+  const transactions = await getTransactions();
+  res.send(transactions);
 })
 
 app.listen(port, () => {
