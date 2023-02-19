@@ -7,20 +7,22 @@ let gallonDisplayField = document.getElementById('gallonDisplay');
 let gallonsInput = document.getElementById('gallons');
 let beginFuelingButton = document.getElementById('beginFueling');
 let emergencyShutoff = document.getElementById('emergencyShutoff');
-
 let currentInputNumber = '';
 let cashAmount = 0;
 let gasTankSize = 0;
 let stepInPumpProcess = 0;
 let costOfGas = 0;
 let emergencyStop = false;
+
 //disable unused buttons
 document.getElementById('D').disabled = true;
 document.getElementById('no').disabled = true;
 document.getElementById('yes').disabled = true;
+
 //disable beginFueling button
 beginFuelingButton.disabled = true;
 emergencyShutoff.disabled = true;
+
 //determine payment type, 1st step in process
 function paymentMethodFunction(input)
 {
@@ -92,9 +94,9 @@ function changeColor(input, inputedPrice) {
 //compute amount of gas to be pumped 5th step
 function amountOfGasPumped() {
     if(paymentMethod === 'cash') {
-        amountOfGasPumped = cashAmount / chosenGasPrice;
-        gasTankSize = amountOfGasPumped;
-        inputField.innerHTML = Math.round(amountOfGasPumped * 100)/100 +' gallons purchased press BEGIN FUELING';
+        let amountOfGas = cashAmount / chosenGasPrice;
+        gasTankSize = amountOfGas;
+        inputField.innerHTML = Math.round(amountOfGas * 100)/100 +' gallons purchased press BEGIN FUELING';
     } else if(paymentMethod === 'card') {
         costOfGas = gasTankSize * chosenGasPrice;
         inputField.innerHTML = '$' + Math.round(costOfGas * 100)/100 + ' of gas purchased press BEGIN FUELING';
