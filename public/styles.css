@@ -152,7 +152,7 @@ footer {
     padding: 5px;
 }
 
-.fuelingBtn, .emergencyShutoff {
+.fuelingBtn, #emergencyShutoff {
     font-size: 10px;
     width: 70px;
     height: 30px;

@@ -2,25 +2,25 @@ let chosenGasBool = false;
 let chosenGasNumber;
 let chosenGasPrice = 0;
 let paymentMethod;
-let paymentMethodBool = false;
 let inputField = document.getElementById('interface');
 let gallonDisplayField = document.getElementById('gallonDisplay');
 let gallonsInput = document.getElementById('gallons');
 let beginFuelingButton = document.getElementById('beginFueling');
-    beginFuelingButton.disabled = true;
+let emergencyShutoff = document.getElementById('emergencyShutoff');
+
 let currentInputNumber = '';
 let cashAmount = 0;
 let gasTankSize = 0;
-let amountOfGas;
-let decimalBool = false;
 let stepInPumpProcess = 0;
 let costOfGas = 0;
-
+let emergencyStop = false;
 //disable unused buttons
 document.getElementById('D').disabled = true;
 document.getElementById('no').disabled = true;
 document.getElementById('yes').disabled = true;
-
+//disable beginFueling button
+beginFuelingButton.disabled = true;
+emergencyShutoff.disabled = true;
 //determine payment type, 1st step in process
 function paymentMethodFunction(input)
 {
@@ -97,10 +97,12 @@ function amountOfGasPumped() {
         inputField.innerHTML = Math.round(amountOfGasPumped * 100)/100 +' gallons purchased press BEGIN FUELING';
     } else if(paymentMethod === 'card') {
         costOfGas = gasTankSize * chosenGasPrice;
-        inputField.innerHTML = Math.round(costOfGas * 100)/100 + ' dollars of gas purchased press BEGIN FUELING';
+        inputField.innerHTML = '$' + Math.round(costOfGas * 100)/100 + ' of gas purchased press BEGIN FUELING';
     }
     stepInPumpProcess++;
     beginFuelingButton.disabled = false;
+    emergencyShutoff.disabled = false;
+
 }
 
 //add input to current input
@@ -130,9 +132,6 @@ function compute() {
         break;
     }
 }
-
-
-
 // variables for interval timer
 let gallonsPumped = 0;
 let intervalId;
@@ -140,24 +139,29 @@ let intervalId;
 function showGallons() {
    inputField.innerHTML = "NOW FUELING";
    gallonDisplayField.innerHTML = 'Gallons Pumped:  ';
-   intervalId =  setInterval(incrementGallons, 100);
+   intervalId =  setInterval(incrementGallons, 10);
 }
 //increment gallons
 function incrementGallons() {
     gallonsPumped += .01;
-    gallonsPumped = Math.round(gallonsPumped * 100)/100
-    if(gallonsPumped === Math.round(gasTankSize * 100)/100)
+    gallonsPumped = Math.round(gallonsPumped * 100)/100;
+    if(gallonsPumped === Math.round(gasTankSize * 100)/100 || emergencyStop === true)
     {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
-        inputField.innerHTML = 'Done Fueling'
+        inputField.innerHTML = 'Done Fueling';
+        if(emergencyStop === true) {
+            inputField.innerHTML = 'Emergency stop initiated';
+        }
         clearInterval(intervalId);
     }
     else {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
     }
 }  
-
-
+//emergency shutoff
+function stopFueling() {
+    emergencyStop = true;
+}
 
 //frontend for getting data for gas prices API
 let gasPrice87 = document.getElementById('price87');
@@ -183,22 +187,25 @@ async function getPrices() {
 //reset everything for new transaction
 function reset()
 {
-    chosenGasBool = false;
-    chosenGasPrice = 0;
-    paymentMethod = 'none';
-    paymentMethodBool = false;
     currentInputNumber = '';
     cashAmount = 0;
     gasTankSize = 0;
+    stepInPumpProcess = 0;
+    costOfGas = 0;
+    chosenGasBool = false; 
+    chosenGasPrice = 0;
+    paymentMethod = 'none';
+    stepInPumpProcess = 0;
     gallonsPumped = 0;
-    gallonsInput.innerHTML = 'Gallons: 0';
-    decimalField.innerHTML = '.00';
-    if(chosenGasNumber)
-    {
+    if(chosenGasNumber) {
         let element=document.getElementById(chosenGasNumber);
         element.style.backgroundColor = "white";
     }
     chosenGasNumber = '';
-    paymentMethod = 'none';
     inputField.innerHTML = 'Enter 1 for credit or 2 for cash';
+    gallonsInput.innerHTML = '';
+    gallonDisplayField.innerHTML = '';
+    beginFuelingButton.disabled = true;
+    emergencyShutoff.disabled = true;
+    emergencyStop = false;
 }
