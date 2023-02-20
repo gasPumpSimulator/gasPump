@@ -13,6 +13,7 @@ let cashAmount = 0;
 let gasTankSize;
 let amountOfGas;
 let decimalBool = false;
+let price;
 
 
 //change color of button for chosen gas type
@@ -130,13 +131,15 @@ function compute()
     {
         amountOfGas = cashAmount / chosenGasPrice;
         gasTankSize = Math.floor(Math.random() * (amountOfGas - 3) + 3);
-        inputField.innerHTML = Math.round(amountOfGas * 100)/100 +' gallons purchased';
+        price = Math.round(amountOfGas * 100)/100;
+        inputField.innerHTML = price + ' gallons purchased';
         beginFuelingButton.disabled = false;
     }
     else if(paymentMethod === 'credit')
     {
         amountOfGas = gasTankSize * chosenGasPrice;
-        inputField.innerHTML = Math.round(amountOfGas * 100)/100 + ' dollars of gas purchased';
+        price = Math.round(amountOfGas * 100)/100;
+        inputField.innerHTML = price + ' dollars of gas purchased';
         beginFuelingButton.disabled = false;
     }
 }
@@ -148,6 +151,9 @@ let decIntervalId;
 let decimal = 0;
 //show gallons as they are being pumped
 function showGallons() {
+    //send post request of gallons and price
+    postTransaction(gasTankSize, price);
+
    inputField.innerHTML = "NOW FUELING";
    intervalId =  setInterval(incrementGallons, 2000);
    decimalBool = false;
@@ -202,4 +208,18 @@ async function getPrices() {
     gasPrice89.innerHTML = data[1];
     gasPrice93.innerHTML = data[2];
     gasPriceDiesel.innerHTML = data[3];
+}
+
+// add transaction to db
+async function postTransaction(gallons, price) {
+    fetch('http://localhost:3000/transactions', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "gallons": gallons, "price": price})
+    })
+    .then(response => response.json())
+    .then(response => console.log(JSON.stringify(response)))
 }
