@@ -29,7 +29,7 @@ export async function createTransaction(gallons, price) {
     INSERT INTO transactions (gallons, price)
     VALUES (?, ?)
     `, [gallons, price]);
-    return getTransaction(id);
+    return result;
 }
 
 // const transactions = await getTransactions();
