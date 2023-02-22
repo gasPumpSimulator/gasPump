@@ -33,7 +33,7 @@ const FuelPump = sequelize.define('FuelPump', {
   await sequelize.sync();
 })();
 
-module.exports = User;
+module.exports = FuelPump;
 
 
 /* MySQL Model
