@@ -158,3 +158,19 @@ footer {
     display: flex;
     margin: 10px;
 }
+nav {
+    width: 20%;
+}
+nav a{
+    display: block;
+    font-size: 20px;
+    margin-left: 30px;
+    text-decoration: none;
+    color: blue;
+}
+nav a:hover{
+    background-color: yellowgreen;
+}
+nav a:visited{
+    color: blue;
+}
