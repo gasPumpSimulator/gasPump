@@ -28,6 +28,11 @@ body {
     display: flex;
     justify-content: center;
 }
+
+#gallons {
+    margin-left: 5px;
+    width: 5px;
+}
 .mainContainer {
     display: flex;
 }
@@ -147,7 +152,7 @@ footer {
     padding: 5px;
 }
 
-.fuelingBtn, .emergencyShutoff {
+.fuelingBtn, #emergencyShutoff {
     font-size: 10px;
     width: 70px;
     height: 30px;
@@ -157,4 +162,15 @@ footer {
 .btnGroup {
     display: flex;
     margin: 10px;
+}
+
+#adminBtn {
+    padding: 4px;
+}
+
+#loginClass {
+    width: 2px;
+    display: flex;
+    background-color: red;
+    border: solid red;
 }

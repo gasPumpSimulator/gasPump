@@ -18,28 +18,28 @@
             <div id="interfaceContainer">
             <div id="interface" style="color:white">Enter 1 for credit or 2 for cash</div>
             <div id="gallonContainer">
-            <div id="gallons" style="color:white">Gallons: 0</div>
-            <div id="decimal" style="color:white">.00</div>
+                <div id="gallonDisplay" style="color:white"></div>
+                <div id="gallons" style="color:white"></div>
             </div>
             </div>
             <div class="btnGroup">
                 <button id="beginFueling" class="fuelingBtn" onclick="showGallons()" onclick="getGasPrice()">BEGIN FUELING</button>
-                <button class="emergencyShutoff">STOP</button>
+                <button id="emergencyShutoff" onclick="stopFueling()">STOP</button>
             </div>
 
         </div>
         <div class="keypadContainer">
             <div class="buttonGroup"  >    
-                <button class="btns" id="1" onclick="paymentMethodFunction('credit')">1
+                <button class="btns" id="1" onclick="paymentMethodFunction(1)">1
                     <div class="alphabet">QZ</div>
                 </button>
-                <button class="btns" id="2" onclick="paymentMethodFunction('cash')">2
+                <button class="btns"id="2" onclick="paymentMethodFunction(2)">2
                     <div class="alphabet">ABC</div>
                 </button>
                 <button class="btns" id="3" onclick="addToInput('3')">3
                     <div class="alphabet">DEF</div>
                 </button>
-                <button class="btns" id="D" onclick="deleteEntry()">
+                <button class="btns" id="yes" onclick="deleteEntry()">
                     <div class="alphabet">YES</div>
                 </button>
             </div>
@@ -53,7 +53,7 @@
             <button class="btns" id="6" onclick="addToInput('6')">6
                 <div class="alphabet">MNO</div>
             </button>
-            <button class="btns" id="C" onclick="">
+            <button class="btns" id="no" onclick="">
                 <div class="alphabet">NO</div>
             </button>
           </div>
@@ -67,8 +67,8 @@
           <button class="btns" id="9" onclick="addToInput('9')">9
             <div class="alphabet">WXY</div>
         </button>
-        <button class="btns" id="D" onclick="reset()">
-            <div class="alphabet">CANCEL</div>
+        <button class="btns" id="cancel" onclick="reset()">
+            <div class="alphabet">RESET</div>
         </button>
         </div>
         <div class="buttonGroup" >
@@ -120,6 +120,9 @@
     <footer>
         <div class = "footerContainer">
           <a href="https://github.com/gasPumpSimulator/gasPump" image><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github link" style="width:20px;height:20px;"></a>
+        </div>
+        <div id="adminBtn">
+            <button>Admin Login</button>
         </div>
         <i class="fab fa-github" aria-hidden="true"></i>
     </footer>
