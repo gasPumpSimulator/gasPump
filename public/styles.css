@@ -174,3 +174,13 @@ nav a:hover{
 nav a:visited{
     color: blue;
 }
+.infoBody {
+    background-color: antiquewhite;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+.infoList {
+    padding: 15px;
+    margin-left: 50px;
+}

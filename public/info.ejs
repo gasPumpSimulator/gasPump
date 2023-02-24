@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css";>
+    <title>GasPumpSimulator || Transactions</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <% const header = 'List of Transactions Here' %>
+    
+    <nav>
+        <a href="/">Back</a>
+    </nav>
+    <div class="infoBody">
+        <h2><%= header %></h1>
+        <ul class="infoList">
+            <% if (transactions.length > 0) { %>
+                <% transactions.forEach(transaction => { %>
+
+                <li class="infoList">Transaction number: <%= transaction.id %> | Gallons: <%= transaction.gallons %> | 
+                    Price: $<%= transaction.price %> | time: <%= transaction.time %></li>
+
+            <% }) %>
+            <% } %>
+
+        </ul>
+    </div>
+</body>
+</html>

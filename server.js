@@ -12,9 +12,11 @@ const __dirname = path.dirname(__filename);
 const app = express()
 const port = 3000
 
+//settings
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, 'public')))
+app.set('view engine', 'ejs');
+app.set('views', 'public');
 
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/index.html'))
@@ -44,6 +46,11 @@ app.get('/getPrices', async (request, response) => {
 })
 
 //database 
+app.get('/info', async (req, res) => {
+  const transactions = await getTransactions();
+  res.render('info', { transactions });
+})
+
 app.get('/transactions', async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
