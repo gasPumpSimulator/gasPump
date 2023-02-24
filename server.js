@@ -16,7 +16,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/index.html'))
 })
-
+app.get('/adminLogin', (request, response) => {
+  response. sendFile(path.join(__dirname, 'public/login.html'))
+})
 app.get('/getPrices', async (request, response) => {
 
     const storeUrl = 'https://gasprices.aaa.com/?state=IN';

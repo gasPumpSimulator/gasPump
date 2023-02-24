@@ -163,3 +163,14 @@ footer {
     display: flex;
     margin: 10px;
 }
+
+#adminBtn {
+    padding: 4px;
+}
+
+#loginClass {
+    width: 2px;
+    display: flex;
+    background-color: red;
+    border: solid red;
+}
