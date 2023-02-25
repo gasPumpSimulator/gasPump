@@ -21,7 +21,7 @@ async function run() {
     // Get a non-pooled connection
     connection = await oracledb.getConnection( {
       user    : "username",
-      password : "Password",
+      password : "Password@1",
       connectString : "158.101.103.144/3306"
     });
 
