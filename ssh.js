@@ -46,6 +46,11 @@ function createDBConnection() {
 					if (err) throw err;
 					else
 					console.log("Connected!");
+					con.query("Select * from transactions", function(err, rows) {
+						if (err) console.log('error2');
+						else
+						console.log(rows);
+					});
 				  });
 				/*
 				db.query("Select * from Transactions", function(err, rows){
