@@ -1,15 +1,17 @@
-import express from 'express'
+import express, { json } from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
+import { getTransactions, getTransaction, createTransaction } from './database.js';
 let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
 let data = [];
-
+const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express()
-const port = 3000
+
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -40,6 +42,24 @@ app.get('/getPrices', async (request, response) => {
     returnValue[3] = data[1].split(' ')[6];
     //return value to frontend
     response.status(200).json(returnValue);
+})
+
+//database 
+app.get('/transactions', async (req, res) => {
+  const transactions = await getTransactions();
+  res.send(transactions);
+})
+
+app.get('/transactions/:id', async (req, res) => {
+  const id = req.params.id;
+  const transaction = await getTransaction(id);
+  res.send(transaction);
+})
+
+app.post('/transactions', async (req, res) => {
+  const { gallons, price } = req.body;
+  const transaction = await createTransaction(gallons, price);
+  res.send(transaction);
 })
 
 app.listen(port, () => {

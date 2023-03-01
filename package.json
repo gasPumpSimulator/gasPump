@@ -1,12 +1,12 @@
 {
   "name": "gaspump",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon node server.js"
+    "start": "nodemon node server.js",
+    "dev": "nodemon ./server.js"
   },
   "repository": {
     "type": "git",
@@ -20,11 +20,29 @@
   "homepage": "https://github.com/gasPumpSimulator/gasPump#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
+<<<<<<< HEAD
     "express": "^4.18.2",
     "oracledb": "https://github.com/oracle/node-oracledb/releases/download/v5.5.0/oracledb-src-5.5.0.tgz"
   },
   "devDependencies": {
     "@types/oracledb": "^5.2.4",
+=======
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "got-scraping": "^3.2.12",
+    "joystick": "^0.1.2",
+    "mysql": "^2.18.1",
+    "mysql-ssh": "^1.0.6",
+    "mysql2": "^3.1.2",
+    "node-csv-parse": "^1.2.0",
+    "node-ssh": "^13.0.1",
+    "simple-ssh": "^1.1.1",
+    "ssh2": "^1.11.0"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.21",
+    "@types/ssh2": "^1.11.7",
+>>>>>>> peterSQL
     "nodemon": "^2.0.20"
   }
 }

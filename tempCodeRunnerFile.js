@@ -1,1 +1,2 @@
-    console.log(chunk);
+import pkg from 'mysql';
+const { mysql } = pkg;
