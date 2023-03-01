@@ -2,6 +2,7 @@ import { Client } from 'ssh2';
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
 dotenv.config();
+
 const connection = function(){};
 connection.invokeQuery = function(sqlQuery, callback) {
 	
@@ -33,7 +34,7 @@ connection.invokeQuery = function(sqlQuery, callback) {
 					if (err) {
 						throw err;
 					} else {
-						console.log("Connected!");
+						console.log("Connected");
 					}
 					con.query(sqlQuery, function(err, rows) {
 						if (err) {

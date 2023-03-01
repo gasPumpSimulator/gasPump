@@ -6,11 +6,10 @@ import cheerio from 'cheerio';
 import { getTransactions, getTransaction, createTransaction } from './database.js';
 let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
 let data = [];
-
+const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express()
-const port = 3000
 
 app.use(express.json());
 
