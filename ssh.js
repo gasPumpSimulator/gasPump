@@ -3,9 +3,9 @@ import mysql from 'mysql2';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const connection = function(){};
-connection.invokeQuery = function(sqlQuery, callback) {
-	
+function connectionQuery(sqlQuery) {
+	return new Promise(function(resolve, reject){
+
 	const ssh = new Client();
 	ssh.connect({
 		host: process.env.SSH_host,
@@ -40,14 +40,15 @@ connection.invokeQuery = function(sqlQuery, callback) {
 						if (err) {
 							console.log('error with query');
 						} else {
-							callback(err, rows);
+							resolve(rows);
 						}
+					con.end();
 					});
-				con.end();
 				});
 			}
 		);
 	});
+	});
 }
-export default connection;
+export default connectionQuery;
 

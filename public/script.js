@@ -9,17 +9,10 @@ let beginFuelingButton = document.getElementById('beginFueling');
 let emergencyShutoff = document.getElementById('emergencyShutoff');
 let currentInputNumber = '';
 let cashAmount = 0;
-<<<<<<< HEAD
 let gasTankSize = 0;
 let stepInPumpProcess = 0;
 let costOfGas = 0;
 let emergencyStop = false;
-=======
-let gasTankSize;
-let amountOfGas;
-let decimalBool = false;
-let price;
->>>>>>> peterSQL
 
 //disable unused buttons
 document.getElementById('D').disabled = true;
@@ -120,40 +113,9 @@ function addToInput(input) {
     if(stepInPumpProcess >= 3 || cashAmount > 0) {
         return;
     }
-<<<<<<< HEAD
     if(stepInPumpProcess != 0) {
         currentInputNumber += input;
         inputField.innerHTML = currentInputNumber;
-=======
-    else if(!gasTankSize && paymentMethod != 'cash')
-    {
-        gasTankSize = currentInputNumber;
-        if(!chosenGasNumber)
-        {
-            inputField.innerHTML = 'Select Gas type and press ENTER';
-            return;
-        }
-    }
-    else if(!chosenGasNumber)
-    {
-        inputField.innerHTML = 'Choose gas type and press ENTER';
-        return;
-    }
-    if(paymentMethod === 'cash')
-    {
-        amountOfGas = cashAmount / chosenGasPrice;
-        gasTankSize = Math.floor(Math.random() * (amountOfGas - 3) + 3);
-        price = Math.round(amountOfGas * 100)/100;
-        inputField.innerHTML = price + ' gallons purchased';
-        beginFuelingButton.disabled = false;
-    }
-    else if(paymentMethod === 'credit')
-    {
-        amountOfGas = gasTankSize * chosenGasPrice;
-        price = Math.round(amountOfGas * 100)/100;
-        inputField.innerHTML = price + ' dollars of gas purchased';
-        beginFuelingButton.disabled = false;
->>>>>>> peterSQL
     }
 }
 
@@ -178,7 +140,7 @@ let intervalId;
 //show gallons as they are being pumped
 function showGallons() {
     //send post request of gallons and price
-    postTransaction(gasTankSize, price);
+    //postTransaction(gasTankSize, price);
 
    inputField.innerHTML = "NOW FUELING";
    gallonDisplayField.innerHTML = 'Gallons Pumped:  ';
@@ -228,7 +190,6 @@ async function getPrices() {
     gasPriceDiesel.innerHTML = data[3];
 }
 
-<<<<<<< HEAD
 //reset everything for new transaction
 function reset()
 {
@@ -256,7 +217,7 @@ function reset()
     } else if (!emergencyShutoff.disabled) {
             return;
     }
-=======
+}
 // add transaction to db
 async function postTransaction(gallons, price) {
     fetch('http://localhost:3000/transactions', {
@@ -269,5 +230,4 @@ async function postTransaction(gallons, price) {
     })
     .then(response => response.json())
     .then(response => console.log(JSON.stringify(response)))
->>>>>>> peterSQL
 }
