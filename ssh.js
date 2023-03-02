@@ -5,7 +5,6 @@ dotenv.config();
 
 function connectionQuery(sqlQuery) {
 	return new Promise(function(resolve, reject){
-
 	const ssh = new Client();
 	ssh.connect({
 		host: process.env.SSH_host,

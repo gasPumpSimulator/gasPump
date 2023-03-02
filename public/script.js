@@ -231,3 +231,5 @@ async function postTransaction(gallons, price) {
     .then(response => response.json())
     .then(response => console.log(JSON.stringify(response)))
 }
+
+//check username and password validity after input from user

@@ -62,6 +62,9 @@ app.post('/transactions', async (req, res) => {
   res.send(transaction);
 })
 
+app.post('/loginCheck', async (req, res) => {
+  
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
