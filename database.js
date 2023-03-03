@@ -4,16 +4,16 @@ dotenv.config();
 import connectionQuery from './ssh.js';
 
 export async function getTransactions() {
-    const rows = await connectionQuery("SELECT * FROM transactions");
+    const rows = await connectionQuery("SELECT * FROM transactions2");
     return rows;
 }
 
 export async function getTransaction(id) {
-    const rows = await connectionQuery(`SELECT * FROM transactions WHERE id = ${id}`);
+    const rows = await connectionQuery(`SELECT * FROM transactions2 WHERE id = ${id}`);
     return rows;
 }
-export async function createTransaction(gallons, price) {
-    const result = await connectionQuery(`INSERT INTO transactions (gallons, price, time) VALUES (${gallons}, ${price}, CURRENT_TIME)`);
+export async function createTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice) {
+    const result = await connectionQuery(`INSERT INTO transactions2 (paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice) VALUES ("${paymentMethod}", "${gasType}",${pricePerGallon},${gallonsPurchased},${totalPrice})`);
     return result;
 }
 export async function checkUsernamePassword(username, password) {

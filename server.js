@@ -66,8 +66,8 @@ app.get('/transactions/:id', async (req, res) => {
 })
 
 app.post('/transactions', async (req, res) => {
-  const { gallons, price } = req.body;
-  const transaction = await createTransaction(gallons, price);
+  const { paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice } = req.body;
+  const transaction = await createTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice);
   res.send(transaction);
 })
 

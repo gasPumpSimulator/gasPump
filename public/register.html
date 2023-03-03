@@ -11,15 +11,22 @@
 </head>
 <body>
     <body>
-        <div action="/login" 
-        method="post">
+        <div action="/login" method="post">
           <!-- user input-->
           <div id="loginClass">
           <input type="text" name="username" placeholder="Username" required><br><br>
           <input type="password" name="password" placeholder="Password" required><br><br>
           <input type="password" name="Admin Password" placeholder="Admin Password" required><br><br>
           <!-- submit button -->
+          <div id="loginAndReturn">
           <button id = "register" type="submit" value="register">Register</button>
+          <form action="/adminLogin">
+            <button>Back</button>
+          </form>
+          <form action="/">
+            <button>Main Menu</button>
+          </form>
+          </div>
         </div>
       </body>
     </html>

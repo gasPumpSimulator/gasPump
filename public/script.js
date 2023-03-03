@@ -98,6 +98,7 @@ function amountOfGasPumped() {
     if(paymentMethod === 'cash') {
         let amountOfGas = cashAmount / chosenGasPrice;
         gasTankSize = amountOfGas;
+        costOfGas = cashAmount;
         inputField.innerHTML = Math.round(amountOfGas * 100)/100 +' gallons purchased press BEGIN FUELING';
     } else if(paymentMethod === 'card') {
         costOfGas = gasTankSize * chosenGasPrice;
@@ -157,7 +158,7 @@ function incrementGallons() {
         } else {
             inputField.innerHTML = 'Done Fueling';
         }
-        postTransaction(gallonsPumped, costOfGas);
+        postTransaction(paymentMethod, chosenGasNumber, chosenGasPrice, gallonsPumped, costOfGas);
         clearInterval(intervalId);
     } else {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
@@ -219,14 +220,19 @@ function reset()
     }
 }
 // add transaction to db
-async function postTransaction(gallons, price) {
+async function postTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice) {
     fetch('http://localhost:3000/transactions', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "gallons": gallons, "price": price})
+        body: JSON.stringify({ 
+        "paymentMethod": paymentMethod, "gasType": gasType,
+        "pricePerGallon": pricePerGallon,
+        "gallonsPurchased": gallonsPurchased,
+        "totalPrice": totalPrice,
+        })
     })
     .then(response => response.json())
     .then(response => console.log(JSON.stringify(response)))
