@@ -11,3 +11,13 @@ body {
 #loginAndRegisterContainer {
     display: flex;
 }
+table {
+    background-color: white;
+    border: 5px solid black;
+}
+  th {
+    border: solid black;
+  }
+  td {
+    border: solid black;
+  }
