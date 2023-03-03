@@ -10,10 +10,16 @@ const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express()
-
+/*
+app.use(session({
+  secret: 'secret',
+  resave: true,
+	saveUninitialized: true
+}));
+*/
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/index.html'))
@@ -62,9 +68,33 @@ app.post('/transactions', async (req, res) => {
   res.send(transaction);
 })
 
-app.post('/loginCheck', async (req, res) => {
-  
-})
+/*app.post('/loginCheck', async (request, response) => {
+	// Capture the input fields
+	let username = request.body.username;
+	let password = request.body.password;
+	// Ensure the input fields exists and are not empty
+	if (username && password) {
+		// Execute SQL query that'll select the account from the database based on the specified username and password
+      const results = await getUsernamePassword();
+			// If the account exists
+			if (results.length > 0) {
+				// Authenticate the user
+				request.session.loggedin = true;
+				request.session.username = username;
+				// Redirect to home page
+				response.redirect('/loggedIn');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
+});
+
+*/
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

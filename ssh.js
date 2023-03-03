@@ -37,7 +37,7 @@ function connectionQuery(sqlQuery) {
 					}
 					con.query(sqlQuery, function(err, rows) {
 						if (err) {
-							console.log('error with query');
+							console.log(err);
 						} else {
 							resolve(rows);
 						}

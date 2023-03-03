@@ -141,7 +141,6 @@ let intervalId;
 function showGallons() {
     //send post request of gallons and price
     //postTransaction(gasTankSize, price);
-
    inputField.innerHTML = "NOW FUELING";
    gallonDisplayField.innerHTML = 'Gallons Pumped:  ';
    intervalId =  setInterval(incrementGallons, 10);
@@ -158,6 +157,7 @@ function incrementGallons() {
         } else {
             inputField.innerHTML = 'Done Fueling';
         }
+        postTransaction(gallonsPumped, costOfGas);
         clearInterval(intervalId);
     } else {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
@@ -220,6 +220,8 @@ function reset()
 }
 // add transaction to db
 async function postTransaction(gallons, price) {
+    console.log(gallons);
+    console.log(price);
     fetch('http://localhost:3000/transactions', {
         method: 'POST',
         headers: {
@@ -231,5 +233,9 @@ async function postTransaction(gallons, price) {
     .then(response => response.json())
     .then(response => console.log(JSON.stringify(response)))
 }
-
+//switch to login page on button click
+function loginPage() {
+    window.location.href = "http://127.0.0.1:5500/public/login.html";
+    return false;
+}
 //check username and password validity after input from user

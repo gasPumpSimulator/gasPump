@@ -116,7 +116,7 @@
     "node-csv-parse": "^1.2.0",
     "node-releases": "^2.0.10",
     "node-ssh": "^13.0.1",
-    "nodemon": "^2.0.20",
+    "nodemon": "^2.0.21",
     "normalize-path": "^3.0.0",
     "normalize-url": "^6.1.0",
     "nth-check": "^2.1.1",
@@ -181,8 +181,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/merge-descriptors": "^1.0.1"
+  }
 }
