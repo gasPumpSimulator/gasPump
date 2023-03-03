@@ -9,18 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <script src="login.js" defer></script>
 </head>
-<body>
     <body>
-        <div action="/login" 
-        method="post">
-          <!-- user input-->
-          <div id="loginClass">
-
+      <form action="/login" method="post">
           <input type="text" name="username" placeholder="Username" required><br><br>
           <input type="password" name="password" placeholder="Password" required><br><br>
           <!-- submit button -->
-          <button id="login" type="submit" value="login" onclick="login()">Login</button>
-          <button id="register" type="reset" value="register" onclick="register()">Register</button>
-        </div>
-      </body>
-    </html>
+            <div id="loginAndRegisterContainer">
+          <button id="login">Login</button>
+      </form>
+      <form action="/register" method="get">
+          <button>Register</button>
+      </form>
+            </div>       
+    </body>
+</html>

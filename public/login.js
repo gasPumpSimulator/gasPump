@@ -1,3 +1,6 @@
-function register() {
-    window.location.href = "http://127.0.0.1:5500/public/register.html";
+
+//check username and password validity after input from user
+async function checkLoginInfo(username, password) {
+    fetch('http://localhost:3000/')
 }
+document.getElementById("")

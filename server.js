@@ -1,22 +1,22 @@
-import express, { json } from 'express'
-import path from 'path'
+import express, { json } from 'express';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
-import { getTransactions, getTransaction, createTransaction } from './database.js';
+import { getTransactions, getTransaction, createTransaction, checkUsernamePassword } from './database.js';
 let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
 let data = [];
 const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const app = express()
-/*
+const app = express();
+//for login session
+import session from 'express-session';
 app.use(session({
   secret: 'secret',
   resave: true,
 	saveUninitialized: true
 }));
-*/
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }));
@@ -25,7 +25,10 @@ app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/index.html'))
 })
 app.get('/adminLogin', (request, response) => {
-  response. sendFile(path.join(__dirname, 'public/login.html'))
+  response.sendFile(path.join(__dirname, 'public/login.html'))
+})
+app.get('/register', (request, response) => {
+  response.sendFile(path.join(__dirname, 'public/register.html'))
 })
 app.get('/getPrices', async (request, response) => {
 
@@ -51,7 +54,7 @@ app.get('/getPrices', async (request, response) => {
 })
 
 //database 
-app.get('/transactions', async (req, res) => {
+app.get('/getTransactions', async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
 })
@@ -68,21 +71,21 @@ app.post('/transactions', async (req, res) => {
   res.send(transaction);
 })
 
-/*app.post('/loginCheck', async (request, response) => {
+app.post('/login', async (request, response) => {
 	// Capture the input fields
 	let username = request.body.username;
 	let password = request.body.password;
 	// Ensure the input fields exists and are not empty
 	if (username && password) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-      const results = await getUsernamePassword();
+      const results = await checkUsernamePassword(username, password);
 			// If the account exists
 			if (results.length > 0) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = username;
 				// Redirect to home page
-				response.redirect('/loggedIn');
+				response.redirect('/mainMenu');
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
@@ -93,7 +96,9 @@ app.post('/transactions', async (req, res) => {
 	}
 });
 
-*/
+app.get('/mainMenu', (request, response) => {
+  response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -1,5 +1,3 @@
-import mysql from 'mysql2';
-
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,6 +14,10 @@ export async function getTransaction(id) {
 }
 export async function createTransaction(gallons, price) {
     const result = await connectionQuery(`INSERT INTO transactions (gallons, price, time) VALUES (${gallons}, ${price}, CURRENT_TIME)`);
+    return result;
+}
+export async function checkUsernamePassword(username, password) {
+    const result = await connectionQuery(`SELECT * FROM loginTable WHERE username = "${username}" AND password = ${password}`);
     return result;
 }
 
