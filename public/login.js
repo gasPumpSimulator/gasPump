@@ -8,6 +8,7 @@ async function getTransactions() {
             'Content-Type': 'application/json',
         },
     })
+    
     const data = await reponse.json();
     console.log(data);
     tableBody.innerHTML = "";

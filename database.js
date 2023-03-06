@@ -21,8 +21,13 @@ export async function checkUsernamePassword(username, password) {
     return result;
 }
 
+export async function checkCreditCard(number) {
+    const result = await connectionQuery(`SELECT * FROM creditCards WHERE creditNumber = ${number}`)
+    console.log('test');
+    return result;
+}
 // const transactions = await getTransactions();
 // console.log(transactions);
-
+//AND CVC = ${cvc}
 // const result = await createTransaction(9.5, 31.99);
 // console.log(result);

@@ -13,6 +13,8 @@ let gasTankSize = 0;
 let stepInPumpProcess = 0;
 let costOfGas = 0;
 let emergencyStop = false;
+let creditCardNumber;
+let userName;
 
 //disable unused buttons
 document.getElementById('D').disabled = true;
@@ -48,11 +50,12 @@ function paymentMethodFunction(input) {
 //2nd step in process
 function gallonsOrDollars() {
     if (paymentMethod === 'card') {
-        if(currentInputNumber.length > 4 || currentInputNumber.length < 4)
+        if(currentInputNumber.length > 16 || currentInputNumber.length < 16)
         {
             inputField.innerHTML = 'Invalid credit card info';
             return;
         } else {
+            databaseCreditNumCheck(currentInputNumber);
             inputField.innerHTML = 'Enter size of gas tank and press ENTER';
         } 
     } else if(paymentMethod === 'cash') {
@@ -67,6 +70,11 @@ function gallonsOrDollars() {
     stepInPumpProcess++;
 }
 
+//check credit information in database
+function checkCreditNumber(creditNumber) {
+
+
+}
 //3rd step in process
 function tankSize() {
     if(currentInputNumber <= 0) {
@@ -238,3 +246,17 @@ async function postTransaction(paymentMethod, gasType, pricePerGallon, gallonsPu
     .then(response => console.log(JSON.stringify(response)))
 }
 
+async function databaseCreditNumCheck(creditNum) {
+    const response = await fetch('http://localhost:3000/creditNumCheck', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "creditNumber": creditNum
+        })
+    })
+    .then(response => response.json())
+    .then(response => console.log(JSON.stringify(response)))
+}

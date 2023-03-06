@@ -4,19 +4,22 @@ import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
 import { getTransactions, getTransaction, createTransaction, checkUsernamePassword } from './database.js';
+import session from 'express-session';
+
 let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
 let data = [];
 const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+
 //for login session
-import session from 'express-session';
 app.use(session({
   secret: 'secret',
   resave: true,
 	saveUninitialized: true
 }));
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }));
@@ -104,4 +107,8 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-
+app.post('/creditNumCheck', async (request, response) => {
+  let creditNum = request.body.creditNum;
+  const results = await checkCreditCard(1111222233334444);
+  response.send(results);
+})
