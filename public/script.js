@@ -48,14 +48,13 @@ function paymentMethodFunction(input) {
 }
 
 //2nd step in process
-function gallonsOrDollars() {
+async function gallonsOrDollars() {
     if (paymentMethod === 'card') {
-        if(currentInputNumber.length > 16 || currentInputNumber.length < 16)
+        if(currentInputNumber.length > 4 || await databaseCreditNumCheck(currentInputNumber) == false)
         {
             inputField.innerHTML = 'Invalid credit card info';
             return;
         } else {
-            databaseCreditNumCheck(currentInputNumber);
             inputField.innerHTML = 'Enter size of gas tank and press ENTER';
         } 
     } else if(paymentMethod === 'cash') {
@@ -70,11 +69,6 @@ function gallonsOrDollars() {
     stepInPumpProcess++;
 }
 
-//check credit information in database
-function checkCreditNumber(creditNumber) {
-
-
-}
 //3rd step in process
 function tankSize() {
     if(currentInputNumber <= 0) {
@@ -257,6 +251,12 @@ async function databaseCreditNumCheck(creditNum) {
             "creditNumber": creditNum
         })
     })
-    .then(response => response.json())
-    .then(response => console.log(JSON.stringify(response)))
+    const data = await response.json();
+    if (data.length < 1) {
+        console.log("false")
+        return false;
+    } else {
+        console.log("true")
+        return true;
+    }
 }

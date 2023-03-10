@@ -3,10 +3,7 @@ dotenv.config();
 
 import connectionQuery from './ssh.js';
 
-export async function getTransactions() {
-    const rows = await connectionQuery("SELECT * FROM transactions2");
-    return rows;
-}
+
 
 export async function getTransaction(id) {
     const rows = await connectionQuery(`SELECT * FROM transactions2 WHERE id = ${id}`);
@@ -21,10 +18,13 @@ export async function checkUsernamePassword(username, password) {
     return result;
 }
 
-export async function checkCreditCard(number) {
-    const result = await connectionQuery(`SELECT * FROM creditCards WHERE creditNumber = ${number}`)
-    console.log('test');
+export async function checkCreditCard(creditNum) {
+    const result = await connectionQuery(`SELECT * FROM creditCards WHERE creditNumber = ${creditNum}`);
     return result;
+}
+export async function getTransactions() {
+    const rows = await connectionQuery("SELECT * FROM transactions2");
+    return rows;
 }
 // const transactions = await getTransactions();
 // console.log(transactions);

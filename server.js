@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
-import { getTransactions, getTransaction, createTransaction, checkUsernamePassword } from './database.js';
+import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard } from './database.js';
 import session from 'express-session';
 
 let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
@@ -56,11 +56,6 @@ app.get('/getPrices', async (request, response) => {
     response.status(200).json(returnValue);
 })
 
-//database 
-app.get('/getTransactions', async (req, res) => {
-  const transactions = await getTransactions();
-  res.send(transactions);
-})
 
 app.get('/transactions/:id', async (req, res) => {
   const id = req.params.id;
@@ -108,7 +103,14 @@ app.listen(port, () => {
 })
 
 app.post('/creditNumCheck', async (request, response) => {
-  let creditNum = request.body.creditNum;
-  const results = await checkCreditCard(1111222233334444);
+  const creditNum = request.body.creditNumber;
+  console.log(creditNum);
+  const results = await checkCreditCard(creditNum);
   response.send(results);
+})
+
+//database 
+app.get('/getTransactions', async (req, res) => {
+  const transactions = await getTransactions();
+  res.send(transactions);
 })
