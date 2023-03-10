@@ -16,7 +16,7 @@ let emergencyStop = false;
 let creditCardNumber;
 let userName;
 let creditCardName = "cash(none)";
-
+let port = "localhost:3000";
 //disable unused buttons
 document.getElementById('D').disabled = true;
 document.getElementById('no').disabled = true;
@@ -54,6 +54,7 @@ async function gallonsOrDollars() {
         if(currentInputNumber.length > 4 || await databaseCreditNumCheck(currentInputNumber) == false)
         {
             inputField.innerHTML = 'Invalid credit card info';
+            currentInputNumber = "";
             return;
         } else {
             inputField.innerHTML = 'Enter size of gas tank and press ENTER';
@@ -180,7 +181,7 @@ let gasPrice93 = document.getElementById('price93');
 let gasPriceDiesel = document.getElementById('priceDiesel');
 let periodBtn = document.getElementById('period')
 
-const baseUrl = 'http://localhost:3000/getPrices'
+const baseUrl = `http://${port}/getPrices`
 
 async function getPrices() {
     const response = await fetch(baseUrl,
@@ -224,7 +225,7 @@ function reset()
 }
 // add transaction to db
 async function postTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice) {
-    fetch('http://localhost:3000/transactions', {
+    fetch(`http://${port}/transactions`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -243,7 +244,7 @@ async function postTransaction(paymentMethod, gasType, pricePerGallon, gallonsPu
 }
 
 async function databaseCreditNumCheck(creditNum) {
-    const response = await fetch('http://localhost:3000/creditNumCheck', {
+    const response = await fetch(`http://${port}/creditNumCheck`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

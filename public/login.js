@@ -1,7 +1,9 @@
+let port = "localhost:3000";
+
 async function getTransactions() {
     const table = document.getElementById("table");
     const tableBody = table.querySelector("tbody");
-    const reponse  = await fetch('http://localhost:3000/getTransactions', {
+    const reponse  = await fetch(`http://${port}/getTransactions`, {
         method: 'GET',
         headers: {
             'Accept': 'applicaton/json',

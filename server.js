@@ -5,6 +5,8 @@ import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
 import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard } from './database.js';
 import session from 'express-session';
+import dotenv from 'dotenv';
+dotenv.config();
 
 let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
 let data = [];
@@ -98,8 +100,8 @@ app.get('/mainMenu', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(process.env.PORT_NUMBER, () => {
+  console.log(`Example app listening on port ${process.env.PORT_NUMBER}`)
 })
 
 app.post('/creditNumCheck', async (request, response) => {
