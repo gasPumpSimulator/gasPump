@@ -15,6 +15,7 @@ let costOfGas = 0;
 let emergencyStop = false;
 let creditCardNumber;
 let userName;
+let creditCardName = "cash(none)";
 
 //disable unused buttons
 document.getElementById('D').disabled = true;
@@ -160,7 +161,7 @@ function incrementGallons() {
         } else {
             inputField.innerHTML = 'Done Fueling';
         }
-        postTransaction(paymentMethod, chosenGasNumber, chosenGasPrice, gallonsPumped, costOfGas);
+        postTransaction(paymentMethod, chosenGasNumber, chosenGasPrice, gallonsPumped, costOfGas, creditCardName);
         clearInterval(intervalId);
     } else {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
@@ -234,6 +235,7 @@ async function postTransaction(paymentMethod, gasType, pricePerGallon, gallonsPu
         "pricePerGallon": pricePerGallon,
         "gallonsPurchased": gallonsPurchased,
         "totalPrice": totalPrice,
+        "creditCardName": creditCardName,
         })
     })
     .then(response => response.json())
@@ -257,6 +259,7 @@ async function databaseCreditNumCheck(creditNum) {
         return false;
     } else {
         console.log("true")
+        creditCardName = data[0].name;
         return true;
     }
 }

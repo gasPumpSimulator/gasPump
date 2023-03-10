@@ -9,8 +9,8 @@ export async function getTransaction(id) {
     const rows = await connectionQuery(`SELECT * FROM transactions2 WHERE id = ${id}`);
     return rows;
 }
-export async function createTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice) {
-    const result = await connectionQuery(`INSERT INTO transactions2 (paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice) VALUES ("${paymentMethod}", "${gasType}",${pricePerGallon},${gallonsPurchased},${totalPrice})`);
+export async function createTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice, creditCardName) {
+    const result = await connectionQuery(`INSERT INTO transactions2 (paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice, name) VALUES ("${paymentMethod}", "${gasType}",${pricePerGallon},${gallonsPurchased},${totalPrice}, "${creditCardName}")`);
     return result;
 }
 export async function checkUsernamePassword(username, password) {
