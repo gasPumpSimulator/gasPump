@@ -4,8 +4,8 @@ import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
 import { request } from "https";
-let data = ['$-.--','$-.--','$-.--','$-.--',];
-
+let returnValue = ['$-.--','$-.--','$-.--','$-.--',];
+let data = [];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
