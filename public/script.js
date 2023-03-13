@@ -242,7 +242,6 @@ async function postTransaction(paymentMethod, gasType, pricePerGallon, gallonsPu
     .then(response => response.json())
     .then(response => console.log(JSON.stringify(response)))
 }
-
 async function databaseCreditNumCheck(creditNum) {
     const response = await fetch(`http://${port}/creditNumCheck`, {
         method: 'POST',
@@ -256,10 +255,8 @@ async function databaseCreditNumCheck(creditNum) {
     })
     const data = await response.json();
     if (data.length < 1) {
-        console.log("false")
         return false;
     } else {
-        console.log("true")
         creditCardName = data[0].name;
         return true;
     }

@@ -18,6 +18,15 @@ export async function checkUsernamePassword(username, password) {
     return result;
 }
 
+export async function addUser(username, password) {
+    const result = await connectionQuery(`SELECT * FROM loginTable WHERE username = "${username}"`);
+    if(result.length > 0) {
+        return false;
+    } else {
+        result = await connectionQuery(`INSERT INTO loginTable (username, password) VALUES ("${username}", "${password}")`);
+        return result;
+    }
+}
 export async function checkCreditCard(creditNum) {
     const result = await connectionQuery(`SELECT * FROM creditCards WHERE creditNumber = ${creditNum}`);
     return result;

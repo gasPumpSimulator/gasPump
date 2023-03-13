@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
-import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard } from './database.js';
+import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard, addUser} from './database.js';
 import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -70,6 +70,21 @@ app.post('/transactions', async (req, res) => {
   const transaction = await createTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice, creditCardName);
   res.send(transaction);
 })
+app.post('/addUser', async (request, response) => {
+  let username = request.body.username;
+  let password = request.body.username;
+  let adminPassword = request. body.adminPassword;
+
+  if(adminPassword == process.env.ADMIN_PASSWORD) {
+    const result = await addUser(username, password);
+    if(result === false) {
+      response.send('User already exists');
+      console.log("success")
+    }
+    response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+    console.log(result)
+  }
+})
 
 app.post('/login', async (request, response) => {
 	// Capture the input fields
@@ -116,3 +131,4 @@ app.get('/getTransactions', async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
 })
+

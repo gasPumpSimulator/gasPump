@@ -7,25 +7,27 @@
     <title>Document</title>
     <link rel="stylesheet" href="stylesLogin.css";>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
-    <script src="script.js" defer></script>
+    <script src="login.js" defer></script>
 </head>
 <body>
     <body>
-        <div action="/login" method="post">
-          <!-- user input-->
-          <div id="loginClass">
-          <input type="text" name="username" placeholder="Username" required><br><br>
-          <input type="password" name="password" placeholder="Password" required><br><br>
-          <input type="password" name="Admin Password" placeholder="Admin Password" required><br><br>
-          <!-- submit button -->
           <div id="loginAndReturn">
-          <button id = "register" type="submit" value="register">Register</button>
-          <form action="/adminLogin">
+          <form action="/addUser" method="post">
+            <div id="loginClass">
+              <input type="text" name="username" placeholder="Username" required><br><br>
+              <input type="password" name="password" placeholder="Password" required><br><br>
+              <input type="password" name="adminPassword" placeholder="Admin Password" required><br><br>
+              <button id="register" type="submit" value="register">Register</button>
+          </form>
+          
+          <form action="/adminLogin" method="get">
             <button>Back</button>
           </form>
+
           <form action="/">
             <button>Main Menu</button>
           </form>
+          
           </div>
         </div>
       </body>
