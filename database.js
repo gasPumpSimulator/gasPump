@@ -19,7 +19,7 @@ export async function checkUsernamePassword(username, password) {
 }
 
 export async function addUser(username, password) {
-    const result = await connectionQuery(`SELECT * FROM loginTable WHERE username = "${username}"`);
+    let result = await connectionQuery(`SELECT * FROM loginTable WHERE username = "${username}"`);
     if(result.length > 0) {
         return false;
     } else {

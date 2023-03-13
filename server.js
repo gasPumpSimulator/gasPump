@@ -71,6 +71,8 @@ app.post('/transactions', async (req, res) => {
   res.send(transaction);
 })
 app.post('/addUser', async (request, response) => {
+  console.log("server running")
+
   let username = request.body.username;
   let password = request.body.username;
   let adminPassword = request. body.adminPassword;
@@ -79,10 +81,9 @@ app.post('/addUser', async (request, response) => {
     const result = await addUser(username, password);
     if(result === false) {
       response.send('User already exists');
-      console.log("success")
+    } else {
+      response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
     }
-    response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
-    console.log(result)
   }
 })
 
