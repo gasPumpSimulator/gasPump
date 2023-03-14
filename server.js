@@ -75,7 +75,7 @@ app.post('/addUser', async (request, response) => {
 
   let username = request.body.username;
   let password = request.body.password;
-  let adminPassword = request. body.adminPassword;
+  let adminPassword = request.body.adminPassword;
 
   if(adminPassword == process.env.ADMIN_PASSWORD) {
     const result = await addUser(username, password);

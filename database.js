@@ -14,7 +14,7 @@ export async function createTransaction(paymentMethod, gasType, pricePerGallon, 
     return result;
 }
 export async function checkUsernamePassword(username, password) {
-    const result = await connectionQuery(`SELECT * FROM loginTable WHERE username = "${username}" AND password = ${password}`);
+    const result = await connectionQuery(`SELECT * FROM loginTable WHERE username = ("${username}" AND password = "${password}")`);
     return result;
 }
 
