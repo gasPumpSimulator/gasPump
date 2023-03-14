@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <link rel="stylesheet" href="styles.css";>
+=======
+<<<<<<< HEAD
+    <link rel="stylesheet" href="styles.css" type="text/css" charset="utf-8">
+=======
+    <link rel="stylesheet" href="styles.css";>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
     <title>GasPumpSimulator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <script src="script.js" defer></script>
@@ -18,28 +26,67 @@
             <div id="interfaceContainer">
             <div id="interface" style="color:white">Enter 1 for credit or 2 for cash</div>
             <div id="gallonContainer">
+<<<<<<< HEAD
             <div id="gallons" style="color:white">Gallons: 0</div>
             <div id="decimal" style="color:white">.00</div>
+=======
+<<<<<<< HEAD
+                <div id="gallonDisplay" style="color:white"></div>
+                <div id="gallons" style="color:white"></div>
+=======
+            <div id="gallons" style="color:white">Gallons: 0</div>
+            <div id="decimal" style="color:white">.00</div>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
             </div>
             </div>
             <div class="btnGroup">
                 <button id="beginFueling" class="fuelingBtn" onclick="showGallons()" onclick="getGasPrice()">BEGIN FUELING</button>
+<<<<<<< HEAD
                 <button class="emergencyShutoff">STOP</button>
+=======
+<<<<<<< HEAD
+                <button id="emergencyShutoff" class="fuelingBtn" onclick="stopFueling()">EMERGENCY SHUTOFF</button>
+=======
+                <button class="emergencyShutoff">STOP</button>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
             </div>
 
         </div>
         <div class="keypadContainer">
             <div class="buttonGroup"  >    
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                <button class="btns" id="1" onclick="paymentMethodFunction(1)">1
+                    <div class="alphabet">QZ</div>
+                </button>
+                <button class="btns"id="2" onclick="paymentMethodFunction(2)">2
+=======
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
                 <button class="btns" id="1" onclick="paymentMethodFunction('credit')">1
                     <div class="alphabet">QZ</div>
                 </button>
                 <button class="btns" id="2" onclick="paymentMethodFunction('cash')">2
+<<<<<<< HEAD
+=======
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
                     <div class="alphabet">ABC</div>
                 </button>
                 <button class="btns" id="3" onclick="addToInput('3')">3
                     <div class="alphabet">DEF</div>
                 </button>
+<<<<<<< HEAD
                 <button class="btns" id="D" onclick="deleteEntry()">
+=======
+<<<<<<< HEAD
+                <button class="btns" id="yes" onclick="deleteEntry()">
+=======
+                <button class="btns" id="D" onclick="deleteEntry()">
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
                     <div class="alphabet">YES</div>
                 </button>
             </div>
@@ -53,7 +100,15 @@
             <button class="btns" id="6" onclick="addToInput('6')">6
                 <div class="alphabet">MNO</div>
             </button>
+<<<<<<< HEAD
             <button class="btns" id="C" onclick="">
+=======
+<<<<<<< HEAD
+            <button class="btns" id="no" onclick="">
+=======
+            <button class="btns" id="C" onclick="">
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
                 <div class="alphabet">NO</div>
             </button>
           </div>
@@ -67,8 +122,18 @@
           <button class="btns" id="9" onclick="addToInput('9')">9
             <div class="alphabet">WXY</div>
         </button>
+<<<<<<< HEAD
         <button class="btns" id="D" onclick="reset()">
             <div class="alphabet">CANCEL</div>
+=======
+<<<<<<< HEAD
+        <button class="btns" id="cancel" onclick="reset()">
+            <div class="alphabet">RESET</div>
+=======
+        <button class="btns" id="D" onclick="reset()">
+            <div class="alphabet">CANCEL</div>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
         </button>
         </div>
         <div class="buttonGroup" >
@@ -90,28 +155,92 @@
         <label id="price87">$3.00</label>
         <div id="87Gas" class="light"></div>
         <div class="gasType">Gasoline</div>
+<<<<<<< HEAD
         <button class="gas_buttons" onclick="changeColor('87Gas', 'price87')">87</button>
+=======
+<<<<<<< HEAD
+        <button class="gas_buttons" onclick="changeColor('87Gas', 'price87')">87
+            <div class="pressLetterGroup">
+                <div class="letter1">P</div>
+                <div class="letter2">R</div>
+                <div class="letter3">E</div>
+                <div class="letter4">S</div>
+                <div class="letter5">S</div>
+            </div>
+        </button>
+=======
+        <button class="gas_buttons" onclick="changeColor('87Gas', 'price87')">87</button>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
     </div>
     <div class="gasButtonGroup">
         <label class="gasName">Plus</label>
         <label id="price89">$3.10</label>
         <div id="89Gas" class="light"></div>
         <div class="gasType">Gasoline</div>
+<<<<<<< HEAD
         <button class="gas_buttons" onclick="changeColor('89Gas', 'price89')">89</button>
+=======
+<<<<<<< HEAD
+        <button class="gas_buttons" onclick="changeColor('89Gas', 'price89')">89
+            <div class="pressLetterGroup">
+                <div class="letter1">P</div>
+                <div class="letter2">R</div>
+                <div class="letter3">E</div>
+                <div class="letter4">S</div>
+                <div class="letter5">S</div>
+            </div>
+        </button>
+=======
+        <button class="gas_buttons" onclick="changeColor('89Gas', 'price89')">89</button>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
     </div>
     <div class="gasButtonGroup">
         <label class="gasName">Premium</label>
         <label id="price93">$3.30</label>
         <div id="93Gas" class="light"></div>
         <div class="gasType">Gasoline</div>
+<<<<<<< HEAD
         <button class="gas_buttons" onclick="changeColor('93Gas', 'price93')">93</button>
+=======
+<<<<<<< HEAD
+        <button class="gas_buttons" onclick="changeColor('93Gas', 'price93')">93
+            <div class="pressLetterGroup">
+                <div class="letter1">P</div>
+                <div class="letter2">R</div>
+                <div class="letter3">E</div>
+                <div class="letter4">S</div>
+                <div class="letter5">S</div>
+            </div>
+        </button>
+=======
+        <button class="gas_buttons" onclick="changeColor('93Gas', 'price93')">93</button>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
     </div>
     <div class="gasButtonGroup diesel">
         <label class="gasName">Diesel</label>
         <label id="priceDiesel">$4.00</label>
         <div id="dieselGas" class="light"></div>
         <div class="gasType">Diesel</div>
+<<<<<<< HEAD
         <button class="gas_buttons" onclick="changeColor('dieselGas', 'priceDiesel')">Diesel</button>
+=======
+<<<<<<< HEAD
+        <button class="gas_buttons" onclick="changeColor('dieselGas', 'priceDiesel')">Diesel
+            <div class="pressLetterGroup">
+                <div class="letter1">P</div>
+                <div class="letter2">R</div>
+                <div class="letter3">E</div>
+                <div class="letter4">S</div>
+                <div class="letter5">S</div>
+            </div>
+        </button>
+=======
+        <button class="gas_buttons" onclick="changeColor('dieselGas', 'priceDiesel')">Diesel</button>
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
     </div>
         </div>
     </div>
@@ -121,6 +250,15 @@
         <div class = "footerContainer">
           <a href="https://github.com/gasPumpSimulator/gasPump" image><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github link" style="width:20px;height:20px;"></a>
         </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        <div id="adminBtn">
+            <button>Admin Login</button>
+        </div>
+=======
+>>>>>>> main
+>>>>>>> c984a8aabbd591308253c55a6ac1937236598bad
         <i class="fab fa-github" aria-hidden="true"></i>
     </footer>
 </body>
