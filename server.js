@@ -3,9 +3,14 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
+<<<<<<< HEAD
 import { request } from "https";
 let data = ['$-.--','$-.--','$-.--','$-.--',];
 
+=======
+let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
+let data = [];
+>>>>>>> main
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,9 +22,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/index.html'))
 })
+<<<<<<< HEAD
 app.get('/adminLogin', (request, response) => {
   response. sendFile(path.join(__dirname, 'public/login.html'))
 })
+=======
+
+>>>>>>> main
 app.get('/getPrices', async (request, response) => {
 
     const storeUrl = 'https://gasprices.aaa.com/?state=IN';
@@ -48,6 +57,7 @@ app.listen(port, () => {
 })
 
 
+<<<<<<< HEAD
 
 //function for getting gas
 function getPrices() {
@@ -81,3 +91,5 @@ var req = request(options, function (res) {
 req.end();
 return data;
 }
+=======
+>>>>>>> main
