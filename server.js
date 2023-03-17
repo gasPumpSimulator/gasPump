@@ -3,6 +3,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
+import bcrypt from 'bcrypt';
+
 import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard, addUser} from './database.js';
 import session from 'express-session';
 import dotenv from 'dotenv';
@@ -73,12 +75,14 @@ app.post('/transactions', async (req, res) => {
 app.post('/addUser', async (request, response) => {
   console.log("server running")
 
-  let username = request.body.username;
-  let password = request.body.password;
-  let adminPassword = request. body.adminPassword;
+  const username = request.body.username;
+  const salt = bcrypt.genSaltSync(10);
+  const password = await bcrypt.hash(request.body.password, salt);
+  let adminPassword = request.body.adminPassword;
+
 
   if(adminPassword == process.env.ADMIN_PASSWORD) {
-    const result = await addUser(username, password);
+    const result = await addUser(username, password, salt);
     if(result === false) {
       response.send('User already exists');
     } else {
@@ -89,14 +93,16 @@ app.post('/addUser', async (request, response) => {
 
 app.post('/login', async (request, response) => {
 	// Capture the input fields
-	let username = request.body.username;
-	let password = request.body.password;
+	const username = request.body.username;
+  const password = request.body.password;
 	// Ensure the input fields exists and are not empty
 	if (username && password) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-      const results = await checkUsernamePassword(username, password);
+      const results = await checkUsernamePassword(username);
 			// If the account exists
-			if (results.length > 0) {
+      const saltedPassword = await bcrypt.hash(password, results[0].salt);
+      console.log(saltedPassword + " " + results[0].password);
+			if (results.length > 0 && saltedPassword === results[0].password) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = username;

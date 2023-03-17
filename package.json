@@ -10,6 +10,7 @@
     "anymatch": "^3.1.3",
     "array-flatten": "^1.1.1",
     "asn1": "^0.2.6",
+    "bcrypt": "^5.1.0",
     "bcrypt-pbkdf": "^1.0.2",
     "bignumber.js": "^9.0.0",
     "binary-extensions": "^2.2.0",
