@@ -31,19 +31,17 @@
         <h1 style="text-align: center;  text-shadow: 2px .5px;
         ">Filter Results</h1>
         <form action="/searchTable">
-            <label for="search">Search Transactions:</label>
-            <input type="text">
+            <label for="searchByID">Search By ID:</label>
+            <input type="text" value="Any">
+            <label for="searchByName">Search By Name:</label>
+            <input type="text" value="Any">
         </form>
     <div class="searchMethodContainer">
-        <label for="searchMethod">Choose Value to Search By:</label>
-        <select name="searchMethod" id="searchMethod">
-            <option value="ID">Transaction ID</option>
-            <option value="name">Name</option>
-            <option value="PaymentMethod">Payment Method</option>
-            <option value="date">Date</option>
-            <option value="Gas Type">Gas Type</option>
-            <option value="gallonsPurchased">Gallons Purchased</option>
-            <option value="totalCost">Total Cost</option>
+        <label for="searchMethod">Payment Method:</label>
+        <select name="PaymentMethod" id="PaymentMethod">
+            <option value="any">Any</option>
+            <option value="cash">Cash</option>
+            <option value="credit">Credit</option>
         </select>
 
         <label for="searchMethod">Gas Type:</label>
@@ -54,6 +52,69 @@
             <option value="Diesel">93Gas</option>
             <option value="Diesel">Diesel</option>
         </select>
+        <label for="searchMethod">Gas Price Per Gallon Search Type:</label>
+        <select name="searchMethod" id="searchMethod">
+            <option value="any">Any</option>
+            <option value="max">Max</option>
+            <option value="min">Min</option>
+            <option value="minMax">Min and Max</option>
+        </select>
+
+        <label for="maxPrice">Maximum Price:</label>
+        <div class="gasPriceSliderMax">
+          <input type="range" min=".01" max="6" value="6" class="slider" id="MaxRange">
+        </div>
+
+        <label for="minPrice">Minimum Price:</label>
+        <div class="gasPriceSliderMin">
+            <input type="range" min=".01" max="6" value="6" class="slider" id="minRange">
+          </div>
+          <label for="searchMethod">Gallons Purchased Search Type:</label>
+          <select name="searchMethod" id="searchMethod">
+              <option value="any">Any</option>
+              <option value="max">Max</option>
+              <option value="min">Min</option>
+              <option value="minMax">Min and Max</option>
+          </select>
+  
+          <label for="maxPrice">Maximum Gallons:</label>
+          <div class="gallonsSliderMax">
+            <input type="range" min=".01" max="6" value="6" class="slider" id="MaxRange">
+          </div>
+  
+          <label for="minPrice">Minimum Gallons:</label>
+          <div class="gasPriceSliderMin">
+              <input type="range" min=".01" max="6" value="6" class="slider" id="minRange">
+            </div>
+            <label for="searchMethod">Total Cost Search Type:</label>
+            <select name="searchMethod" id="searchMethod">
+                <option value="any">Any</option>
+                <option value="max">Max</option>
+                <option value="min">Min</option>
+                <option value="minMax">Min and Max</option>
+            </select>
+    
+            <label for="maxPrice">Maximum Cost:</label>
+            <div class="gallonsSliderMax">
+              <input type="range" min=".01" max="6" value="6" class="slider" id="MaxRange">
+            </div>
+    
+            <label for="minPrice">Minimum Cost:</label>
+            <div class="gasPriceSliderMin">
+                <input type="range" min=".01" max="6" value="6" class="slider" id="minRange">
+              </div>
+
+              <label for="meeting-time">Start Date/Time:</label>
+
+              <input type="datetime-local" id="meeting-time"
+                     name="meeting-time" value="2018-06-12T19:30"
+                     min="2018-06-07T00:00" max="2018-06-14T00:00">
+                     <label for="meeting-time">End Date/Time:</label>
+
+                     <input type="datetime-local" id="meeting-time"
+                            name="meeting-time" value="2018-06-12T19:30"
+                            min="2018-06-07T00:00" max="2018-06-14T00:00">
+                     
     </div>
     </div>
     </div>

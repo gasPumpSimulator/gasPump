@@ -40,3 +40,9 @@ table {
     border-right: solid black;
     border-bottom: solid black;
   }
+  .searchMethodContainer {
+    display: flex;
+    flex-direction: column;
+    border: solid;
+    padding: 10px;
+  }
