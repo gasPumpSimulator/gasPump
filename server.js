@@ -97,31 +97,28 @@ app.post('/login', async (request, response) => {
   const password = request.body.password;
 	// Ensure the input fields exists and are not empty
 	if (username && password) {
-		// Execute SQL query that'll select the account from the database based on the specified username and password
-    async function getValues(){
+  // use async functions to check password, hash and compare them 
+    (async function() {
       try{
-        const results = await checkUsernamePassword(username);
-        const saltedPassword = await bcrypt.hash(password, results[0].salt);
-        const resultComparison = await passwordValidityCheck(results[0].password, saltedPassword);
-      }catch(e){
-        console.log(e);
-      }    
-  }
-  getValues();
-  async function passwordValidityCheck(inputedPassword, DatabasePassword) {
-			if (DatabasePassword.length > 0 && DatabasePassword === inputedPassword) {
-				// Authenticate the user
-				request.session.loggedin = true;
-				request.session.username = username;
-				// Redirect to home page
-				response.redirect('/mainMenu');
-        return true;
-			} else {
-				response.send('Incorrect Username and/or Password!');
-        response.end();
-        return false;
-			}			
-  }
+            const results = await checkUsernamePassword(username);
+            const saltedPassword = await bcrypt.hash(password, results[0].salt);
+            await passwordValidityCheck(results[0].password, saltedPassword);
+          }catch(e){
+            console.log(e);
+          }    
+    })();
+    async function passwordValidityCheck(inputedPassword, DatabasePassword) {
+			  if (DatabasePassword.length > 0 && DatabasePassword === inputedPassword) {
+				  // Authenticate the user
+				  request.session.loggedin = true;
+				  request.session.username = username;
+				  // Redirect to home page
+				  response.redirect('/mainMenu');
+			  } else {
+				  response.send('Incorrect Username and/or Password!');
+          response.end();
+			  }			
+    }
   } else {
     response.send('Please enter Username and Password!');
     response.end();
