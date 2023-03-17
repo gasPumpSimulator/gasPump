@@ -98,24 +98,34 @@ app.post('/login', async (request, response) => {
 	// Ensure the input fields exists and are not empty
 	if (username && password) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-      const results = await checkUsernamePassword(username);
-			// If the account exists
-      const saltedPassword = await bcrypt.hash(password, results[0].salt);
-      console.log(saltedPassword + " " + results[0].password);
-			if (results.length > 0 && saltedPassword === results[0].password) {
+    async function getValues(){
+      try{
+        const results = await checkUsernamePassword(username);
+        const saltedPassword = await bcrypt.hash(password, results[0].salt);
+        const resultComparison = await passwordValidityCheck(results[0].password, saltedPassword);
+      }catch(e){
+        console.log(e);
+      }    
+  }
+  getValues();
+  async function passwordValidityCheck(inputedPassword, DatabasePassword) {
+			if (DatabasePassword.length > 0 && DatabasePassword === inputedPassword) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = username;
 				// Redirect to home page
 				response.redirect('/mainMenu');
+        return true;
 			} else {
 				response.send('Incorrect Username and/or Password!');
+        response.end();
+        return false;
 			}			
-			response.end();
-	} else {
-		response.send('Please enter Username and Password!');
-		response.end();
-	}
+  }
+  } else {
+    response.send('Please enter Username and Password!');
+    response.end();
+  }
 });
 
 app.get('/mainMenu', (request, response) => {
