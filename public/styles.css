@@ -318,6 +318,8 @@ body {
 footer {
     height: 50px;
     background-color: grey;
+    margin-top: 20px;
+    padding-top: 10px;
 }
 
 .gasName {
