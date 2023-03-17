@@ -1,0 +1,42 @@
+body {
+    background-color: grey;
+}
+.mainContainer {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: fill;
+    align-items: fill;
+    min-height: 100vh;
+
+}
+.rightBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+    border: solid;
+    flex-grow: 1;
+}
+.leftBody {
+    background-color: rgb(109, 96, 96);
+    border: solid;
+}
+table {
+    margin: 50px;
+    background-color: rgba(236, 84, 84, 0.357);
+    border: 5px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(21, 20, 20, 0.827);
+}
+  th {
+    border-right: solid black;
+    border-bottom: solid black;
+    border-top: solid black;
+
+  }
+  td {
+    border-right: solid black;
+    border-bottom: solid black;
+  }
