@@ -152,6 +152,14 @@ app.post('/searchTransactions', async (req, res) => {
   const maxPricePerGallon = req.body.maxPricePerGallon;
   const minPricePerGallon = req.body.minPricePerGallon;
   const gallonsPurchased = req.body.GallonsPurchased;
+  const minGallonsPurchased = req.body.minGallonsPurchased;
+  const maxGallonsPurchased = req.body.maxGallonsPurchased;
+  const totalCost = req.body.totalCost;
+  const maxTotalCost = req.body.maxTotalCost;
+  const minTotalCost = req.body.minTotalCost;
+  const minTime = req.body.startTime;
+  const maxTime = req.body.endTime;
+
   console.log({
     ID,
     name,
@@ -161,6 +169,13 @@ app.post('/searchTransactions', async (req, res) => {
     maxPricePerGallon,
     minPricePerGallon,
     gallonsPurchased,
+    minGallonsPurchased,
+    maxGallonsPurchased,
+    totalCost,
+    maxTotalCost,
+    minTotalCost,
+    minTime,
+    maxTime,
   });
   res.sendFile(path.join(__dirname, 'public/mainMenu.html'));
 })

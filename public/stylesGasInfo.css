@@ -1,19 +1,19 @@
 body {
-    background-color: grey;
+    background-color: black;
+    height: 100vh;
+
 }
 .mainContainer {
     font-family: 'Roboto', sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     flex-direction: row;
-    justify-content: fill;
-    align-items: fill;
-    min-height: 100vh;
-
+    height: 100vh;
 }
 .rightBody {
+  flex-grow: 1;
     display: grid;
-    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template: .75fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 10px;
     background-color: grey;
     border: solid;
@@ -23,7 +23,7 @@ body {
 .leftBody {
     background-color: rgb(109, 96, 96);
     border: solid;
-    flex-grow: 1.5;
+    width: 70vw;
 }
 table {
     margin: 50px;
