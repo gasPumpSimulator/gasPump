@@ -13,17 +13,17 @@ export async function createTransaction(paymentMethod, gasType, pricePerGallon, 
     const result = await connectionQuery(`INSERT INTO transactions2 (paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice, name) VALUES ("${paymentMethod}", "${gasType}",${pricePerGallon},${gallonsPurchased},${totalPrice}, "${creditCardName}")`);
     return result;
 }
-export async function checkUsernamePassword(username, password) {
-    const result = await connectionQuery(`SELECT * FROM loginTable WHERE username = "${username}" AND password = "${password}"`);
+export async function checkUsernamePassword(username) {
+    const result = await connectionQuery(`SELECT password, salt FROM loginTable WHERE username = "${username}"`);
     return result;
 }
 
-export async function addUser(username, password) {
+export async function addUser(username, password, salt) {
     let result = await connectionQuery(`SELECT * FROM loginTable WHERE username = "${username}"`);
     if(result.length > 0) {
         return false;
     } else {
-        result = await connectionQuery(`INSERT INTO loginTable (username, password) VALUES ("${username}", "${password}")`);
+        result = await connectionQuery(`INSERT INTO loginTable (username, password, salt) VALUES ("${username}", "${password}", "${salt}")`);
         return result;
     }
 }
