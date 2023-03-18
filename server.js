@@ -73,13 +73,10 @@ app.post('/transactions', async (req, res) => {
   res.send(transaction);
 })
 app.post('/addUser', async (request, response) => {
-  console.log("server running")
-
   const username = request.body.username;
   const salt = bcrypt.genSaltSync(10);
   const password = await bcrypt.hash(request.body.password, salt);
   let adminPassword = request.body.adminPassword;
-
 
   if(adminPassword == process.env.ADMIN_PASSWORD) {
     const result = await addUser(username, password, salt);
@@ -146,3 +143,24 @@ app.get('/getTransactions', async (req, res) => {
   res.send(transactions);
 })
 
+app.post('/searchTransactions', async (req, res) => {
+  const ID = req.body.searchByID;
+  const name = req.body.name;
+  const paymentMethod = req.body.paymentMethod;
+  const gasType = req.body.gasType;
+  const pricePerGallon = req.body.pricePerGallon;
+  const maxPricePerGallon = req.body.maxPricePerGallon;
+  const minPricePerGallon = req.body.minPricePerGallon;
+  const gallonsPurchased = req.body.GallonsPurchased;
+  console.log({
+    ID,
+    name,
+    paymentMethod,
+    gasType,
+    pricePerGallon,
+    maxPricePerGallon,
+    minPricePerGallon,
+    gallonsPurchased,
+  });
+  res.sendFile(path.join(__dirname, 'public/mainMenu.html'));
+})
