@@ -3,6 +3,7 @@ body {
 }
 .mainContainer {
     font-family: 'Roboto', sans-serif;
+    font-size: 12px;
     display: flex;
     flex-direction: row;
     justify-content: fill;
@@ -13,8 +14,11 @@ body {
 .rightBody {
     display: grid;
     grid-template: 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
     background-color: grey;
     border: solid;
+    font-weight: bold;
+
 }
 .leftBody {
     background-color: rgb(109, 96, 96);
@@ -39,7 +43,8 @@ table {
     border-bottom: solid black;
   }
   .rightBody > div {
-    border: solid;
+      padding: 10px;
+      box-shadow: 5px 5px 5px rgba(21, 20, 20, 0.827);
 
   }
   .rightBody > h1 {
@@ -52,48 +57,82 @@ table {
     border: solid;
     justify-content: center;
     align-items: center;
-    grid-column: 2 / 6;
+    grid-column: 2 / 4;
     grid-row: 2;
   }
   .searchMethodContainer1 {
-    display: flex;
-    flex-direction: column;
     border: solid;
     grid-column: 4 / 6;
     grid-row: 3;
-  }
-  .searchMethodContainer2 {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .searchMethodContainer2 {
     border: solid;
     grid-column: 4 / 6;
     grid-row: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .searchMethodContainer3 {
-    display: flex;
     flex-direction: column;
     border: solid;
     grid-column: 2 / 4;
     grid-row: 3;
   }
   .searchMethodContainer4 {
-    display: flex;
-    flex-direction: column;
     border: solid;
     grid-column: 2 / 4;
     grid-row: 5;
+
+    
   }
   .searchMethodContainer5 {
-    display: flex;
-    flex-direction: column;
     border: solid;
     grid-column: 2 / 4;
     grid-row: 4;
   }
   .searchMethodContainer6 {
-    display: flex;
-    flex-direction: column;
     border: solid;
     grid-column: 4 / 6;
     grid-row: 5;
-  }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+}
+select {
+  width: 152px;
+  margin-top: 5px;
+}
+input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.sliderValue {
+  width: 50px;
+}
+label {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.slider {
+  width: 170px;
+}
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid;
+  grid-column: 4 / 6;
+  grid-row: 2;
+}
+button {
+  margin: 5px;
+  width: 100px;
+}
