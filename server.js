@@ -5,7 +5,7 @@ import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
 import bcrypt from 'bcrypt';
 
-import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard, addUser} from './database.js';
+import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard, addUser, getCustomQuery} from './database.js';
 import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -132,7 +132,6 @@ app.listen(process.env.PORT_NUMBER, () => {
 
 app.post('/creditNumCheck', async (request, response) => {
   const creditNum = request.body.creditNumber;
-  console.log(creditNum);
   const results = await checkCreditCard(creditNum);
   response.send(results);
 })
@@ -149,16 +148,22 @@ app.post('/searchTransactions', async (req, res) => {
   const paymentMethod = req.body.paymentMethod;
   const gasType = req.body.gasType;
   const pricePerGallon = req.body.pricePerGallon;
+
   const maxPricePerGallon = req.body.maxPricePerGallon;
   const minPricePerGallon = req.body.minPricePerGallon;
+
   const gallonsPurchased = req.body.GallonsPurchased;
+
   const minGallonsPurchased = req.body.minGallonsPurchased;
   const maxGallonsPurchased = req.body.maxGallonsPurchased;
   const totalCost = req.body.totalCost;
+
   const maxTotalCost = req.body.maxTotalCost;
   const minTotalCost = req.body.minTotalCost;
+
   const minTime = req.body.startTime;
   const maxTime = req.body.endTime;
+
 
   console.log({
     ID,
@@ -177,5 +182,6 @@ app.post('/searchTransactions', async (req, res) => {
     minTime,
     maxTime,
   });
+  console.log(results);
   res.sendFile(path.join(__dirname, 'public/mainMenu.html'));
 })

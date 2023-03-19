@@ -5,13 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="login.js" defer></script>
+    <script src="filterTable.js" defer></script>
+
     <link rel="stylesheet" href="stylesGasInfo.css";>
     <title>Document</title>
 </head>
 <body onload="getTransactions()">
     <div class="mainContainer">
     <div class="leftBody">
-    <table id="table">
+        <table id="table">
         <h1 style="text-align: center;  text-shadow: 2px .5px;
         ">Transaction Table</h1>
         <thead>
@@ -29,7 +31,7 @@
     </div>
     <div class="rightBody">
         <div class="buttonContainer">
-            <button type="submit" form="searchForm">Search</button>
+            <button id="submitButton">Search</button>
     
             <form id="returnMain" action="/" method="get">
                 <button type="submit" form="returnMain">Main Menu</button>
@@ -40,14 +42,14 @@
     <div class="searchMethodContainer">
         <form id="searchForm" action="/searchTransactions" method="post">
             <label for="searchByID">Search By ID:</label><br>
-            <input name="searchByID" type="text" value="Any"><br>
+            <input name="searchByID" type="text" value="any"><br>
             <label for="searchByName">Search By Name:</label><br>
-            <input name="name" type="text" value="Any">
+            <input name="name" type="text" value="any">
     </div>
     <div class="searchMethodContainer1">
         <label for="searchMethod">Payment Method:</label>
         <select name="paymentMethod" id="paymentMethod">
-            <option value="Any">Any</option>
+            <option value="any">any</option>
             <option value="Cash">Cash</option>
             <option value="Credit">Credit</option>
         </select>
@@ -55,7 +57,7 @@
     <div class="searchMethodContainer2">
         <label for="searchMethod">Gas Type:</label>
         <select name="gasType" id="gasType">
-            <option value="Any">Any</option>
+            <option value="any">any</option>
             <option value="87Gas">87Gas</option>
             <option value="89Gas">89Gas</option>
             <option value="Diesel">93Gas</option>
@@ -65,62 +67,62 @@
     <div class="searchMethodContainer3">
         <label for="searchMethod">Gas Price Per Gallon Search Type:</label>
         <select name="pricePerGallon" id="pricePerGallon">
-            <option value="Any">Any</option>
-            <option value="Max">Max</option>
-            <option value="Min">Min</option>
-            <option value="MinMax">Min and Max</option>
+            <option value="any">any</option>
+            <option value="max">max</option>
+            <option value="min">min</option>
+            <option value="minmax">min and max</option>
         </select><br>
-        <label for="maxPricePerGallon">Maximum Price:</label>
+        <label for="maxPricePerGallon">maximum Price:</label>
         <input type="text" id="maxPricePerGallon" name="maxPricePerGallon" class="sliderValue" value="3">
 
-        <div class="gasPriceSliderMax">
-          <input type="range" min=".01" max="6" value="6" class="slider" id="MaxRangePricePerGallon">
+        <div class="gasPriceSlidermax">
+          <input type="range" min=".01" max="6" value="6" class="slider" id="maxRangePricePerGallon">
         </div>
-        <label for="minPricePerGallon">Minimum Price:</label>
+        <label for="minPricePerGallon">minimum Price:</label>
         <input type="text" id="minPricePerGallon" name="minPricePerGallon" value="4" class="sliderValue">
 
-        <div class="gasPriceSliderMin">
+        <div class="gasPriceSlidermin">
             <input type="range" min=".01" max="6" value="10" class="slider" id="minRangePricePerGallon">
           </div>
     </div>
     <div class="searchMethodContainer4">
           <label for="GallonsPurchased">Gallons Purchased Search Type:</label>
           <select name="GallonsPurchased" style="width: 169px" id="GallonsPurchased">
-              <option value="any">Any</option>
-              <option value="max">Max</option>
-              <option value="min">Min</option>
-              <option value="minMax">Min and Max</option>
+              <option value="any">any</option>
+              <option value="max">max</option>
+              <option value="min">min</option>
+              <option value="minmax">min and max</option>
           </select><br>
-          <label for="maxPrice">Maximum Gallons:</label>
+          <label for="maxPrice">maximum Gallons:</label>
           <input type="text" id="maxGallons" name="maxGallonsPurchased" class="sliderValue" value="2">
-          <div class="gallonsSliderMax">
-            <input type="range" min=".01" max="6" value="6" class="slider" id="MaxRange">
+          <div class="gallonsSlidermax">
+            <input type="range" min=".01" max="6" value="6" class="slider" id="maxRange">
           </div>
-          <label for="minPrice">Minimum Gallons:</label>
+          <label for="minPrice">minimum Gallons:</label>
           <input type="text" id="minGallons" name="minGallonsPurchased" class="sliderValue" value="2">
-          <div class="gasPriceSliderMin">
+          <div class="gasPriceSlidermin">
               <input type="range" min=".01" max="6" value="6" class="slider" id="minRange">
             </div>
     </div>
     <div class="searchMethodContainer5">
             <label for="totalCost">Total Cost Search Type:</label>
             <select name="totalCost" id="totalCost">
-                <option value="any">Any</option>
-                <option value="max">Max</option>
-                <option value="min">Min</option>
-                <option value="minMax">Min and Max</option>
+                <option value="any">any</option>
+                <option value="max">max</option>
+                <option value="min">min</option>
+                <option value="minmax">min and max</option>
             </select><br>
     
-            <label for="maxTotalCost">Maximum Cost:</label>
+            <label for="maxTotalCost">maximum Cost:</label>
             <input type="text" id="maxTotalCost" name="maxTotalCost" class="sliderValue" value="4">
 
             <div class="minTotalCost">
               <input type="range" min=".01" max="6" value="6" class="slider" id="minTotalCost" name="minTotalCost">
             </div>
     
-            <label for="minPrice">Minimum Cost:</label>
+            <label for="minPrice">minimum Cost:</label>
             <input type="text" id="minPriceInput" class="sliderValue">
-            <div class="gasPriceSliderMin">
+            <div class="gasPriceSlidermin">
                 <input type="range" min=".01" max="6" value="6" class="slider" id="minRange">
               </div>
     </div>

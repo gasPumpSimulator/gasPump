@@ -96,6 +96,7 @@
     "joystick": "^0.1.2",
     "json-buffer": "^3.0.1",
     "keyv": "^4.5.2",
+    "kill": "^0.0.2",
     "lodash.isequal": "^4.5.0",
     "long": "^5.2.1",
     "lowercase-keys": "^2.0.0",
