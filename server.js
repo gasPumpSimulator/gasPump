@@ -83,6 +83,8 @@ app.post('/addUser', async (request, response) => {
     if(result === false) {
       response.send('User already exists');
     } else {
+      request.session.loggedin = true;
+			request.session.username = username;
       response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
     }
   }
@@ -148,7 +150,7 @@ app.get('/getTransactions', async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
 })
-
+/*
 app.post('/searchTransactions', async (req, res) => {
   const ID = req.body.searchByID;
   const name = req.body.name;
@@ -192,3 +194,4 @@ app.post('/searchTransactions', async (req, res) => {
   console.log(results);
   res.sendFile(path.join(__dirname, 'public/mainMenu.html'));
 })
+*/

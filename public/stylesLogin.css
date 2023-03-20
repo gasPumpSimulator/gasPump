@@ -5,7 +5,7 @@ body {
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
-    background-color: grey;
+    background-color: black;
 }
 
 #loginAndRegisterContainer, #loginAndReturn {
@@ -26,4 +26,23 @@ table {
   justify-content: center;
   align-items: center;
   background-color: red;
+}
+input {
+  width: 320px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+button {
+  width: 100px;
+  background-color: green;
+  height: 50px;
+  border: solid grey;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.buttonContainer {
+  display: flex;
 }
