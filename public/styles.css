@@ -78,6 +78,7 @@ body {
     background-color: rgb(72, 67, 67);
     border-radius: 10px;
     width: 50em;
+    border: solid 10px rgba(169, 169, 169, 0.305);
 }
 .mainSides {
     flex-grow: 1;
