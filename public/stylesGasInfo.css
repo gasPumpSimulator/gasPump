@@ -165,6 +165,12 @@ label {
 
 }
 button {
-  margin: 5px;
-  width: 100px;
+    width: 100px;
+    background-color: grey;
+    height: 40px;
+    border: solid black;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
 }
