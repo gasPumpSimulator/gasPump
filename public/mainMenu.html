@@ -16,7 +16,7 @@
         <table id="table">
         <h1 style="text-align: center;  text-shadow: 2px .5px;
         ">Transaction Table</h1>
-        <thead>s
+        <thead>
             <th>ID</th>
             <th>Payment Method</th>
             <th>Gas Type</th>
@@ -72,15 +72,17 @@
             <option value="min">min</option>
             <option value="minmax">min and max</option>
         </select><br>
-        <label for="maxPricePerGallon">maximum Price:</label>
-        <input type="text" id="maxPricePerGallon" name="maxPricePerGallon" class="sliderValue" value="3">
-
+        <div>
+            <label for="maxPricePerGallon">maximum Price:</label>
+            <input type="text" id="maxPricePerGallon" name="maxPricePerGallon" class="sliderValue" value="3">
+        </div>
         <div class="gasPriceSlidermax">
           <input type="range" min=".01" max="6" value="6" class="slider" id="maxRangePricePerGallon">
         </div>
-        <label for="minPricePerGallon">minimum Price:</label>
-        <input type="text" id="minPricePerGallon" name="minPricePerGallon" value="4" class="sliderValue">
-
+        <div>
+            <label for="minPricePerGallon">minimum Price:</label>
+            <input type="text" id="minPricePerGallon" name="minPricePerGallon" value="4" class="sliderValue">
+        </div>
         <div class="gasPriceSlidermin">
             <input type="range" min=".01" max="6" value="10" class="slider" id="minRangePricePerGallon">
           </div>
@@ -93,13 +95,17 @@
               <option value="min">min</option>
               <option value="minmax">min and max</option>
           </select><br>
-          <label for="maxPrice">maximum Gallons:</label>
-          <input type="text" id="maxGallons" name="maxGallonsPurchased" class="sliderValue" value="2">
+          <div>
+            <label for="maxPrice">maximum Gallons:</label>
+            <input type="text" id="maxGallons" name="maxGallonsPurchased" class="sliderValue" value="2">
+          </div>
           <div class="gallonsSlidermax">
             <input type="range" min=".01" max="6" value="6" class="slider" id="maxRange">
           </div>
-          <label for="minPrice">minimum Gallons:</label>
-          <input type="text" id="minGallons" name="minGallonsPurchased" class="sliderValue" value="2">
+          <div>
+            <label for="minPrice">minimum Gallons:</label>
+            <input type="text" id="minGallons" name="minGallonsPurchased" class="sliderValue" value="2">
+          </div>
           <div class="gasPriceSlidermin">
               <input type="range" min=".01" max="6" value="6" class="slider" id="minRange">
             </div>
@@ -112,27 +118,28 @@
                 <option value="min">min</option>
                 <option value="minmax">min and max</option>
             </select><br>
-    
-            <label for="maxTotalCost">maximum Cost:</label>
-            <input type="text" id="maxTotalCost" name="maxTotalCost" class="sliderValue" value="30">
-
+            <div>
+                <label for="maxTotalCost">maximum Cost:</label>
+                <input type="text" id="maxTotalCost" name="maxTotalCost" class="sliderValue" value="30">
+            </div>
             <div class="maxTotalCostSlider">
               <input type="range" min=".01" max="6" value="6" class="slider" id="maxTotalCostSlider" name="maxTotalCostSlider">
             </div>
-    
-            <label for="minTotalCost">minimum Cost:</label>
-            <input type="text" id="minTotalCost" name="minTotalCost" value="0" class="sliderValue">
+            <div>
+                <label for="minTotalCost">minimum Cost:</label>
+                <input type="text" id="minTotalCost" name="minTotalCost" value="0" class="sliderValue">
+            </div>
             <div class="gasPriceSlidermin">
                 <input type="range" min=".01" max="6" value="6" class="slider" id="minRange">
               </div>
     </div>
     <div class="searchMethodContainer6">
-              <label for="startTime">Start Date/Time:</label>
+              <label for="startTime">Start Date:</label>
               <input type="date" id="startTime"
                      name="startTime" value="2018-06-12"
                      min="2018-06-07" max="2023-06-14">
               
-              <label for="endTime">End Date/Time:</label>
+              <label for="endTime">End Date:</label>
               <input type="date" id="endTime"
                      name="endTime" value="2018-06-12"
                      min="2018-06-07" max="2023-06-14">

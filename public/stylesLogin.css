@@ -21,3 +21,9 @@ table {
   td {
     border: solid black;
   }
+.innerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+}

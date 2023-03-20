@@ -24,6 +24,12 @@ body {
     background-color: rgb(109, 96, 96);
     border: solid;
     width: 70vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1 {
+  padding-bottom: 50px;
 }
 table {
     margin: 50px;
@@ -83,15 +89,26 @@ table {
     border: solid;
     grid-column: 2 / 4;
     grid-row: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
   .searchMethodContainer4 {
     border: solid;
     grid-column: 2 / 4;
     grid-row: 5;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     
   }
   .searchMethodContainer5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     border: solid;
     grid-column: 2 / 4;
     grid-row: 4;
