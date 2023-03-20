@@ -129,7 +129,10 @@ app.get('/mainMenu', (request, response) => {
     response.send('Must log in!');
   }
 })
-
+app.get('/logOut', (request, response) => {
+  request.session.loggedin = false;
+  response.sendFile(path.join(__dirname, 'public/index.html'))
+})
 app.listen(process.env.PORT_NUMBER, () => {
   console.log(`Example app listening on port ${process.env.PORT_NUMBER}`)
 })
