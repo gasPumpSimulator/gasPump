@@ -123,7 +123,11 @@ app.post('/login', async (request, response) => {
 });
 
 app.get('/mainMenu', (request, response) => {
-  response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+  if(request.session.loggedin === true) {
+    response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+  } else {
+    response.send('Must log in!');
+  }
 })
 
 app.listen(process.env.PORT_NUMBER, () => {
