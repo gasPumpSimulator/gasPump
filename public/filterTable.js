@@ -14,6 +14,7 @@ function getCurrentDate() {
         n = `${y}-${m}-${d}`;
     }
     endTime.value = n;
+    console.log("user time ", endTime.value)
 }
 window.onload(getCurrentDate());
 
@@ -54,8 +55,8 @@ async function addTxt() {
     userChoices.push(Number(maxTotalCost));
     userChoices.push(Number(minTotalCost));
     //12
-    userChoices.push(minTime.slice(0, -6));
-    userChoices.push(maxTime.slice(0, -6));
+    userChoices.push(minTime);
+    userChoices.push(maxTime);
     //14 done
     userChoices.push(gasType);
 
@@ -130,6 +131,15 @@ async function addTxt() {
                     continue;
                 }
             }
+        }
+        //check dates
+        if(tableValues[7] < userChoices[12]) {
+            table.deleteRow(row);
+            continue;   
+        }
+        if(tableValues[7] > userChoices[13]) {
+            table.deleteRow(row);
+            continue;   
         }
         if(userChoices[0] !== "any") {
             if(tableValues[0] !== userChoices[0]) {
