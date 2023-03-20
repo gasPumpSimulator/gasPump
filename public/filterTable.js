@@ -73,22 +73,21 @@ async function addTxt() {
         tableValues[5] = table.rows[row].cells[5].innerHTML;
         tableValues[6] = table.rows[row].cells[6].innerHTML;
         tableValues[7] = table.rows[row].cells[7].innerHTML;
-        console.log("----------------------------------------");
-      //  for(let column = 0; column < 8; column++) {
-       // }
-        console.log("table values " + tableValues[0])
-        console.log("user choice " + userChoices[0])
-        console.log("table name " + tableValues[1])
-        console.log("user name " + userChoices[2])
+
         if(userChoices[0] !== "any") {
             if(tableValues[0] !== userChoices[0]) {
                 table.deleteRow(row);
                 continue;
             } 
         }
-        if(tableValues[1] !== userChoices[2]) {
-            table.deleteRow(row);
-        } else {
+        if(userChoices[2] !== "any") {
+            if(tableValues[1] !== userChoices[2]) {
+                table.deleteRow(row);
+            } else {
+                row++;
+            }
+        }
+        else {
             row++;
         }
     }
