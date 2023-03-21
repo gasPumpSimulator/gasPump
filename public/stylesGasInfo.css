@@ -1,14 +1,12 @@
 body {
     background-color: black;
-    height: 100vh;
-
+    height: 100px;
 }
 .mainContainer {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     display: flex;
     flex-direction: row;
-    height: 100vh;
 }
 .rightBody {
   flex-grow: 1;
@@ -32,7 +30,10 @@ h1 {
   padding-bottom: 50px;
 }
 table {
-    margin: 50px;
+    display: block;
+    height: 750px;
+    margin: 20px;
+    overflow-y: scroll;
     background-color: grey;
     border: 5px solid black;
     border-radius: 5px;
