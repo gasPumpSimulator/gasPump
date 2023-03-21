@@ -1,6 +1,7 @@
 body {
     background-color: black;
     height: 100vh;
+    font-size: 25px;
 }
 .mainContainer {
     font-family: 'Roboto', sans-serif;
@@ -19,6 +20,7 @@ body {
 
 }
 .leftBody {
+    flex-grow: 1;
     background-color:rgb(72, 67, 67);
     border: solid;
     height: 100vh;
@@ -31,6 +33,8 @@ h1 {
 }
 table {
     min-width: 500px;
+    max-width: 1000px;
+    font-size: 18px;
     grid-column: 2 / 6;
     grid-row: 2 / 6;
     display: block;
@@ -70,6 +74,7 @@ table {
     grid-row: 2;
     background-color: green;
     min-width: 200px;
+    max-width: 300px;
   }
   .searchMethodContainer1 {
     border: solid;
@@ -81,6 +86,7 @@ table {
     align-items: center;
     background-color: green;
     min-width: 200px;
+    max-width: 300px;
 
   }
   .searchMethodContainer2 {
@@ -92,7 +98,7 @@ table {
     justify-content: center;
     align-items: center;
     background-color: green;
-
+    max-width: 300px;
   }
   .searchMethodContainer3 {
     flex-direction: column;
@@ -104,6 +110,7 @@ table {
     align-items: center;
     flex-direction: column;
     background-color: green;
+    max-width: 300px;
   }
   .searchMethodContainer4 {
     border: solid;
@@ -114,8 +121,7 @@ table {
     align-items: center;
     flex-direction: column;
     background-color: green;
-
-    
+    max-width: 300px;
   }
   .searchMethodContainer5 {
     display: flex;
@@ -126,7 +132,7 @@ table {
     grid-column: 2 / 4;
     grid-row: 4;
     background-color: green;
-
+    max-width: 300px;
   }
   .searchMethodContainer6 {
     border: solid;
@@ -137,7 +143,7 @@ table {
     justify-content: center;
     align-items: center; 
     background-color: green;
- 
+    max-width: 300px;
 }
 select {
   width: 152px;
@@ -166,7 +172,7 @@ label {
   grid-column: 4 / 6;
   grid-row: 2;
   background-color: green;
-
+  max-width: 300px;
 }
 button {
     width: 100px;
