@@ -170,7 +170,6 @@ function incrementGallons() {
         postTransaction(paymentMethod, chosenGasNumber, chosenGasPrice, gallonsPumped, costOfGas, creditCardName);
         clearInterval(intervalId);
         timeoutID = setTimeout(askReciept, 3000);
-        console.log('StepInPumpProcess: ' + stepInPumpProcess);
     } else {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
     }
@@ -185,7 +184,7 @@ function askReciept() {
 }
 
 function displayReciept() {
-    alert(`Thank you for your purshase! Gallons pumped: ${gallonsPumped} || ${costOfGas}`);
+    alert(`Thank you for your purshase! Gallons pumped: ${gallonsPumped} || Price: ${costOfGas} || Enter email address for printed receipt`);
 }
 
 //emergency shutoff
