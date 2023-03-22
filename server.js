@@ -5,7 +5,7 @@ import gotScraping from 'got-scraping';
 import cheerio from 'cheerio';
 import bcrypt from 'bcrypt';
 
-import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard, addUser} from './database.js';
+import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard, addUser, getCustomQuery} from './database.js';
 import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -73,19 +73,18 @@ app.post('/transactions', async (req, res) => {
   res.send(transaction);
 })
 app.post('/addUser', async (request, response) => {
-  console.log("server running")
-
   const username = request.body.username;
   const salt = bcrypt.genSaltSync(10);
   const password = await bcrypt.hash(request.body.password, salt);
   let adminPassword = request.body.adminPassword;
-
 
   if(adminPassword == process.env.ADMIN_PASSWORD) {
     const result = await addUser(username, password, salt);
     if(result === false) {
       response.send('User already exists');
     } else {
+      request.session.loggedin = true;
+			request.session.username = username;
       response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
     }
   }
@@ -126,16 +125,22 @@ app.post('/login', async (request, response) => {
 });
 
 app.get('/mainMenu', (request, response) => {
-  response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+  if(request.session.loggedin === true) {
+    response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+  } else {
+    response.send('Must log in!');
+  }
 })
-
+app.get('/logOut', (request, response) => {
+  request.session.loggedin = false;
+  response.sendFile(path.join(__dirname, 'public/index.html'))
+})
 app.listen(process.env.PORT_NUMBER, () => {
   console.log(`Example app listening on port ${process.env.PORT_NUMBER}`)
 })
 
 app.post('/creditNumCheck', async (request, response) => {
   const creditNum = request.body.creditNumber;
-  console.log(creditNum);
   const results = await checkCreditCard(creditNum);
   response.send(results);
 })
@@ -145,4 +150,48 @@ app.get('/getTransactions', async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
 })
+/*
+app.post('/searchTransactions', async (req, res) => {
+  const ID = req.body.searchByID;
+  const name = req.body.name;
+  const paymentMethod = req.body.paymentMethod;
+  const gasType = req.body.gasType;
+  const pricePerGallon = req.body.pricePerGallon;
 
+  const maxPricePerGallon = req.body.maxPricePerGallon;
+  const minPricePerGallon = req.body.minPricePerGallon;
+
+  const gallonsPurchased = req.body.GallonsPurchased;
+
+  const minGallonsPurchased = req.body.minGallonsPurchased;
+  const maxGallonsPurchased = req.body.maxGallonsPurchased;
+  const totalCost = req.body.totalCost;
+
+  const maxTotalCost = req.body.maxTotalCost;
+  const minTotalCost = req.body.minTotalCost;
+
+  const minTime = req.body.startTime;
+  const maxTime = req.body.endTime;
+
+
+  console.log({
+    ID,
+    name,
+    paymentMethod,
+    gasType,
+    pricePerGallon,
+    maxPricePerGallon,
+    minPricePerGallon,
+    gallonsPurchased,
+    minGallonsPurchased,
+    maxGallonsPurchased,
+    totalCost,
+    maxTotalCost,
+    minTotalCost,
+    minTime,
+    maxTime,
+  });
+  console.log(results);
+  res.sendFile(path.join(__dirname, 'public/mainMenu.html'));
+})
+*/

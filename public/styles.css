@@ -22,46 +22,63 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 70%;
+    background-color:  rgb(72, 67, 67);
+    margin-bottom: 50px;
+    border: solid 10px;
+    border-bottom: 0;
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: 3px 0px 8px black;
+
 } 
 #interfaceContainer {
-    width: 300px;
-    height: 150px;
+    width: 400px;
+    height: 200px;
     background-image: radial-gradient(
     rgba(81, 155, 81, 0.75), black 120%
     );
     margin: 10px;
     text-align: center;
-    border: solid rgba(0, 0, 0, 0.493) 5px;
+    border: solid rgba(0, 0, 0, 0.493) 10px;
     border-bottom: solid rgba(0, 0, 0, 0.493) 2px;
-    border-top: solid rgba(0, 0, 0, 0.493) 5px;
+    border-top: solid rgba(0, 0, 0, 0.493) 10px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     color: white;
     font-family:'digital-7regular', Inconsolata, monospace;
-    font-size: 1.3rem;
+    font-size: 2rem;
     text-shadow: 0 0 5px #C8C8C8;
 }
-
+#interface {
+    margin-top: 60px;
+}
 #gallonContainer {
     display: flex;
-    justify-content: center;
+    margin-left: 18%;
+    padding-top: 10px;
+    text-align: center;
 }
-
 #gallons {
-    margin-left: 5px;
+    margin-left: 0px;
     width: 5px;
 }
 .mainContainer {
     display: flex;
+    flex-grow: 1;
+    margin-bottom:20px;
 }
 .containerBody {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: grey;
+    background-color: rgb(72, 67, 67);
     border-radius: 10px;
     width: 50em;
+    max-height: 1000px;
+    border: solid 10px rgba(169, 169, 169, 0.305);
 }
 .mainSides {
     flex-grow: 1;
@@ -72,7 +89,6 @@ body {
 .gasButtonContainer {
     display: flex;
     justify-content: center;
-    background-color: grey;
     margin: 10px;
 }
 .gasButtonGroup {
@@ -138,7 +154,7 @@ body {
 }
 /*END: Curvy P R E S S text for each button*/
 .gas_buttons {
-    flex-grow: 0;
+    flex-grow: .5;
     width: 4.5em;
     height: 5.5em;
     border-radius: 30px;
@@ -166,7 +182,7 @@ body {
     border: solid;
     border: 2px solid black;
     border-top: 5px solid black;
-    width: 50px;
+    width: 60px;
     margin-bottom: 20px;
     color: white;
     text-shadow: 0 0 3px #C8C8C8;
@@ -179,7 +195,7 @@ body {
 }
 
 .keypadContainer {
-    background-color: black;
+    background-color: rgba(35, 33, 33, 0.71);
     display: flex;
     width: 16em;
     height: 16em;
@@ -189,22 +205,15 @@ body {
     padding: 10px;
     border: 5px solid black;
     border-radius: 10px;
+    margin-top: 0px;
     margin-bottom: 20px;
+    box-shadow: 2px 5px 10px black;
+
 
 }
 
 .middle {
     display: flex;
-}
-
-.buttonGroup {
-    flex-grow: 1;
-    background-color: black;
-    min-width: 175px;
-    min-height: 40px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
 }
 
 header {
@@ -214,7 +223,6 @@ header {
 
 footer {
     height: 30px;
-    background-color: black;
     display: flex;
     justify-content: center;
     font-size: 10px;
@@ -250,8 +258,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
-    background-color: grey;
+    flex-grow: 1.5;
     padding-left: 70px;
 } 
 .output {
@@ -299,7 +306,6 @@ body {
 }
 
 .btnContainer {
-    background-color: grey;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -308,17 +314,17 @@ body {
 }
 .buttonGroup {
     background-color: black;
-    min-width: 175px;
+    min-width: 150px;
     min-height: 40px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border: solid;
 }
 
 footer {
     height: 50px;
-    background-color: grey;
-    margin-top: 20px;
+    background-color: black;
     padding-top: 10px;
 }
 
@@ -359,7 +365,7 @@ footer {
     font-weight: bold;
     font-size: 1em;
     width: 8em;
-    height: 4em;
+    height: 3em;
     background-color: red;
     border-radius: 50px;
 }

@@ -1,9 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
 import connectionQuery from './ssh.js';
-
-
 
 export async function getTransaction(id) {
     const rows = await connectionQuery(`SELECT * FROM transactions2 WHERE id = ${id}`);
@@ -33,6 +30,10 @@ export async function checkCreditCard(creditNum) {
 }
 export async function getTransactions() {
     const rows = await connectionQuery("SELECT * FROM transactions2");
+    return rows;
+}
+export async function getCustomQuery(gasType) {
+    const rows = await connectionQuery(`SELECT * FROM transactions2 WHERE gasType = "${gasType}"`);
     return rows;
 }
 // const transactions = await getTransactions();
