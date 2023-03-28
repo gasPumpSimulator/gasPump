@@ -281,3 +281,116 @@ async function databaseCreditNumCheck(creditNum) {
         return true;
     }
 }
+
+//Frontend credit card formatting and validation START
+
+/*
+Checks for credit card validation through the use of the Luhn algorithm.
+It's an error-checking algorithm supported by all major credit card networks used 
+to verify each card numbers' length and validity. This is checked using multiple RegEx patterns.
+Supports American Express (Amex/AmEx), Visa, Mastercard, Discover, Diners club, and JCB.
+Regex prevents anything outside of numbers.
+Last updated: 3/27/23
+*/
+function cardNum() {
+    let cardno;
+    let cardNoValid = false;
+    //Validate card numbers' length and pattern using regex
+    for(let i = 0; i < 6; ++i)
+    {
+        switch(i)
+        {
+            case 0: //American Express (Amex/AmEx)
+                cardno = /^(?:3[47][0-9]{13})$/;
+                if(currentInputNumber.value.match(cardno)) {
+                    cardNoValid = true;
+                    creditCardName = 'Amex';
+                }
+                break;
+            case 1: //Visa
+                cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+                if(currentInputNumber.value.match(cardno)) {
+                    cardNoValid = true;
+                    creditCardName = 'Visa';
+                }
+                break;
+            case 2: //Mastercard
+                cardno = /^(?:5[1-5][0-9]{14})$/;
+                if(currentInputNumber.value.match(cardno)){
+                    cardNoValid = true;
+                    creditCardName = 'Mastercard';
+                }
+                break;
+            case 3: //Discover
+                cardno = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
+                if(currentInputNumber.value.match(cardno)) {
+                    cardNoValid = true;
+                    creditCardName = 'Discover';
+                }
+                break;
+            case 4: //Diners club
+                cardno = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
+                if(currentInputNumber.value.match(cardno)) {
+                    cardNoValid = true;
+                    creditCardName = 'Discover';
+                }
+                break;
+            case 5: //JCB
+                cardno = /^(?:(?:2131|1800|35\d{3})\d{11})$/;
+                if(currentInputNumber.value.match(cardno)) {
+                    cardNoValid = true;
+                    creditCardName = 'Amex/Discover';
+                }
+                break;
+        }
+    }
+    console.log("End of cardNum function \nReturn type: " + cardNoValid + "\nCard type: " + creditCardName);
+    return cardNoValid;
+}
+
+function cardExpMonth() {
+    let monthValid = false;
+
+
+    console.log("End of cardExp function | Return type: " + monthValid);
+    return monthValid;
+}
+
+function cardExpYear() {
+    let yearValid = false;
+
+
+    console.log("End of cardExp function | Return type: " + yearValid);
+    return yearValid;
+}
+
+function cardCVC(_creditCardName){
+    let valid = false;
+    switch(_creditCardName){
+        case 'Amex':
+            if(creditCardCVC.length() == 4 && !creditCardCVC.isNaN()) valid = true;
+            break;
+        case 'Visa':
+            if(creditCardCVC.length() == 3 && !creditCardCVC.isNaN()) valid = true;
+            break;
+        case 'Mastercard':
+            if(creditCardCVC.length() == 3 && !creditCardCVC.isNaN()) valid = true;
+            break;
+        case 'Discover':
+            if(creditCardCVC.length() == 3 && !creditCardCVC.isNaN()) valid = true;
+            break;
+        case 'Amex/Discover':
+            if((creditCardCVC.length() == 3 || creditCardCVC.length() == 4) && !creditCardCVC.isNaN()) valid = true;
+            break;
+    }
+    console.log("End of cardCVC function | Return type: " + valid)
+    return valid;
+}
+
+//Frontend credit card formatting and validation END
+
+//Backend card validation START
+
+
+
+//Backend card validation END
