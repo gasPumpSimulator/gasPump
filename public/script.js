@@ -19,6 +19,8 @@ let creditCardName = "cash(none)";
 let port = "localhost:3000";
 let timeoutID;
 let recieptBool = false;
+let cvcCode;
+let creditExp;
 
 //disable unused buttons
 document.getElementById('D').disabled = true;

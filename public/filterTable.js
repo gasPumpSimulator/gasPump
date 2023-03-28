@@ -6,7 +6,7 @@ function getCurrentDate() {
     n =  new Date();
     y = n.getFullYear();
     m = n.getMonth() + 1;
-    d = n.getDate();
+    d = n.getDate() + 1;
     console.log(d)
     if(m < 10) {
         n = `${y}-0${m}-${d}`;
