@@ -18,7 +18,7 @@ let userName;
 let creditCardName = "cash(none)";
 let port = "localhost:3000";
 let timeoutID;
-let recieptBool = false;
+let receiptBool = false;
 let cvcCode;
 let creditExp;
 
@@ -142,7 +142,7 @@ function compute() {
         amountOfGasPumped();
         break;
     case 4: 
-        displayReciept();
+        displayReceipt();
     } 
 }
 // variables for interval timer
@@ -171,22 +171,22 @@ function incrementGallons() {
         }
         postTransaction(paymentMethod, chosenGasNumber, chosenGasPrice, gallonsPumped, costOfGas, creditCardName);
         clearInterval(intervalId);
-        timeoutID = setTimeout(askReciept, 3000);
+        timeoutID = setTimeout(askReceipt, 3000);
     } else {
         gallonsInput.innerHTML = ' ' + gallonsPumped;
     }
 }  
 
-function askReciept() {
+function askReceipt() {
     clearTimeout(timeoutID);
-    inputField.innerHTML = 'Would you like a reciept? Press ENTER for YES, RESET for NO';
+    inputField.innerHTML = 'Would you like a receipt? Press ENTER for YES, RESET for NO';
     gallonDisplayField = ' ';
     gallonsInput.innerHTML = ' ';
-    recieptBool = true;
+    receiptBool = true;
 }
 
-function displayReciept() {
-    alert(`Thank you for your purshase! Gallons pumped: ${gallonsPumped} || Price: ${costOfGas} || Enter email address for printed receipt`);
+function displayReceipt() {
+    alert(`Thank you for your purchase! Gallons pumped: ${gallonsPumped} || Price: ${costOfGas} || Enter your email address for printed receipt`);
 }
 
 //emergency shutoff
@@ -218,7 +218,7 @@ async function getPrices() {
 //reset everything for new transaction
 function reset()
 {
-    if(emergencyStop || inputField.innerHTML === 'Done Fueling' || recieptBool === true) {
+    if(emergencyStop || inputField.innerHTML === 'Done Fueling' || receiptBool === true) {
         currentInputNumber = '';
         cashAmount = 0;
         gasTankSize = 0;
