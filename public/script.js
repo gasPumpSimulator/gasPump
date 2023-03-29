@@ -199,7 +199,7 @@ let gasPrice87 = document.getElementById('price87');
 let gasPrice89 = document.getElementById('price89');
 let gasPrice93 = document.getElementById('price93');
 let gasPriceDiesel = document.getElementById('priceDiesel');
-let periodBtn = document.getElementById('period')
+let periodBtn = document.getElementById('period');
 
 const baseUrl = `http://${port}/getPrices`
 
