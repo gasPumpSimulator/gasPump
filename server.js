@@ -1,155 +1,175 @@
-import express, { json } from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import gotScraping from 'got-scraping';
-import cheerio from 'cheerio';
-import bcrypt from 'bcrypt';
+// eslint-disable-next-line no-unused-vars
+import express, { json } from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import gotScraping from "got-scraping";
+import cheerio from "cheerio";
+import bcrypt from "bcrypt";
 
-import { getTransactions, getTransaction, createTransaction, checkUsernamePassword, checkCreditCard, addUser, getCustomQuery} from './database.js';
-import session from 'express-session';
-import dotenv from 'dotenv';
+import {
+  getTransactions,
+  getTransaction,
+  createTransaction,
+  checkUsernamePassword,
+  checkCreditCard,
+  addUser,
+} from "./database.js";
+import session from "express-session";
+import dotenv from "dotenv";
 dotenv.config();
 
-let returnValue = ['$-.--', '$-.--','$-.--','$-.--'];
+let returnValue = ["$-.--", "$-.--", "$-.--", "$-.--"];
 let data = [];
-const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
 //for login session
-app.use(session({
-  secret: 'secret',
-  resave: true,
-	saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname, 'public/index.html'))
-})
-app.get('/adminLogin', (request, response) => {
-  response.sendFile(path.join(__dirname, 'public/login.html'))
-})
-app.get('/register', (request, response) => {
-  response.sendFile(path.join(__dirname, 'public/register.html'))
-})
-app.get('/getPrices', async (request, response) => {
+app.get("/", (request, response) => {
+  response.sendFile(path.join(__dirname, "public/index.html"));
+});
+app.get("/adminLogin", (request, response) => {
+  response.sendFile(path.join(__dirname, "public/login.html"));
+});
+app.get("/register", (request, response) => {
+  response.sendFile(path.join(__dirname, "public/register.html"));
+});
+app.get("/getPrices", async (request, response) => {
+  const storeUrl = "https://gasprices.aaa.com/?state=IN";
+  // Download HTML with Got Scraping
+  const res = await gotScraping.gotScraping(storeUrl);
+  const html = res.body;
+  // Parse HTML with Cheerio
+  const $ = cheerio.load(html);
+  //get all the tr elements on page add to array
+  $(".table-mob:first tr").each((_, e) => {
+    let row = $(e).text().replace(/(\s+)/g, " ");
+    data.push(row);
+  });
+  //add all elements that have price in them to return arrray
+  returnValue[0] = data[1].split(" ")[3];
+  returnValue[1] = data[1].split(" ")[4];
+  returnValue[2] = data[1].split(" ")[5];
+  returnValue[3] = data[1].split(" ")[6];
+  //return value to frontend
+  response.status(200).json(returnValue);
+});
 
-    const storeUrl = 'https://gasprices.aaa.com/?state=IN';
-    // Download HTML with Got Scraping
-    const res = await gotScraping.gotScraping(storeUrl);
-    const html = res.body;
-    // Parse HTML with Cheerio
-    const $ = cheerio.load(html);
-    //get all the tr elements on page add to array
-    $('.table-mob:first tr').each((_, e) => {
-    
-        let row  = $(e).text().replace(/(\s+)/g, ' ');
-        data.push(row);  
-    });
-    //add all elements that have price in them to return arrray
-    returnValue[0] = data[1].split(' ')[3];
-    returnValue[1] = data[1].split(' ')[4];
-    returnValue[2] = data[1].split(' ')[5];
-    returnValue[3] = data[1].split(' ')[6];
-    //return value to frontend
-    response.status(200).json(returnValue);
-})
-
-
-app.get('/transactions/:id', async (req, res) => {
+app.get("/transactions/:id", async (req, res) => {
   const id = req.params.id;
   const transaction = await getTransaction(id);
   res.send(transaction);
-})
+});
 
-app.post('/transactions', async (req, res) => {
-  const { paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice, creditCardName } = req.body;
-  const transaction = await createTransaction(paymentMethod, gasType, pricePerGallon, gallonsPurchased, totalPrice, creditCardName);
+app.post("/transactions", async (req, res) => {
+  const {
+    paymentMethod,
+    gasType,
+    pricePerGallon,
+    gallonsPurchased,
+    totalPrice,
+    creditCardName,
+  } = req.body;
+  const transaction = await createTransaction(
+    paymentMethod,
+    gasType,
+    pricePerGallon,
+    gallonsPurchased,
+    totalPrice,
+    creditCardName
+  );
   res.send(transaction);
-})
-app.post('/addUser', async (request, response) => {
+});
+app.post("/addUser", async (request, response) => {
   const username = request.body.username;
   const salt = bcrypt.genSaltSync(10);
   const password = await bcrypt.hash(request.body.password, salt);
   let adminPassword = request.body.adminPassword;
 
-  if(adminPassword == process.env.ADMIN_PASSWORD) {
+  if (adminPassword == process.env.ADMIN_PASSWORD) {
     const result = await addUser(username, password, salt);
-    if(result === false) {
-      response.send('User already exists');
+    if (result === false) {
+      response.send("User already exists");
     } else {
       request.session.loggedin = true;
-			request.session.username = username;
-      response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+      request.session.username = username;
+      response.sendFile(path.join(__dirname, "public/mainMenu.html"));
     }
-  }
-})
-
-app.post('/login', async (request, response) => {
-	// Capture the input fields
-	const username = request.body.username;
-  const password = request.body.password;
-	// Ensure the input fields exists and are not empty
-	if (username && password) {
-  // use async functions to check password, hash and compare them 
-    (async function() {
-      try{
-            const results = await checkUsernamePassword(username);
-            const saltedPassword = await bcrypt.hash(password, results[0].salt);
-            await passwordValidityCheck(results[0].password, saltedPassword);
-          }catch(e){
-            console.log(e);
-          }    
-    })();
-    async function passwordValidityCheck(inputedPassword, DatabasePassword) {
-			  if (DatabasePassword.length > 0 && DatabasePassword === inputedPassword) {
-				  // Authenticate the user
-				  request.session.loggedin = true;
-				  request.session.username = username;
-				  // Redirect to home page
-				  response.redirect('/mainMenu');
-			  } else {
-				  response.send('Incorrect Username and/or Password!');
-          response.end();
-			  }			
-    }
-  } else {
-    response.send('Please enter Username and Password!');
-    response.end();
   }
 });
 
-app.get('/mainMenu', (request, response) => {
-  if(request.session.loggedin === true) {
-    response.sendFile(path.join(__dirname, 'public/mainMenu.html'))
+app.post("/login", async (request, response) => {
+  // Capture the input fields
+  const username = request.body.username;
+  const password = request.body.password;
+  // Ensure the input fields exists and are not empty
+  if (username && password) {
+    // use async functions to check password, hash and compare them
+    (async function () {
+      try {
+        const results = await checkUsernamePassword(username);
+        const saltedPassword = await bcrypt.hash(password, results[0].salt);
+        await passwordValidityCheck(results[0].password, saltedPassword);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
   } else {
-    response.send('Must log in!');
+    response.send("Please enter Username and Password!");
+    response.end();
   }
-})
-app.get('/logOut', (request, response) => {
-  request.session.loggedin = false;
-  response.sendFile(path.join(__dirname, 'public/index.html'))
-})
-app.listen(process.env.PORT_NUMBER, () => {
-  console.log(`Example app listening on port ${process.env.PORT_NUMBER}`)
-})
+  async function passwordValidityCheck(inputedPassword, DatabasePassword) {
+    if (DatabasePassword.length > 0 && DatabasePassword === inputedPassword) {
+      // Authenticate the user
+      request.session.loggedin = true;
+      request.session.username = username;
+      // Redirect to home page
+      response.redirect("/mainMenu");
+    } else {
+      response.send("Incorrect Username and/or Password!");
+      response.end();
+    }
+  }
+});
 
-app.post('/creditNumCheck', async (request, response) => {
+app.get("/mainMenu", (request, response) => {
+  if (request.session.loggedin === true) {
+    response.sendFile(path.join(__dirname, "public/mainMenu.html"));
+  } else {
+    response.send("Must log in!");
+  }
+});
+app.get("/logOut", (request, response) => {
+  request.session.loggedin = false;
+  response.sendFile(path.join(__dirname, "public/index.html"));
+});
+app.listen(process.env.PORT_NUMBER, () => {
+  console.log(`Example app listening on port ${process.env.PORT_NUMBER}`);
+});
+
+app.post("/creditNumCheck", async (request, response) => {
   const creditNum = request.body.creditNumber;
   const results = await checkCreditCard(creditNum);
   response.send(results);
-})
+});
 
-//database 
-app.get('/getTransactions', async (req, res) => {
+//database
+app.get("/getTransactions", async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
-})
+});
 /*
 app.post('/searchTransactions', async (req, res) => {
   const ID = req.body.searchByID;
@@ -194,4 +214,17 @@ app.post('/searchTransactions', async (req, res) => {
   console.log(results);
   res.sendFile(path.join(__dirname, 'public/mainMenu.html'));
 })
+
+    async function passwordValidityCheck(inputedPassword, DatabasePassword) {
+      if (DatabasePassword.length > 0 && DatabasePassword === inputedPassword) {
+        // Authenticate the user
+        request.session.loggedin = true;
+        request.session.username = username;
+        // Redirect to home page
+        response.redirect("/mainMenu");
+      } else {
+        response.send("Incorrect Username and/or Password!");
+        response.end();
+      }
+    }
 */
