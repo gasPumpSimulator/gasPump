@@ -224,9 +224,10 @@ function incrementGallons() {
   ) {
     gallonsInput.innerHTML = " " + gallonsPumped;
     if (emergencyStop === true) {
-      inputField.innerHTML = "Emergency stop initiated";
+      outputField.innerHTML = "Emergency stop initiated";
     } else {
-      inputField.innerHTML = "Done Fueling";
+      outputField.innerHTML = "Done Fueling";
+      inputField.type = "hidden";
     }
     postTransaction(
       paymentMethod,
@@ -245,7 +246,7 @@ function incrementGallons() {
 
 function askReceipt() {
   clearTimeout(timeoutID);
-  inputField.innerHTML =
+  outputField.innerHTML =
     "Would you like a receipt? Press ENTER for YES, RESET for NO";
   gallonDisplayField.innerHTML = "";
   gallonsInput.innerHTML = "";
@@ -285,7 +286,8 @@ async function getPrices() {
 
 //reset everything for new transaction
 function reset() {
-  if (emergencyStop || inputField.innerHTML === "Done Fueling") {
+  if (emergencyStop || inputField.innerHTML === "Done Fueling" || receiptBool) {
+    inputField.type = "visible";
     currentInput = "";
     cashAmount = 0;
     gasTankSize = 0;
