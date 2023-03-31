@@ -29,5 +29,9 @@
     "node": "^19.8.1",
     "nodemon": "^2.0.21",
     "ssh2": "^1.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0"
   }
 }
