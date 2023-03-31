@@ -338,8 +338,8 @@ async function postTransaction(transactionObject) {
   })
     .then((response) => response.json())
     .then((response) => console.log(JSON.stringify(response)));
-<<<<<<< HEAD
 }
+
 async function databaseCreditNumCheck(transactionObject) {
   const response = await fetch(`http://${port}/creditNumCheck`, {
     method: "POST",
@@ -378,44 +378,44 @@ function cardNum() {
     switch (i) {
       case 0: //American Express (Amex/AmEx)
         cardno = /^(?:3[47][0-9]{13})$/;
-        if (currentInputNumber.value.match(cardno)) {
+        if (currentInput.value.match(cardno)) {
           cardNoValid = true;
-          creditCardName = "Amex";
+          transactionObject.creditCardName = "Amex";
         }
         break;
       case 1: //Visa
         cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-        if (currentInputNumber.value.match(cardno)) {
+        if (currentInput.value.match(cardno)) {
           cardNoValid = true;
-          creditCardName = "Visa";
+          transactionObject.creditCardName = "Visa";
         }
         break;
       case 2: //Mastercard
         cardno = /^(?:5[1-5][0-9]{14})$/;
-        if (currentInputNumber.value.match(cardno)) {
+        if (currentInput.value.match(cardno)) {
           cardNoValid = true;
-          creditCardName = "Mastercard";
+          transactionObject.creditCardName = "Mastercard";
         }
         break;
       case 3: //Discover
         cardno = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
-        if (currentInputNumber.value.match(cardno)) {
+        if (currentInput.value.match(cardno)) {
           cardNoValid = true;
-          creditCardName = "Discover";
+          transactionObject.creditCardName = "Discover";
         }
         break;
       case 4: //Diners club
         cardno = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
-        if (currentInputNumber.value.match(cardno)) {
+        if (currentInput.value.match(cardno)) {
           cardNoValid = true;
-          creditCardName = "Discover";
+          transactionObject.creditCardName = "Discover";
         }
         break;
       case 5: //JCB
         cardno = /^(?:(?:2131|1800|35\d{3})\d{11})$/;
-        if (currentInputNumber.value.match(cardno)) {
+        if (currentInput.value.match(cardno)) {
           cardNoValid = true;
-          creditCardName = "Amex/Discover";
+          transactionObject.creditCardName = "Amex/Discover";
         }
         break;
     }
@@ -424,7 +424,7 @@ function cardNum() {
     "End of cardNum function \nReturn type: " +
       cardNoValid +
       "\nCard type: " +
-      creditCardName
+      transactionObject.creditCardName
   );
   return cardNoValid;
 }
@@ -447,21 +447,38 @@ function cardCVC(_creditCardName) {
   let valid = false;
   switch (_creditCardName) {
     case "Amex":
-      if (creditCardCVC.length() == 4 && !creditCardCVC.isNaN()) valid = true;
+      if (
+        transactionObject.cvcCode.length() == 4 &&
+        !transactionObject.cvcCode.isNaN()
+      )
+        valid = true;
       break;
     case "Visa":
-      if (creditCardCVC.length() == 3 && !creditCardCVC.isNaN()) valid = true;
+      if (
+        transactionObject.cvcCode.length() == 3 &&
+        !transactionObject.cvcCode.isNaN()
+      )
+        valid = true;
       break;
     case "Mastercard":
-      if (creditCardCVC.length() == 3 && !creditCardCVC.isNaN()) valid = true;
+      if (
+        transactionObject.cvcCode.length() == 3 &&
+        !transactionObject.cvcCode.isNaN()
+      )
+        valid = true;
       break;
     case "Discover":
-      if (creditCardCVC.length() == 3 && !creditCardCVC.isNaN()) valid = true;
+      if (
+        transactionObject.cvcCode.length() == 3 &&
+        !transactionObject.cvcCode.isNaN()
+      )
+        valid = true;
       break;
     case "Amex/Discover":
       if (
-        (creditCardCVC.length() == 3 || creditCardCVC.length() == 4) &&
-        !creditCardCVC.isNaN()
+        (transactionObject.cvcCode.length() == 3 ||
+          transactionObject.cvcCode.length() == 4) &&
+        !transactionObject.cvcCode.isNaN()
       )
         valid = true;
       break;
@@ -475,25 +492,3 @@ function cardCVC(_creditCardName) {
 //Backend card validation START
 
 //Backend card validation END
-=======
-}
-async function databaseCreditNumCheck(transactionObject) {
-  const response = await fetch(`http://${port}/creditNumCheck`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      creditNumber: transactionObject.creditCardNumber,
-    }),
-  });
-  const data = await response.json();
-  if (data.length < 1) {
-    return false;
-  } else {
-    transactionObject.creditCardName = data[0].name;
-    return true;
-  }
-}
->>>>>>> tempPeter

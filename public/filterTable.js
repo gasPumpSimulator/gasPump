@@ -6,7 +6,7 @@ function getCurrentDate() {
   let n = new Date();
   const y = n.getFullYear();
   const m = n.getMonth() + 1;
-  const d = n.getDate() + 1;
+  const d = n.getDate();
   console.log(d);
   if (m < 10) {
     n = `${y}-0${m}-${d}`;

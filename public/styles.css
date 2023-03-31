@@ -42,20 +42,7 @@ body {
   border-bottom-right-radius: 0;
   box-shadow: 3px 0px 8px black;
 }
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-  background-color: rgb(72, 67, 67);
-  margin-bottom: 50px;
-  border: solid 10px;
-  border-bottom: 0;
-  border-radius: 10px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  box-shadow: 3px 0px 8px black;
-}
+
 #interfaceContainer {
   width: 400px;
   height: 200px;
@@ -89,40 +76,40 @@ body {
 
 /*START: Styles for input element in terminal screen*/
 #inputData {
-    background-color: transparent;
-    text-align: center;
-    border: none;
-    font-family:'digital-7regular', Inconsolata, monospace;
-    font-size: 1.8rem;
-    text-shadow: 0 0 5px #C8C8C8;
-    color: white;
+  background-color: transparent;
+  text-align: center;
+  border: none;
+  font-family: "digital-7regular", Inconsolata, monospace;
+  font-size: 1.8rem;
+  text-shadow: 0 0 5px #c8c8c8;
+  color: white;
 }
 
 /*START: Styles placeholder attribute text for input element in terminal screen*/
 #inputData::-webkit-input-placeholder {
-    color: rgb(199, 199, 199);
+  color: rgb(199, 199, 199);
 }
 #inputData:-moz-placeholder {
-    /* FF 4-18 */
-    color: rgb(199, 199, 199);
-    opacity: 1;
+  /* FF 4-18 */
+  color: rgb(199, 199, 199);
+  opacity: 1;
 }
 #inputData::-moz-placeholder {
-    /* FF 19+ */
-    color: rgb(199, 199, 199);
-    opacity: 1;
+  /* FF 19+ */
+  color: rgb(199, 199, 199);
+  opacity: 1;
 }
 #inputData:-ms-input-placeholder {
-    /* IE 10+ */
-    color: rgb(199, 199, 199);
+  /* IE 10+ */
+  color: rgb(199, 199, 199);
 }
 #inputData::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: rgb(199, 199, 199);
+  /* Microsoft Edge */
+  color: rgb(199, 199, 199);
 }
 #inputData::placeholder {
-    /* modern browser */
-    color: rgb(199, 199, 199);
+  /* modern browser */
+  color: rgb(199, 199, 199);
 }
 /*END: Styles placeholder attribute text for input element in terminal screen*/
 /*END: Styles for input element in terminal screen*/
