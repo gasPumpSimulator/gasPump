@@ -338,6 +338,7 @@ async function postTransaction(transactionObject) {
   })
     .then((response) => response.json())
     .then((response) => console.log(JSON.stringify(response)));
+<<<<<<< HEAD
 }
 async function databaseCreditNumCheck(transactionObject) {
   const response = await fetch(`http://${port}/creditNumCheck`, {
@@ -474,3 +475,25 @@ function cardCVC(_creditCardName) {
 //Backend card validation START
 
 //Backend card validation END
+=======
+}
+async function databaseCreditNumCheck(transactionObject) {
+  const response = await fetch(`http://${port}/creditNumCheck`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      creditNumber: transactionObject.creditCardNumber,
+    }),
+  });
+  const data = await response.json();
+  if (data.length < 1) {
+    return false;
+  } else {
+    transactionObject.creditCardName = data[0].name;
+    return true;
+  }
+}
+>>>>>>> tempPeter

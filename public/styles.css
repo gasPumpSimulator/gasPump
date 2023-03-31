@@ -6,9 +6,19 @@
     url("./fonts/digital-7.regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
+  font-family: "digital-7regular";
+  src: url("./fonts/digital-7.regular-webfont.woff2") format("woff2"),
+    url("./fonts/digital-7.regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: black;
   font-family: "Roboto", sans-serif;
   display: flex;
   flex-direction: column;
@@ -32,7 +42,35 @@ body {
   border-bottom-right-radius: 0;
   box-shadow: 3px 0px 8px black;
 }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  background-color: rgb(72, 67, 67);
+  margin-bottom: 50px;
+  border: solid 10px;
+  border-bottom: 0;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 3px 0px 8px black;
+}
 #interfaceContainer {
+  width: 400px;
+  height: 200px;
+  background-image: radial-gradient(rgba(81, 155, 81, 0.75), black 120%);
+  margin: 10px;
+  text-align: center;
+  border: solid rgba(0, 0, 0, 0.493) 10px;
+  border-bottom: solid rgba(0, 0, 0, 0.493) 2px;
+  border-top: solid rgba(0, 0, 0, 0.493) 10px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  color: white;
+  font-family: "digital-7regular", Inconsolata, monospace;
+  font-size: 2rem;
+  text-shadow: 0 0 5px #c8c8c8;
   width: 400px;
   height: 200px;
   background-image: radial-gradient(rgba(81, 155, 81, 0.75), black 120%);
