@@ -1,17 +1,19 @@
 let transactionObject = {
-  chosenGasNumber: "",
-  chosenGasPrice: "",
-  paymentMethod: "",
-  cashAmount: "",
-  gasTankSize: "",
+  chosenGasNumber: "df",
+  chosenGasPrice: "f",
+  paymentMethod: "f",
+  cashAmount: "d",
+  gasTankSize: "d",
   // eslint-disable-next-line no-dupe-keys
-  cashAmount: "",
-  costOfGas: "",
-  creditCardNumber: "",
-  creditCardName: "",
-  cvcCode: "",
-  creditExp: "",
+  cashAmount: "d",
+  costOfGas: "d",
+  creditCardNumber: "d",
+  creditCardName: "d",
+  cvcCode: "d",
+  creditExp: "s",
 };
 
-transactionObject.chosenGasNumber = 3333;
-console.log(transactionObject.chosenGasNumber);
+for (let key in transactionObject) {
+  transactionObject.key = "test";
+  console.log(transactionObject.key);
+}

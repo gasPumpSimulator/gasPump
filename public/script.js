@@ -135,7 +135,7 @@ function tankSize() {
   inputField.value = "";
 }
 
-//change color of button for chosen gas type 4th step
+//change color of button for chosen gas type
 function changeColor(input, inputedPrice) {
   let price = document.getElementById(inputedPrice).innerHTML;
   price = price.replace("$", "");
@@ -296,28 +296,25 @@ async function getPrices() {
 //reset everything for new transaction
 function reset() {
   if (emergencyStop || inputField.innerHTML === "Done Fueling" || receiptBool) {
-    inputField.type = "visible";
     currentInput = "";
-    transactionObject.cashAmount = 0;
-    transactionObject.gasTankSize = 0;
     stepInPumpProcess = 1;
-    transactionObject.costOfGas = 0;
-    chosenGasBool = false;
-    transactionObject.chosenGasPrice = 0;
-    transactionObject.paymentMethod = "none";
     gallonsPumped = 0;
-    if (transactionObject.chosenGasNumber) {
-      let element = document.getElementById(transactionObject.chosenGasNumber);
-      element.style.backgroundColor = "white";
+    chosenGasBool = false;
+    emergencyStop = false;
+    document.getElementById(
+      transactionObject.chosenGasNumber
+    ).style.backgroundColor = "white";
+    for (let key in transactionObject) {
+      transactionObject.key = "";
     }
-    transactionObject.chosenGasNumber = "";
+    transactionObject.creditCardName = "cash(none)";
     outputField.innerHTML = "Enter 1 for credit or 2 for cash";
     inputField.value = "";
+    inputField.type = "visible";
     gallonsInput.innerHTML = "";
     gallonDisplayField.innerHTML = "";
     beginFuelingButton.disabled = true;
     emergencyShutoff.disabled = true;
-    emergencyStop = false;
   } else if (!emergencyShutoff.disabled) {
     return;
   }
