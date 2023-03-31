@@ -96,12 +96,12 @@ function checkCreditCVC() {
   if (currentInput === "") {
     return;
   }
-  if (currentInput.length > 3) {
+  if (!/\d{3}/.test(currentInput)) {
     outputField.innerHTML = "Invalid CVC.  Please Try again";
   } else {
     transactionObject.cvcCode = currentInput;
     outputField.innerHTML =
-      "Please enter credit card expiration date then press ENTER";
+      "Please enter credit card expiration date in the form MM.YYYY then press ENTER";
     stepInPumpProcess++;
   }
   currentInput = "";
@@ -112,7 +112,7 @@ function checkCreditExp() {
   if (currentInput === "") {
     return;
   }
-  if (currentInput.length > 3) {
+  if (!/\d{2}[.]\d{4}/.test(currentInput)) {
     outputField.innerHTML = "Invalid Expiration date. Please Try again";
   } else {
     transactionObject.creditExp = currentInput;
