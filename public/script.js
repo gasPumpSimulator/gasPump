@@ -21,6 +21,7 @@ let transactionObject = {
   costOfGas: "",
   creditCardNumber: "",
   creditCardName: "cash(none)",
+  creditCardType: "",
   cvcCode: "",
   creditExp: "",
 };
@@ -77,15 +78,11 @@ async function checkCreditNameOrCash() {
   currentInput = "";
 }
 //3rd step, checks inputted name
-/*async*/ function checkNumCredit() {
-  if (
-    currentInput.length > 4 /*||
-    (
-      /*await databaseCreditNumCheck(currentInput)) == false*/
-  ) {
+async function checkNumCredit() {
+  if (!cardNum(currentInput)) {
     outputField.innerHTML = "Invalid Entry. Please try again";
   } else {
-    outputField.innerHTML = "Enter the 3 digit CVC code then press enter";
+    outputField.innerHTML = "Enter CVC code then press enter";
     stepInPumpProcess++;
   }
   inputField.value = "";
@@ -96,7 +93,7 @@ function checkCreditCVC() {
   if (currentInput === "") {
     return;
   }
-  if (!/\d{3}/.test(currentInput)) {
+  if (!cardCVC(transactionObject.creditCardType)) {
     outputField.innerHTML = "Invalid CVC.  Please Try again";
   } else {
     transactionObject.cvcCode = currentInput;
@@ -370,7 +367,7 @@ Supports American Express (Amex/AmEx), Visa, Mastercard, Discover, Diners club, 
 Regex prevents anything outside of numbers.
 Last updated: 3/27/23
 */
-function cardNum() {
+function cardNum(inputCardNo) {
   let cardno;
   let cardNoValid = false;
   //Validate card numbers' length and pattern using regex
@@ -378,44 +375,44 @@ function cardNum() {
     switch (i) {
       case 0: //American Express (Amex/AmEx)
         cardno = /^(?:3[47][0-9]{13})$/;
-        if (currentInput.value.match(cardno)) {
+        if (inputCardNo.match(cardno)) {
           cardNoValid = true;
-          transactionObject.creditCardName = "Amex";
+          transactionObject.creditCardType = "Amex";
         }
         break;
       case 1: //Visa
         cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-        if (currentInput.value.match(cardno)) {
+        if (inputCardNo.match(cardno)) {
           cardNoValid = true;
-          transactionObject.creditCardName = "Visa";
+          transactionObject.creditCardType = "Visa";
         }
         break;
       case 2: //Mastercard
         cardno = /^(?:5[1-5][0-9]{14})$/;
-        if (currentInput.value.match(cardno)) {
+        if (inputCardNo.match(cardno)) {
           cardNoValid = true;
-          transactionObject.creditCardName = "Mastercard";
+          transactionObject.creditCardType = "Mastercard";
         }
         break;
       case 3: //Discover
         cardno = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
-        if (currentInput.value.match(cardno)) {
+        if (inputCardNo.match(cardno)) {
           cardNoValid = true;
-          transactionObject.creditCardName = "Discover";
+          transactionObject.creditCardType = "Discover";
         }
         break;
       case 4: //Diners club
         cardno = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
-        if (currentInput.value.match(cardno)) {
+        if (inputCardNo.match(cardno)) {
           cardNoValid = true;
-          transactionObject.creditCardName = "Discover";
+          transactionObject.creditCardType = "Discover";
         }
         break;
       case 5: //JCB
         cardno = /^(?:(?:2131|1800|35\d{3})\d{11})$/;
-        if (currentInput.value.match(cardno)) {
+        if (inputCardNo.match(cardno)) {
           cardNoValid = true;
-          transactionObject.creditCardName = "Amex/Discover";
+          transactionObject.creditCardType = "Amex/Discover";
         }
         break;
     }
@@ -424,7 +421,7 @@ function cardNum() {
     "End of cardNum function \nReturn type: " +
       cardNoValid +
       "\nCard type: " +
-      transactionObject.creditCardName
+      transactionObject.creditCardType
   );
   return cardNoValid;
 }
@@ -447,38 +444,21 @@ function cardCVC(_creditCardName) {
   let valid = false;
   switch (_creditCardName) {
     case "Amex":
-      if (
-        transactionObject.cvcCode.length() == 4 &&
-        !transactionObject.cvcCode.isNaN()
-      )
-        valid = true;
+      if (currentInput.length == 4 && !isNaN(currentInput)) valid = true;
       break;
     case "Visa":
-      if (
-        transactionObject.cvcCode.length() == 3 &&
-        !transactionObject.cvcCode.isNaN()
-      )
-        valid = true;
+      if (currentInput.length == 3 && !isNaN(currentInput)) valid = true;
       break;
     case "Mastercard":
-      if (
-        transactionObject.cvcCode.length() == 3 &&
-        !transactionObject.cvcCode.isNaN()
-      )
-        valid = true;
+      if (currentInput.length == 3 && !isNaN(currentInput)) valid = true;
       break;
     case "Discover":
-      if (
-        transactionObject.cvcCode.length() == 3 &&
-        !transactionObject.cvcCode.isNaN()
-      )
-        valid = true;
+      if (currentInput.length == 3 && !isNaN(currentInput)) valid = true;
       break;
     case "Amex/Discover":
       if (
-        (transactionObject.cvcCode.length() == 3 ||
-          transactionObject.cvcCode.length() == 4) &&
-        !transactionObject.cvcCode.isNaN()
+        (currentInput.length == 3 || currentInput.length == 4) &&
+        !currentInput.isNaN()
       )
         valid = true;
       break;
