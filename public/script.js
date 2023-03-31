@@ -1,29 +1,41 @@
 /* eslint-disable no-unused-vars */
 let chosenGasBool = false;
-let chosenGasNumber;
-let chosenGasPrice = 0;
-let paymentMethod;
+let emergencyStop = false;
+let receiptBool = false;
+
+//html fields
 let outputField = document.getElementById("interface");
 let gallonDisplayField = document.getElementById("gallonDisplay");
 let gallonsInput = document.getElementById("gallons");
 let inputField = document.getElementById("input");
 let beginFuelingButton = document.getElementById("beginFueling");
 let emergencyShutoff = document.getElementById("emergencyShutoff");
+
+//object to hold transaction information
+let transactionObject = {
+  chosenGasNumber: "",
+  chosenGasPrice: "",
+  paymentMethod: "",
+  cashAmount: "",
+  gasTankSize: "",
+  costOfGas: "",
+  creditCardNumber: "",
+  creditCardName: "cash(none)",
+  cvcCode: "",
+  creditExp: "",
+};
+
+//input variables and step in process
 let currentInput = "";
-let cashAmount = 0;
-let gasTankSize = 0;
 let stepInPumpProcess = 1;
-let costOfGas = 0;
-let emergencyStop = false;
-/* exported creditCardNumber */
-let creditCardNumber;
-let userName;
-let creditCardName = "cash(none)";
+
+//port number definition
 let port = "localhost:3000";
+
+// variables for interval timer
+let gallonsPumped = 0;
+let intervalId;
 let timeoutID;
-let receiptBool = false;
-let cvcCode;
-let creditExp;
 
 //disable unused buttons
 document.getElementById("D").disabled = true;
@@ -39,10 +51,10 @@ function paymentMethodFunction(input) {
   let message;
   if (input === 1) {
     message = "input name on credit card and press ENTER";
-    paymentMethod = "card";
+    transactionObject.paymentMethod = "card";
   } else {
     message = "input cash amount and press ENTER";
-    paymentMethod = "cash";
+    transactionObject.paymentMethod = "cash";
   }
   outputField.innerHTML = message;
   stepInPumpProcess++;
@@ -52,13 +64,13 @@ async function checkCreditNameOrCash() {
   if (currentInput === "") {
     return;
   }
-  if (paymentMethod === "card") {
-    userName = currentInput;
+  if (transactionObject.paymentMethod === "card") {
+    transactionObject.creditCardName = currentInput;
     outputField.innerHTML = "Enter credit card number then press enter";
     stepInPumpProcess++;
   } else {
-    cashAmount = currentInput;
-    outputField.innerHTML = `$${cashAmount} of gas purchased, choose gas type then press enter`;
+    transactionObject.cashAmount = currentInput;
+    outputField.innerHTML = `$${transactionObject.cashAmount} of gas purchased, choose gas type then press enter`;
     stepInPumpProcess = 7;
   }
   inputField.value = "";
@@ -87,6 +99,7 @@ function checkCreditCVC() {
   if (currentInput.length > 3) {
     outputField.innerHTML = "Invalid CVC.  Please Try again";
   } else {
+    transactionObject.cvcCode = currentInput;
     outputField.innerHTML =
       "Please enter credit card expiration date then press ENTER";
     stepInPumpProcess++;
@@ -102,6 +115,7 @@ function checkCreditExp() {
   if (currentInput.length > 3) {
     outputField.innerHTML = "Invalid Expiration date. Please Try again";
   } else {
+    transactionObject.creditExp = currentInput;
     outputField.innerHTML = "";
     stepInPumpProcess++;
     outputField.innerHTML = "Enter size of gas tank and press enter";
@@ -115,7 +129,7 @@ function tankSize() {
     return;
   }
   stepInPumpProcess++;
-  gasTankSize = currentInput;
+  transactionObject.gasTankSize = currentInput;
   outputField.innerHTML = "Choose type of gas and press enter";
   currentInput = "";
   inputField.value = "";
@@ -126,11 +140,14 @@ function changeColor(input, inputedPrice) {
   let price = document.getElementById(inputedPrice).innerHTML;
   price = price.replace("$", "");
   let ChosenButton = document.getElementById(input);
-  if (!chosenGasBool && (gasTankSize != 0 || cashAmount != 0)) {
+  if (
+    !chosenGasBool &&
+    (transactionObject.gasTankSize != 0 || transactionObject.cashAmount != 0)
+  ) {
     ChosenButton.style.backgroundColor = "red";
     chosenGasBool = true;
-    chosenGasNumber = input;
-    chosenGasPrice = price;
+    transactionObject.chosenGasNumber = input;
+    transactionObject.chosenGasPrice = price;
   }
 }
 
@@ -139,18 +156,20 @@ function amountOfGasPumped() {
   if (!chosenGasBool) {
     return;
   }
-  if (paymentMethod === "cash") {
-    let amountOfGas = cashAmount / chosenGasPrice;
-    gasTankSize = amountOfGas;
-    costOfGas = cashAmount;
+  if (transactionObject.paymentMethod === "cash") {
+    let amountOfGas =
+      transactionObject.cashAmount / transactionObject.chosenGasPrice;
+    transactionObject.gasTankSize = amountOfGas;
+    transactionObject.costOfGas = transactionObject.cashAmount;
     outputField.innerHTML =
       Math.round(amountOfGas * 100) / 100 +
       " gallons purchased press BEGIN FUELING";
-  } else if (paymentMethod === "card") {
-    costOfGas = gasTankSize * chosenGasPrice;
+  } else if (transactionObject.paymentMethod === "card") {
+    transactionObject.costOfGas =
+      transactionObject.gasTankSize * transactionObject.chosenGasPrice;
     outputField.innerHTML =
       "$" +
-      Math.round(costOfGas * 100) / 100 +
+      Math.round(transactionObject.costOfGas * 100) / 100 +
       " of gas purchased press BEGIN FUELING";
   }
   stepInPumpProcess++;
@@ -198,9 +217,6 @@ function compute(input) {
       displayreceipt();
   }
 }
-// variables for interval timer
-let gallonsPumped = 0;
-let intervalId;
 
 //show gallons as they are being pumped
 function showGallons() {
@@ -219,7 +235,7 @@ function incrementGallons() {
   gallonsPumped += 0.01;
   gallonsPumped = Math.round(gallonsPumped * 100) / 100;
   if (
-    gallonsPumped === Math.round(gasTankSize * 100) / 100 ||
+    gallonsPumped === Math.round(transactionObject.gasTankSize * 100) / 100 ||
     emergencyStop === true
   ) {
     gallonsInput.innerHTML = " " + gallonsPumped;
@@ -229,14 +245,7 @@ function incrementGallons() {
       outputField.innerHTML = "Done Fueling";
       inputField.type = "hidden";
     }
-    postTransaction(
-      paymentMethod,
-      chosenGasNumber,
-      chosenGasPrice,
-      gallonsPumped,
-      costOfGas,
-      creditCardName
-    );
+    postTransaction(transactionObject);
     clearInterval(intervalId);
     timeoutID = setTimeout(askReceipt, 3000);
   } else {
@@ -255,7 +264,7 @@ function askReceipt() {
 
 function displayreceipt() {
   alert(
-    `Thank you for your purchase! Gallons pumped: ${gallonsPumped} || Price: ${costOfGas} || Enter email address for printed receipt`
+    `Thank you for your purchase! Gallons pumped: ${gallonsPumped} || Price: ${transactionObject.costOfGas} || Enter email address for printed receipt`
   );
 }
 
@@ -289,19 +298,19 @@ function reset() {
   if (emergencyStop || inputField.innerHTML === "Done Fueling" || receiptBool) {
     inputField.type = "visible";
     currentInput = "";
-    cashAmount = 0;
-    gasTankSize = 0;
+    transactionObject.cashAmount = 0;
+    transactionObject.gasTankSize = 0;
     stepInPumpProcess = 1;
-    costOfGas = 0;
+    transactionObject.costOfGas = 0;
     chosenGasBool = false;
-    chosenGasPrice = 0;
-    paymentMethod = "none";
+    transactionObject.chosenGasPrice = 0;
+    transactionObject.paymentMethod = "none";
     gallonsPumped = 0;
-    if (chosenGasNumber) {
-      let element = document.getElementById(chosenGasNumber);
+    if (transactionObject.chosenGasNumber) {
+      let element = document.getElementById(transactionObject.chosenGasNumber);
       element.style.backgroundColor = "white";
     }
-    chosenGasNumber = "";
+    transactionObject.chosenGasNumber = "";
     outputField.innerHTML = "Enter 1 for credit or 2 for cash";
     inputField.value = "";
     gallonsInput.innerHTML = "";
@@ -314,13 +323,7 @@ function reset() {
   }
 }
 // add transaction to db
-async function postTransaction(
-  paymentMethod,
-  gasType,
-  pricePerGallon,
-  gallonsPurchased,
-  totalPrice
-) {
+async function postTransaction(transactionObject) {
   fetch(`http://${port}/transactions`, {
     method: "POST",
     headers: {
@@ -328,18 +331,18 @@ async function postTransaction(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      paymentMethod: paymentMethod,
-      gasType: gasType,
-      pricePerGallon: pricePerGallon,
-      gallonsPurchased: gallonsPurchased,
-      totalPrice: totalPrice,
-      creditCardName: creditCardName,
+      paymentMethod: transactionObject.paymentMethod,
+      gasType: transactionObject.chosenGasNumber,
+      pricePerGallon: transactionObject.chosenGasPrice,
+      gallonsPurchased: transactionObject.gasTankSize,
+      totalPrice: transactionObject.costOfGas,
+      creditCardName: transactionObject.creditCardName,
     }),
   })
     .then((response) => response.json())
     .then((response) => console.log(JSON.stringify(response)));
 }
-async function databaseCreditNumCheck(creditNum) {
+async function databaseCreditNumCheck(transactionObject) {
   const response = await fetch(`http://${port}/creditNumCheck`, {
     method: "POST",
     headers: {
@@ -347,14 +350,14 @@ async function databaseCreditNumCheck(creditNum) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      creditNumber: creditNum,
+      creditNumber: transactionObject.creditCardNumber,
     }),
   });
   const data = await response.json();
   if (data.length < 1) {
     return false;
   } else {
-    creditCardName = data[0].name;
+    transactionObject.creditCardName = data[0].name;
     return true;
   }
 }
