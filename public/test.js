@@ -1,5 +1,1 @@
-if (!/\d{3}/.test("333")) {
-  console.log("invalid input");
-} else {
-  console.log("valid");
-}
+console.log(/^[a-zA-Z\s]+$/i.test("ben2mfed"));

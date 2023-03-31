@@ -66,9 +66,14 @@ async function checkCreditNameOrCash() {
     return;
   }
   if (transactionObject.paymentMethod === "card") {
-    transactionObject.creditCardName = currentInput;
-    outputField.innerHTML = "Enter credit card number then press enter";
-    stepInPumpProcess++;
+    if (/^[a-zA-Z\s]+$/i.test(currentInput)) {
+      transactionObject.creditCardName = currentInput;
+      outputField.innerHTML = "Enter credit card number then press enter";
+      stepInPumpProcess++;
+    } else {
+      outputField.innerHTML = "Invalid Name. Please try again.";
+      return;
+    }
   } else {
     transactionObject.cashAmount = currentInput;
     outputField.innerHTML = `$${transactionObject.cashAmount} of gas purchased, choose gas type then press enter`;
