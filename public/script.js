@@ -8,6 +8,7 @@ let outputField = document.getElementById("interface");
 let gallonDisplayField = document.getElementById("gallonDisplay");
 let gallonsInput = document.getElementById("gallons");
 let inputField = document.getElementById("input");
+inputField.setAttribute("type", "hidden");
 let beginFuelingButton = document.getElementById("beginFueling");
 let emergencyShutoff = document.getElementById("emergencyShutoff");
 
@@ -50,11 +51,12 @@ emergencyShutoff.disabled = true;
 //determine payment type, 1st step in process
 function paymentMethodFunction(input) {
   let message;
+  inputField.setAttribute("type", "text");
   if (input === 1) {
-    message = "input name on credit card and press ENTER";
+    message = "Input name on credit card and press ENTER";
     transactionObject.paymentMethod = "card";
   } else {
-    message = "input cash amount and press ENTER";
+    message = "Input cash amount and press ENTER";
     transactionObject.paymentMethod = "cash";
   }
   outputField.innerHTML = message;
@@ -71,12 +73,16 @@ async function checkCreditNameOrCash() {
       outputField.innerHTML = "Enter credit card number then press enter";
       stepInPumpProcess++;
     } else {
-      outputField.innerHTML = "Invalid Name. Please try again.";
+      outputField.innerHTML = "Invalid name, please try again";
       return;
     }
-  } else {
+  } else if (
+    typeof +inputField.value === "number" &&
+    !isNaN(+inputField.value)
+  ) {
     transactionObject.cashAmount = currentInput;
     outputField.innerHTML = `$${transactionObject.cashAmount} of gas purchased, choose gas type then press enter`;
+    inputField.setAttribute("type", "hidden");
     stepInPumpProcess = 7;
   }
   inputField.value = "";
@@ -85,7 +91,7 @@ async function checkCreditNameOrCash() {
 //3rd step, checks inputted name
 async function checkNumCredit() {
   if (!cardNum(currentInput)) {
-    outputField.innerHTML = "Invalid Entry. Please try again";
+    outputField.innerHTML = "Invalid credit card number, please try again";
   } else {
     outputField.innerHTML = "Enter CVC code then press enter";
     stepInPumpProcess++;
@@ -99,7 +105,7 @@ function checkCreditCVC() {
     return;
   }
   if (!cardCVC(transactionObject.creditCardType)) {
-    outputField.innerHTML = "Invalid CVC.  Please Try again";
+    outputField.innerHTML = "Invalid CVC, please Try again";
   } else {
     transactionObject.cvcCode = currentInput;
     outputField.innerHTML =
@@ -158,6 +164,7 @@ function amountOfGasPumped() {
   if (!chosenGasBool) {
     return;
   }
+
   if (transactionObject.paymentMethod === "cash") {
     let amountOfGas =
       transactionObject.cashAmount / transactionObject.chosenGasPrice;
@@ -172,7 +179,7 @@ function amountOfGasPumped() {
     outputField.innerHTML =
       "$" +
       Math.round(transactionObject.costOfGas * 100) / 100 +
-      " of gas purchased press BEGIN FUELING";
+      " of gas purchased press 'BEGIN FUELING'";
   }
   stepInPumpProcess++;
   beginFuelingButton.disabled = false;
@@ -245,7 +252,6 @@ function incrementGallons() {
       outputField.innerHTML = "Emergency stop initiated";
     } else {
       outputField.innerHTML = "Done Fueling";
-      inputField.type = "hidden";
     }
     postTransaction(transactionObject);
     clearInterval(intervalId);
@@ -259,6 +265,7 @@ function askReceipt() {
   clearTimeout(timeoutID);
   outputField.innerHTML =
     "Would you like a receipt? Press ENTER for YES, RESET for NO";
+  inputField.type = "hidden";
   gallonDisplayField.innerHTML = "";
   gallonsInput.innerHTML = "";
   receiptBool = true;
@@ -312,7 +319,7 @@ function reset() {
     transactionObject.creditCardName = "cash(none)";
     outputField.innerHTML = "Enter 1 for credit or 2 for cash";
     inputField.value = "";
-    inputField.type = "visible";
+    inputField.type = "hidden";
     gallonsInput.innerHTML = "";
     gallonDisplayField.innerHTML = "";
     beginFuelingButton.disabled = true;
@@ -431,18 +438,14 @@ function cardNum(inputCardNo) {
   return cardNoValid;
 }
 
-function cardExpMonth() {
+function cardExp() {
   let monthValid = false;
-
-  console.log("End of cardExp function | Return type: " + monthValid);
-  return monthValid;
-}
-
-function cardExpYear() {
   let yearValid = false;
 
-  console.log("End of cardExp function | Return type: " + yearValid);
-  return yearValid;
+  console.log(
+    "End of cardExp function | Return type: " + monthValid && yearValid
+  );
+  return monthValid && yearValid;
 }
 
 function cardCVC(_creditCardName) {
