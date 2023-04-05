@@ -78,6 +78,7 @@ body {
 #input {
   background-color: transparent;
   background-image: radial-gradient(rgba(81, 155, 81, 0.75), black 120%);
+  text-align: center;
   border: none;
   font-family: "digital-7regular", Inconsolata, monospace;
   font-size: 30px;
