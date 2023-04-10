@@ -432,3 +432,13 @@ footer {
   background-color: red;
   border-radius: 50px;
 }
+
+#recieptContainer {
+  font-size: 15px;
+  position: absolute;
+  margin-left: 100px;
+  margin-top: 200px;
+  color: rgb(21, 135, 9);
+  width: 200px;
+  text-align: center;
+}

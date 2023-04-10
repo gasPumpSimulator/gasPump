@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import gotScraping from "got-scraping";
 import cheerio from "cheerio";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 
 import {
   getTransactions,
@@ -170,6 +171,33 @@ app.get("/getTransactions", async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
 });
+
+// emailed repeipt
+app.post("/mail", async (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: "hotmail",
+    auth: {
+      user: "gaspumpivytech@outlook.com",
+      pass: "g@spump!23",
+    },
+  });
+
+  const mailOptions = {
+    from: "gaspumpivytech@outlook.com",
+    to: req.body.email,
+    subject: "Gas Receipt",
+    text: `Thank you for your purchase! Total Cost: $${req.body.cost} || Gallons Pumped: ${req.body.gallons}`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+});
+
 /*
 app.post('/searchTransactions', async (req, res) => {
   const ID = req.body.searchByID;
