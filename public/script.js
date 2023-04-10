@@ -267,7 +267,7 @@ function incrementGallons() {
 // email
 function askReceipt() {
   clearTimeout(timeoutID);
-  inputField.innerHTML =
+  outputField.innerHTML =
     "Would you like a receipt? Press ENTER for YES, RESET for NO";
   gallonDisplayField.innerHTML = " ";
   gallonsInput.innerHTML = " ";
@@ -307,7 +307,7 @@ async function sendEmail() {
     body: JSON.stringify({
       email: email,
       gallons: gallonsPumped,
-      cost: costOfGas,
+      cost: transactionObject.costOfGas,
     }),
   })
     .then((response) => response.json())
