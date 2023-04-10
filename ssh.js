@@ -8,10 +8,10 @@ function connectionQuery(sqlQuery) {
   // eslint-disable-next-line no-unused-vars
   return new Promise(function (resolve, reject) {
     let con = mysql.createConnection({
-      host: "localhost",
+      host: "127.0.0.1",
       user: "root",
-      password: "12345678",
-      database: "gasPump",
+      password: "Cooliest7!",
+      database: "gas_station",
     });
     con.connect(function (err) {
       if (err) throw err;
