@@ -62,13 +62,29 @@ function paymentMethodFunction(input) {
   outputField.innerHTML = message;
   stepInPumpProcess++;
 }
+
 //2nd step in process, checks credit name or amount of gas using cash, skips credit steps if cash
+/*
+The regex pattern used here allows for:
+First name: One or more letters (uppercase or lowercase).
+Middle initial or name: An optional middle initial or name, followed by an optional hyphen and one or more letters (uppercase or lowercase).
+Last name: One or more letters (uppercase or lowercase).
+Examples of valid names: 
+John Smith
+Jane D. Doe
+Bob O'Connor
+Mary-Ann Johnson
+Sarah S. Johnson-Smith
+Date last updated: 4/17/23
+*/
 async function checkCreditNameOrCash() {
+  let regexName =
+    /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*(?:[\s]+[a-zA-Z]+(?:[\s-][a-zA-Z]+)*)*$/;
   if (currentInput === "") {
     return;
   }
   if (transactionObject.paymentMethod === "card") {
-    if (/^[a-zA-Z\s]+$/i.test(currentInput)) {
+    if (regexName.test(currentInput)) {
       transactionObject.creditCardName = currentInput;
       outputField.innerHTML = "Enter credit card number then press enter";
       stepInPumpProcess++;
@@ -134,8 +150,8 @@ function checkCreditExp() {
   inputField.value = "";
 }
 
-//Validates credit card format on server; should return true or false
-async function validateCardServer(transactionObject) {
+//6th step validates credit card format on server; should return true or false
+async function validateCardServer() {
   try {
     const response = await fetch(`http://${port}/cardCheck`, {
       method: "POST",
@@ -162,19 +178,21 @@ async function validateCardServer(transactionObject) {
       console.log(
         "According to the server, the credit card information is valid."
       );
+      stepInPumpProcess++; //Next step
     } else {
       console.log(
         "According to the server, the credit card information is invalid."
       );
+      stepInPumpProcess = 3; //Returns to third step; restarts process of inputting credit card information.
     }
     return binaryValue;
   } catch (error) {
-    console.error("Error sending credit card info:", error);
+    console.error("Error sending credit card info: ", error);
     //handle the error here
   }
 }
 
-//6th step in process
+//7th step in process
 function tankSize() {
   if (currentInput <= 0 || currentInput === "") {
     return;
@@ -202,7 +220,7 @@ function changeColor(input, inputedPrice) {
   }
 }
 
-//compute amount of gas to be pumped 7th step
+//8th step computes amount of gas to be pumped
 function amountOfGasPumped() {
   if (!chosenGasBool) {
     return;
@@ -260,12 +278,15 @@ function compute(input) {
       checkCreditExp();
       break;
     case 6:
-      tankSize();
+      validateCardServer();
       break;
     case 7:
-      amountOfGasPumped();
+      tankSize();
       break;
     case 8:
+      amountOfGasPumped();
+      break;
+    case 9:
       displayreceipt();
   }
 }
@@ -313,7 +334,7 @@ function askReceipt() {
   gallonsInput.innerHTML = "";
   receiptBool = true;
 }
-
+//9th step in fuel pump process; displays receipt
 function displayreceipt() {
   alert(
     `Thank you for your purchase! Gallons pumped: ${gallonsPumped} || Price: ${transactionObject.costOfGas} || Enter email address for printed receipt`
