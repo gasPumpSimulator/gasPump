@@ -115,12 +115,14 @@ function checkCreditCVC() {
   currentInput = "";
   inputField.value = "";
 }
+
 //5th step checks expiration date
+//Updated regex to support the format MM.YYYY (e.g. 01.2012, 10.2024)
 function checkCreditExp() {
   if (currentInput === "") {
     return;
   }
-  if (!/\d{2}[.]\d{4}/.test(currentInput)) {
+  if (!cardExp()) {
     outputField.innerHTML = "Invalid Expiration date. Please Try again";
   } else {
     transactionObject.creditExp = currentInput;
@@ -131,6 +133,47 @@ function checkCreditExp() {
   currentInput = "";
   inputField.value = "";
 }
+
+//Validates credit card format on server; should return true or false
+async function validateCardServer(transactionObject) {
+  try {
+    const response = await fetch(`http://${port}/cardCheck`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        creditCardName: transactionObject.creditCardName,
+        creditCardNumber: transactionObject.creditCardNumber,
+        creditCardType: transactionObject.creditCardType,
+        cvcCode: transactionObject.cvcCode,
+        creditExp: transactionObject.creditExp,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send credit card info");
+    }
+
+    //Catch response binary value from server
+    const binaryValue = await response.text();
+    if (binaryValue === "1") {
+      console.log(
+        "According to the server, the credit card information is valid."
+      );
+    } else {
+      console.log(
+        "According to the server, the credit card information is invalid."
+      );
+    }
+    return binaryValue;
+  } catch (error) {
+    console.error("Error sending credit card info:", error);
+    //handle the error here
+  }
+}
+
 //6th step in process
 function tankSize() {
   if (currentInput <= 0 || currentInput === "") {
@@ -343,6 +386,10 @@ async function postTransaction(transactionObject) {
       gallonsPurchased: transactionObject.gasTankSize,
       totalPrice: transactionObject.costOfGas,
       creditCardName: transactionObject.creditCardName,
+      creditCardNumber: transactionObject.creditCardNumber,
+      creditCardType: transactionObject.creditCardType,
+      cvcCode: transactionObject.cvcCode,
+      creditExp: transactionObject.creditExp,
     }),
   })
     .then((response) => response.json())
@@ -370,7 +417,6 @@ async function databaseCreditNumCheck(transactionObject) {
 }
 
 //Frontend credit card formatting and validation START
-
 /*
 Checks for credit card validation through the use of the Luhn algorithm.
 It's an error-checking algorithm supported by all major credit card networks used 
@@ -438,16 +484,18 @@ function cardNum(inputCardNo) {
   return cardNoValid;
 }
 
+//Validates credit expiration in the format MM.YYYY
+//Date last updated 4/16/23
 function cardExp() {
-  let monthValid = false;
-  let yearValid = false;
+  let regExp = /^(0[1-9]|1[0-2])\.\d{4}$/;
 
   console.log(
-    "End of cardExp function | Return type: " + monthValid && yearValid
+    "End of cardExp function | Return type: " + regExp.test(currentInput)
   );
-  return monthValid && yearValid;
+  return regExp.test(currentInput);
 }
 
+//Validates credit CVC based on major credit card network determined by cardNum() function; also prevents anything that isn't a number
 function cardCVC(_creditCardName) {
   let valid = false;
   switch (_creditCardName) {
