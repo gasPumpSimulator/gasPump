@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import gotScraping from "got-scraping";
 import cheerio from "cheerio";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 
 import {
   getTransactions,
@@ -23,6 +24,7 @@ let data = [];
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+const creditCard = require("./creditCardValid"); //Credit card validation functions
 
 //for login session
 app.use(
@@ -170,6 +172,55 @@ app.get("/getTransactions", async (req, res) => {
   const transactions = await getTransactions();
   res.send(transactions);
 });
+
+// emailed receipt
+app.post("/mail", async (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: "hotmail",
+    auth: {
+      user: "gaspumpivytech@outlook.com",
+      pass: "g@spump!23",
+    },
+  });
+
+  const mailOptions = {
+    from: "gaspumpivytech@outlook.com",
+    to: req.body.email,
+    subject: "Gas Receipt",
+    text: `Thank you for your purchase! Total Cost: $${req.body.cost} || Gallons Pumped: ${req.body.gallons}`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+});
+
+app.post("/cardCheck", async (req, res) => {
+  const {
+    creditCardName,
+    creditCardNumber,
+    creditCardType,
+    cvcCode,
+    creditExp,
+  } = req.body;
+  console.log("Incoming payment request: ", req.body);
+
+  //Validate credit card number, cvc, and expiration date
+  const cardNumValid = creditCard.cardNum(creditCardNumber);
+  const cardCVCValid = creditCard.cardCVC(cvcCode, creditCardType);
+  const cardExpValid = creditCard.cardExp(creditExp);
+
+  if (cardNumValid && cardCVCValid && cardExpValid) {
+    res.send(Buffer.from([1]));
+  } else {
+    res.send(Buffer.from([0]));
+  }
+});
+
 /*
 app.post('/searchTransactions', async (req, res) => {
   const ID = req.body.searchByID;
