@@ -48,7 +48,7 @@ document.getElementById("yes").disabled = true;
 beginFuelingButton.disabled = true;
 emergencyShutoff.disabled = true;
 
-//determine payment type, 1st step in process
+//1st step in process, determines the payment type: cash or credit
 function paymentMethodFunction(input) {
   let message;
   inputField.setAttribute("type", "text");
@@ -84,9 +84,9 @@ async function checkCreditNameOrCash() {
     return;
   }
   if (transactionObject.paymentMethod === "card") {
+    outputField.innerHTML = "Enter credit card number then press enter";
     if (regexName.test(currentInput)) {
       transactionObject.creditCardName = currentInput;
-      outputField.innerHTML = "Enter credit card number then press enter";
       stepInPumpProcess++;
     } else {
       outputField.innerHTML = "Invalid name, please try again";
@@ -97,8 +97,6 @@ async function checkCreditNameOrCash() {
     !isNaN(+inputField.value)
   ) {
     transactionObject.cashAmount = currentInput;
-    outputField.innerHTML = `$${transactionObject.cashAmount} of gas purchased, choose gas type then press enter`;
-    inputField.setAttribute("type", "hidden");
     stepInPumpProcess = 7;
   }
   inputField.value = "";
@@ -110,6 +108,7 @@ async function checkNumCredit() {
     outputField.innerHTML = "Invalid credit card number, please try again";
   } else {
     outputField.innerHTML = "Enter CVC code then press enter";
+    transactionObject.creditCardNumber = currentInput;
     stepInPumpProcess++;
   }
   inputField.value = "";
@@ -144,7 +143,9 @@ function checkCreditExp() {
     transactionObject.creditExp = currentInput;
     outputField.innerHTML = "";
     stepInPumpProcess++;
-    outputField.innerHTML = "Enter size of gas tank and press enter";
+    outputField.innerHTML =
+      "Press enter to validate credit card information server-side. . .";
+    inputField.setAttribute("type", "hidden");
   }
   currentInput = "";
   inputField.value = "";
@@ -178,28 +179,36 @@ async function validateCardServer() {
       console.log(
         "According to the server, the credit card information is valid."
       );
+      outputField.innerHTML = "Response: Valid.\n Press enter again.";
       stepInPumpProcess++; //Next step
-    } else {
+    } else if (binaryValue === "0") {
       console.log(
         "According to the server, the credit card information is invalid."
       );
-      stepInPumpProcess = 3; //Returns to third step; restarts process of inputting credit card information.
+      outputField.innerHTML = "Response: Invalid.\n Press enter again.";
+      stepInPumpProcess = 2; //Returns to second step; restarts process of inputting credit card information.
     }
-    return binaryValue;
   } catch (error) {
     console.error("Error sending credit card info: ", error);
     //handle the error here
   }
 }
 
-//7th step in process
+//7th step in the process where the size of the gas tank is inputted
 function tankSize() {
-  if (currentInput <= 0 || currentInput === "") {
+  if (isNaN(currentInput) && (currentInput <= 0 || currentInput === "")) {
+    console.log("Invalid tank size.");
     return;
+  }
+  if (transactionObject.paymentMethod === "card") {
+    outputField.innerHTML = "Enter size of fuel tank and press enter";
+    inputField.setAttribute("type", "text");
+  } else {
+    outputField.innerHTML = "Press the fuel type you want and press ENTER";
   }
   stepInPumpProcess++;
   transactionObject.gasTankSize = currentInput;
-  outputField.innerHTML = "Choose type of gas and press enter";
+  inputField.setAttribute("type", "hidden");
   currentInput = "";
   inputField.value = "";
 }
@@ -409,7 +418,6 @@ async function postTransaction(transactionObject) {
       creditCardName: transactionObject.creditCardName,
       creditCardNumber: transactionObject.creditCardNumber,
       creditCardType: transactionObject.creditCardType,
-      cvcCode: transactionObject.cvcCode,
       creditExp: transactionObject.creditExp,
     }),
   })
@@ -545,7 +553,3 @@ function cardCVC(_creditCardName) {
 }
 
 //Frontend credit card formatting and validation END
-
-//Backend card validation START
-
-//Backend card validation END
