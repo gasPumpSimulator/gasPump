@@ -68,9 +68,24 @@ export function cardNum(_creditCardNumber) {
 
 //Validates credit expiration in the format MM.YYYY
 export function cardExp(_creditExp) {
+  // Get current date and format it to MM.YYYY
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // getMonth() returns zero-indexed month
+  const currentYear = currentDate.getFullYear();
+  const cardMonth = parseInt(_creditExp.slice(0, 2));
+  const cardYear = parseInt(_creditExp.slice(3));
+  let expValid = false;
   let regExp = /^(0[1-9]|1[0-2])\.\d{4}$/;
 
-  return regExp.test(_creditExp);
+  if (cardYear > currentYear) {
+    expValid = true;
+  } else if (cardYear == currentYear) {
+    if (cardMonth > currentMonth) {
+      expValid = true;
+    }
+  }
+
+  return regExp.test(_creditExp) && expValid;
 }
 
 //Validates credit CVC based on major credit card network determined by cardNum() function; also prevents anything that isn't a number
