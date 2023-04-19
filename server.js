@@ -201,13 +201,7 @@ app.post("/mail", async (req, res) => {
 
 //Validates credit card information and sends 1 or 0 depending if the credit card information
 app.post("/cardCheck", async (req, res) => {
-  const {
-    creditCardName,
-    creditCardNumber,
-    creditCardType,
-    cvcCode,
-    creditExp,
-  } = req.body;
+  const { creditCardNumber, creditCardType, cvcCode, creditExp } = req.body;
   console.log("Incoming payment request: ", req.body);
 
   //Validate credit card number, cvc, and expiration date
