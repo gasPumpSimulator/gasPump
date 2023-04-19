@@ -102,6 +102,7 @@ function checkCreditNameOrCash() {
   } else {
     if (typeof +inputField.value === "number" && !isNaN(+inputField.value)) {
       transactionObject.cashAmount = currentInput;
+      outputField.innerHTML = "Choose type of gas and press enter";
       stepInPumpProcess = 7;
     }
   }
@@ -149,19 +150,23 @@ function checkCreditExp() {
   if (currentInput === "") {
     return;
   }
+  transactionObject.creditExp = currentInput;
   if (!cardExp()) {
     outputField.innerHTML = "Invalid Expiration date. Please Try again";
+    return;
   } else {
     transactionObject.creditExp = currentInput;
-    outputField.innerHTML = "";
-    stepInPumpProcess++;
-    outputField.innerHTML =
-      "Press enter to validate credit card information server-side. . .";
-    inputField.setAttribute("type", "hidden");
   }
-  currentInput = "";
-  inputField.value = "";
-  console.log("End of step 5");
+  if (!validateCardServer()) {
+    outputField.innerHTML = "Invalid credit card";
+    reset();
+  } else {
+    outputField.innerHTML = "Enter size of gas tank and press enter";
+
+    currentInput = "";
+    inputField.value = "";
+    stepInPumpProcess++;
+  }
 }
 
 //6th step validates credit card format on server; should return true or false
@@ -193,21 +198,12 @@ async function validateCardServer() {
       console.log(
         "According to the server, the credit card information is valid."
       );
-      outputField.innerHTML = "Response: Valid.\n Press enter again.";
-      stepInPumpProcess++; //Next step
+      return true;
     } else if (binaryValue === "0") {
       console.log(
         "According to the server, the credit card information is invalid."
       );
-      outputField.innerHTML = "Response: Invalid.\n Press enter again.";
-      currentInput = "";
-      transactionObject.paymentMethod = "";
-      transactionObject.creditCardNumber = "";
-      transactionObject.creditCardName = "cash(none)";
-      transactionObject.creditCardType = "";
-      transactionObject.cvcCode = "";
-      transactionObject.creditExp = "";
-      stepInPumpProcess = 1; //Returns to first step; restarts process of inputting credit card information.
+      return false;
     }
   } catch (error) {
     console.error("Error sending credit card info: ", error);
@@ -216,27 +212,17 @@ async function validateCardServer() {
   console.log("End of step 6");
 }
 
-//7th step in the process where the size of the gas tank is inputted
+//6th step in the process where the size of the gas tank is inputted
 function tankSize() {
-  console.log("Step 7");
-  if (isNaN(currentInput) && (currentInput <= 0 || currentInput === "")) {
-    console.log("Invalid tank size.");
+  if (currentInput <= 0 || currentInput === "") {
     return;
-  }
-  if (transactionObject.paymentMethod === "card") {
-    outputField.innerHTML = "Enter size of fuel tank and press enter";
-    inputField.setAttribute("type", "text");
-  } else {
-    inputField.setAttribute("type", "hidden");
-    outputField.innerHTML = "Press the fuel type you want and press ENTER";
   }
   stepInPumpProcess++;
   transactionObject.gasTankSize = currentInput;
+  outputField.innerHTML = "Choose type of gas and press enter";
   currentInput = "";
   inputField.value = "";
-  console.log("End of step 7");
 }
-
 //change color of button for chosen gas type
 function changeColor(input, inputedPrice) {
   let price = document.getElementById(inputedPrice).innerHTML;
@@ -313,15 +299,12 @@ function compute(input) {
       checkCreditExp();
       break;
     case 6:
-      validateCardServer();
-      break;
-    case 7:
       tankSize();
       break;
-    case 8:
+    case 7:
       amountOfGasPumped();
       break;
-    case 9:
+    case 8:
       displayreceipt();
   }
 }
@@ -555,20 +538,17 @@ function cardExp() {
 
   console.log(
     "End of cardExp function | Return type: " +
-      (regExp.test(currentInput) && currentDateString > stringToCompare)
+      (regExp.test(currentInput) && currentDateString > currentInput)
   );
 
-  // String to compare with current date
-  const stringToCompare = "04.2022";
-
   // Compare dates
-  if (currentDateString > stringToCompare) {
+  if (currentDateString > currentInput) {
     console.log("The string is past the current date.");
   } else {
     console.log("The string is not past the current date.");
   }
 
-  return regExp.test(currentInput) && currentDateString > stringToCompare;
+  return regExp.test(currentInput) && currentDateString > currentInput;
 }
 
 //Validates credit CVC based on major credit card network determined by cardNum() function; also prevents anything that isn't a number
