@@ -530,25 +530,25 @@ function cardExp() {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1; // getMonth() returns zero-indexed month
   const currentYear = currentDate.getFullYear();
-  const currentDateString = `${currentMonth
-    .toString()
-    .padStart(2, "0")}.${currentYear}`;
-
+  const cardMonth = parseInt(currentInput.slice(0, 2));
+  const cardYear = parseInt(currentInput.slice(3));
+  let expValid = false;
   let regExp = /^(0[1-9]|1[0-2])\.\d{4}$/;
 
+  if (cardYear > currentYear) {
+    expValid = true;
+  } else if (cardYear == currentYear) {
+    if (cardMonth > currentMonth) {
+      expValid = true;
+    }
+  }
   console.log(
-    "End of cardExp function | Return type: " +
-      (regExp.test(currentInput) && currentDateString > currentInput)
+    "End of cardExp function " +
+      "| Return type: " +
+      (regExp.test(currentInput) && expValid)
   );
 
-  // Compare dates
-  if (currentDateString > currentInput) {
-    console.log("The string is past the current date.");
-  } else {
-    console.log("The string is not past the current date.");
-  }
-
-  return regExp.test(currentInput) && currentDateString > currentInput;
+  return regExp.test(currentInput) && expValid;
 }
 
 //Validates credit CVC based on major credit card network determined by cardNum() function; also prevents anything that isn't a number
