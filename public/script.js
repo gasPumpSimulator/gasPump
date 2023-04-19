@@ -180,7 +180,6 @@ async function validateCardServer() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        creditCardName: transactionObject.creditCardName,
         creditCardNumber: transactionObject.creditCardNumber,
         creditCardType: transactionObject.creditCardType,
         cvcCode: transactionObject.cvcCode,
@@ -217,6 +216,7 @@ function tankSize() {
   if (currentInput <= 0 || currentInput === "") {
     return;
   }
+  inputField.setAttribute("type", "hidden");
   stepInPumpProcess++;
   transactionObject.gasTankSize = currentInput;
   outputField.innerHTML = "Choose type of gas and press enter";
@@ -245,7 +245,7 @@ function amountOfGasPumped() {
   if (!chosenGasBool) {
     return;
   }
-
+  inputField.setAttribute("type", "hidden");
   if (transactionObject.paymentMethod === "cash") {
     let amountOfGas =
       transactionObject.cashAmount / transactionObject.chosenGasPrice;
@@ -426,9 +426,6 @@ async function postTransaction(transactionObject) {
       gallonsPurchased: transactionObject.gasTankSize,
       totalPrice: transactionObject.costOfGas,
       creditCardName: transactionObject.creditCardName,
-      creditCardNumber: transactionObject.creditCardNumber,
-      creditCardType: transactionObject.creditCardType,
-      creditExp: transactionObject.creditExp,
     }),
   })
     .then((response) => response.json())
