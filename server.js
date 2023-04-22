@@ -6,6 +6,7 @@ import gotScraping from "got-scraping";
 import cheerio from "cheerio";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import { cardNum, cardExp, cardCVC } from "./Server_parts/creditCardValid.js"; //Credit card validation functions
 
 import {
   getTransactions,
@@ -172,7 +173,7 @@ app.get("/getTransactions", async (req, res) => {
   res.send(transactions);
 });
 
-// emailed repeipt
+// emailed receipt
 app.post("/mail", async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "hotmail",
@@ -196,6 +197,32 @@ app.post("/mail", async (req, res) => {
       console.log("Email sent: " + info.response);
     }
   });
+});
+
+//Validates credit card information and sends 1 or 0 depending if the credit card information
+app.post("/cardCheck", async (req, res) => {
+  const {
+    creditCardName,
+    creditCardNumber,
+    creditCardType,
+    cvcCode,
+    creditExp,
+  } = req.body;
+  console.log("Incoming payment request: ", req.body);
+
+  //Validate credit card number, cvc, and expiration date
+  const cardNumValid = cardNum(creditCardNumber);
+  const cardCVCValid = cardCVC(cvcCode, creditCardType);
+  const cardExpValid = cardExp(creditExp);
+
+  //Send binary value back to validateCardServer() frontend async function
+  if (cardNumValid && cardCVCValid && cardExpValid) {
+    console.log("Response: True");
+    res.send("1");
+  } else {
+    console.log("Response: False");
+    res.send("0");
+  }
 });
 
 /*

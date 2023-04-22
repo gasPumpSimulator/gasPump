@@ -50,60 +50,85 @@ document.getElementById("yes").disabled = true;
 //disable beginFueling button
 beginFuelingButton.disabled = true;
 emergencyShutoff.disabled = true;
-
-//determine payment type, 1st step in process
-function paymentMethodFunction(input) {
-  let message;
-  inputField.setAttribute("type", "text");
+//1st step in process, determines the payment type: cash or credit
+function paymentMethodFunction(input = 0) {
+  console.log("Step 1");
+  let message = "Press 1 for credit or 2 for cash then ENTER";
+  inputField.setAttribute("type", "hidden");
   if (input === 1) {
+    inputField.setAttribute("type", "text");
     message = "Input name on credit card and press ENTER";
     transactionObject.paymentMethod = "card";
-  } else {
+    stepInPumpProcess++;
+  } else if (input === 2) {
+    inputField.setAttribute("type", "text");
     message = "Input cash amount and press ENTER";
     transactionObject.paymentMethod = "cash";
+    stepInPumpProcess++;
   }
+  currentInput = "";
   outputField.innerHTML = message;
-  stepInPumpProcess++;
+  console.log("End of step 1");
 }
+
 //2nd step in process, checks credit name or amount of gas using cash, skips credit steps if cash
-async function checkCreditNameOrCash() {
+/*
+The regex pattern used here allows for:
+First name: One or more letters (uppercase or lowercase).
+Middle initial or name: An optional middle initial or name, followed by an optional hyphen and one or more letters (uppercase or lowercase).
+Last name: One or more letters (uppercase or lowercase).
+Examples of valid names: 
+John Smith
+Jane D. Doe
+Bob O'Connor
+Mary-Ann Johnson
+Sarah S. Johnson-Smith
+Date last updated: 4/17/23
+*/
+function checkCreditNameOrCash() {
+  console.log("Step 2");
+  inputField.setAttribute("type", "text");
+  let regexName =
+    /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*(?:[\s]+[a-zA-Z]+(?:[\s-][a-zA-Z]+)*)*$/;
   if (currentInput === "") {
     return;
   }
   if (transactionObject.paymentMethod === "card") {
-    if (/^[a-zA-Z\s]+$/i.test(currentInput)) {
+    outputField.innerHTML = "Enter credit card number then press enter";
+    if (regexName.test(currentInput)) {
       transactionObject.creditCardName = currentInput;
-      outputField.innerHTML = "Enter credit card number then press enter";
       stepInPumpProcess++;
     } else {
       outputField.innerHTML = "Invalid name, please try again";
       return;
     }
-  } else if (
-    typeof +inputField.value === "number" &&
-    !isNaN(+inputField.value)
-  ) {
-    transactionObject.cashAmount = currentInput;
-    outputField.innerHTML = `$${transactionObject.cashAmount} of gas purchased, choose gas type then press enter`;
-    inputField.setAttribute("type", "hidden");
-    stepInPumpProcess = 7;
+  } else {
+    if (typeof +inputField.value === "number" && !isNaN(+inputField.value)) {
+      transactionObject.cashAmount = currentInput;
+      stepInPumpProcess = 7;
+    }
   }
   inputField.value = "";
   currentInput = "";
+  console.log("End of step 2");
 }
 //3rd step, checks inputted name
 async function checkNumCredit() {
+  console.log("Step 3");
   if (!cardNum(currentInput)) {
     outputField.innerHTML = "Invalid credit card number, please try again";
   } else {
     outputField.innerHTML = "Enter CVC code then press enter";
+    transactionObject.creditCardNumber = currentInput;
     stepInPumpProcess++;
   }
   inputField.value = "";
   currentInput == "";
+  console.log("End of step 3");
 }
 //4th step in process checks CVC
 function checkCreditCVC() {
+  console.log("Step 4");
   if (currentInput === "") {
     return;
   }
@@ -117,33 +142,102 @@ function checkCreditCVC() {
   }
   currentInput = "";
   inputField.value = "";
+  console.log("End of step 4");
 }
+
 //5th step checks expiration date
+//Updated regex to support the format MM.YYYY (e.g. 01.2012, 10.2024)
 function checkCreditExp() {
+  console.log("Step 5");
   if (currentInput === "") {
     return;
   }
-  if (!/\d{2}[.]\d{4}/.test(currentInput)) {
+  if (!cardExp()) {
     outputField.innerHTML = "Invalid Expiration date. Please Try again";
   } else {
     transactionObject.creditExp = currentInput;
     outputField.innerHTML = "";
     stepInPumpProcess++;
-    outputField.innerHTML = "Enter size of gas tank and press enter";
+    outputField.innerHTML =
+      "Press enter to validate credit card information server-side. . .";
+    inputField.setAttribute("type", "hidden");
   }
   currentInput = "";
   inputField.value = "";
+  console.log("End of step 5");
 }
-//6th step in process
+
+//6th step validates credit card format on server; should return true or false
+async function validateCardServer() {
+  console.log("Step 6");
+  try {
+    const response = await fetch(`http://${port}/cardCheck`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        creditCardName: transactionObject.creditCardName,
+        creditCardNumber: transactionObject.creditCardNumber,
+        creditCardType: transactionObject.creditCardType,
+        cvcCode: transactionObject.cvcCode,
+        creditExp: transactionObject.creditExp,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send credit card info");
+    }
+
+    //Catch response binary value from server
+    const binaryValue = await response.text();
+    if (binaryValue === "1") {
+      console.log(
+        "According to the server, the credit card information is valid."
+      );
+      outputField.innerHTML = "Response: Valid.\n Press enter again.";
+      stepInPumpProcess++; //Next step
+    } else if (binaryValue === "0") {
+      console.log(
+        "According to the server, the credit card information is invalid."
+      );
+      outputField.innerHTML = "Response: Invalid.\n Press enter again.";
+      transactionObject.paymentMethod = "";
+      transactionObject.creditCardNumber = "";
+      transactionObject.creditCardName = "cash(none)";
+      transactionObject.creditCardType = "";
+      transactionObject.cvcCode = "";
+      transactionObject.creditExp = "";
+      stepInPumpProcess = 1; //Returns to first step; restarts process of inputting credit card information.
+    }
+  } catch (error) {
+    console.error("Error sending credit card info: ", error);
+    //handle the error here
+  }
+  currentInput = "";
+  console.log("End of step 6");
+}
+
+//7th step in the process where the size of the gas tank is inputted
 function tankSize() {
-  if (currentInput <= 0 || currentInput === "") {
+  console.log("Step 7");
+  if (isNaN(currentInput) && (currentInput <= 0 || currentInput === "")) {
+    console.log("Invalid tank size.");
     return;
+  }
+  if (transactionObject.paymentMethod === "card") {
+    outputField.innerHTML = "Enter size of fuel tank and press enter";
+    inputField.setAttribute("type", "text");
+  } else {
+    inputField.setAttribute("type", "hidden");
+    outputField.innerHTML = "Press the fuel type you want and press ENTER";
   }
   stepInPumpProcess++;
   transactionObject.gasTankSize = currentInput;
-  outputField.innerHTML = "Choose type of gas and press enter";
   currentInput = "";
   inputField.value = "";
+  console.log("End of step 7");
 }
 
 //change color of button for chosen gas type
@@ -162,8 +256,9 @@ function changeColor(input, inputedPrice) {
   }
 }
 
-//compute amount of gas to be pumped 7th step
+//8th step computes amount of gas to be pumped
 function amountOfGasPumped() {
+  console.log("Step 8");
   if (!chosenGasBool) {
     return;
   }
@@ -187,6 +282,7 @@ function amountOfGasPumped() {
   stepInPumpProcess++;
   beginFuelingButton.disabled = false;
   emergencyShutoff.disabled = false;
+  console.log("End of step 8");
 }
 
 //add input to current input
@@ -220,13 +316,16 @@ function compute(input) {
       checkCreditExp();
       break;
     case 6:
-      tankSize();
+      validateCardServer();
       break;
     case 7:
-      amountOfGasPumped();
+      tankSize();
       break;
     case 8:
-      displayReceipt();
+      amountOfGasPumped();
+      break;
+    case 9:
+      displayreceipt();
   }
 }
 
@@ -381,6 +480,9 @@ async function postTransaction(transactionObject) {
       gallonsPurchased: transactionObject.gasTankSize,
       totalPrice: transactionObject.costOfGas,
       creditCardName: transactionObject.creditCardName,
+      creditCardNumber: transactionObject.creditCardNumber,
+      creditCardType: transactionObject.creditCardType,
+      creditExp: transactionObject.creditExp,
     }),
   })
     .then((response) => response.json())
@@ -408,7 +510,6 @@ async function databaseCreditNumCheck(transactionObject) {
 }
 
 //Frontend credit card formatting and validation START
-
 /*
 Checks for credit card validation through the use of the Luhn algorithm.
 It's an error-checking algorithm supported by all major credit card networks used 
@@ -476,16 +577,35 @@ function cardNum(inputCardNo) {
   return cardNoValid;
 }
 
+//Validates credit expiration in the format MM.YYYY
+//Date last updated 4/16/23
 function cardExp() {
-  let monthValid = false;
-  let yearValid = false;
+  // Get current date and format it to MM.YYYY
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // getMonth() returns zero-indexed month
+  const currentYear = currentDate.getFullYear();
+  const cardMonth = parseInt(currentInput.slice(0, 2));
+  const cardYear = parseInt(currentInput.slice(3));
+  let expValid = false;
+  let regExp = /^(0[1-9]|1[0-2])\.\d{4}$/;
 
+  if (cardYear > currentYear) {
+    expValid = true;
+  } else if (cardYear == currentYear) {
+    if (cardMonth > currentMonth) {
+      expValid = true;
+    }
+  }
   console.log(
-    "End of cardExp function | Return type: " + monthValid && yearValid
+    "End of cardExp function " +
+      "| Return type: " +
+      (regExp.test(currentInput) && expValid)
   );
-  return monthValid && yearValid;
+
+  return regExp.test(currentInput) && expValid;
 }
 
+//Validates credit CVC based on major credit card network determined by cardNum() function; also prevents anything that isn't a number
 function cardCVC(_creditCardName) {
   let valid = false;
   switch (_creditCardName) {
@@ -514,7 +634,3 @@ function cardCVC(_creditCardName) {
 }
 
 //Frontend credit card formatting and validation END
-
-//Backend card validation START
-
-//Backend card validation END
