@@ -325,7 +325,7 @@ function compute(input) {
       amountOfGasPumped();
       break;
     case 9:
-      displayreceipt();
+      displayReceipt();
   }
 }
 
