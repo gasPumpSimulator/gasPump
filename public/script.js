@@ -11,6 +11,9 @@ let inputField = document.getElementById("input");
 inputField.setAttribute("type", "hidden");
 let beginFuelingButton = document.getElementById("beginFueling");
 let emergencyShutoff = document.getElementById("emergencyShutoff");
+const receiptInfo = document.getElementById("receiptInfo");
+const receiptContainer = document.getElementById("receiptContainer");
+const receiptInputDiv = document.getElementById("receiptInputDiv");
 
 //object to hold transaction information
 let transactionObject = {
@@ -305,7 +308,7 @@ function compute(input) {
       amountOfGasPumped();
       break;
     case 8:
-      displayreceipt();
+      displayReceipt();
   }
 }
 
@@ -343,21 +346,55 @@ function incrementGallons() {
   }
 }
 
+// email
 function askReceipt() {
   clearTimeout(timeoutID);
   outputField.innerHTML =
     "Would you like a receipt? Press ENTER for YES, RESET for NO";
-  inputField.type = "hidden";
-  gallonDisplayField.innerHTML = "";
-  gallonsInput.innerHTML = "";
+  gallonDisplayField.innerHTML = " ";
+  gallonsInput.innerHTML = " ";
   receiptBool = true;
 }
-//9th step in fuel pump process; displays receipt
-function displayreceipt() {
-  console.log("Step 9");
-  alert(
-    `Thank you for your purchase! Gallons pumped: ${gallonsPumped} || Price: ${transactionObject.costOfGas} || Enter email address for printed receipt`
-  );
+
+function displayReceipt() {
+  receiptInfo.innerHTML = `Thank you for your purshase! 
+  Enter email address for printed receipt:`;
+
+  let emailInputBox = document.createElement("input");
+  emailInputBox.setAttribute("type", "text");
+  emailInputBox.setAttribute("id", "emailInput");
+
+  let emailSubmitButton = document.createElement("button");
+  emailSubmitButton.innerHTML = "SEND";
+  emailSubmitButton.setAttribute("id", "emailSubmit");
+  emailSubmitButton.setAttribute("onClick", "sendEmail()");
+  emailSubmitButton.setAttribute("action", "/mail");
+  emailSubmitButton.setAttribute("method", "POST");
+
+  receiptInputDiv.appendChild(emailInputBox);
+  receiptInputDiv.appendChild(emailSubmitButton);
+}
+
+async function sendEmail() {
+  receiptInfo.innerHTML = "";
+
+  let email = emailInput.value;
+  console.log(email);
+  fetch(`http://${port}/mail`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      gallons: gallonsPumped,
+      cost: transactionObject.costOfGas,
+    }),
+  })
+    .then((response) => response.json())
+    .then((response) => console.log(JSON.stringify(response)))
+    .then(alert("Email sent!"));
 }
 
 //emergency shutoff
