@@ -225,6 +225,7 @@ app.post("/cardCheck", async (req, res) => {
   }
 });
 
+//Code to connect to oracle database
 /*
 app.post('/searchTransactions', async (req, res) => {
   const ID = req.body.searchByID;
