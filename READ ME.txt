@@ -1,0 +1,6 @@
+There are operating system compatibility issues related to the library node called "bcrypt".
+
+To fix this, type this into the terminal:
+1. npm uninstall bcrypt
+2. Wait till packages are removed.
+2. npm install bcrypt
