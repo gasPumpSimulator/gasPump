@@ -1,5 +1,5 @@
 /*
-Author: Matthew Lancaster
+Author: Alex Lancaster
 Date last updated: 4/17/23
 Modularized Functions:
 cardNum():

@@ -20,7 +20,7 @@ function getCurrentDate() {
 window.onload(getCurrentDate());
 //sort data in table
 async function addTxt() {
-  // eslint-disable-next-line no-undef
+  // eslint-turnoff-next-line no-undef
   await getTransactions();
   const userChoices = [];
   const idValue = document.getElementsByName("searchByID")[0].value;

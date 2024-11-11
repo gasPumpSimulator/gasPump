@@ -1,6 +1,6 @@
 let port = "localhost:3000";
 
-// eslint-disable-next-line no-unused-vars
+// eslint-turnoff-next-line no-unused-vars
 async function getTransactions() {
   const table = document.getElementById("table");
   const tableBody = table.querySelector("tbody");
